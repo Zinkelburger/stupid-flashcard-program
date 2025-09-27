@@ -1,0 +1,239 @@
+Front,Back,NextReview,Difficulty
+Key to press at the GRUB boot screen to edit kernel options,e,2025-09-27T21:08:59-04:00,Good
+Parameter to add at the end of the 'linux16' line to interrupt the boot process,rd.break,2025-09-26T02:09:28-04:00,Hard
+Key combination to boot the system after adding 'rd.break',Ctrl-x,2025-09-26T16:07:06-04:00,Again
+"On RHEL 8, what parameters should be removed from the 'linux16' line?",ro and crashkernel=...,2025-09-26T23:07:30-04:00,Hard
+Command to remount the /sysroot filesystem with read-write access,"mount -o remount,rw /sysroot",2025-09-25T19:24:29-04:00,medium
+Command to change the apparent root directory to /sysroot,chroot /sysroot,2025-09-25T19:24:29-04:00,medium
+Command used to change the root password once inside the chroot environment,passwd,2025-09-25T19:24:29-04:00,medium
+What is the easiest way to ensure SELinux contexts are corrected after a password reset?,Create an empty file named .autorelabel in the root directory (touch /.autorelabel),2025-09-25T19:24:29-04:00,medium
+How do you exit the rd.break shell to resume booting?,Type 'exit' twice,2025-09-25T19:24:29-04:00,medium
+Which file is edited to make kernel parameter changes persistent?,/etc/default/grub,2025-09-25T19:24:29-04:00,medium
+Command to apply persistent grub changes on a BIOS system,grub2-mkconfig > /boot/grub2/grub.cfg,2025-09-25T19:24:29-04:00,medium
+Command to apply persistent grub changes on a UEFI system,grub2-mkconfig > /boot/efi/EFI/redhat/grub.cfg,2025-09-25T19:24:29-04:00,medium
+What is the primary command-line tool for managing NetworkManager connections?,nmcli,2025-09-25T19:24:29-04:00,medium
+What is the text-based user interface (TUI) for managing NetworkManager?,nmtui,2025-09-25T19:24:29-04:00,medium
+Full command to begin adding a new ethernet connection named 'CorpNet' on interface 'eth0'.,nmcli conn add con-name CorpNet ifname eth0 type ethernet,2025-09-25T19:24:29-04:00,medium
+Which property in an 'nmcli conn add' command sets the IPv4 address and prefix?,ipv4.addresses <IP_ADDRESS>/<PREFIX>,2025-09-25T19:24:29-04:00,medium
+Which property in an 'nmcli conn add' command sets the default gateway?,ipv4.gateway <GATEWAY_ADDRESS>,2025-09-25T19:24:29-04:00,medium
+Which property in an 'nmcli conn add' command sets the primary DNS server?,ipv4.dns <DNS_SERVER_ADDRESS>,2025-09-25T19:24:29-04:00,medium
+What is the command to modify an existing connection?,nmcli con modify <CONNECTION_NAME> ...,2025-09-25T19:24:29-04:00,medium
+"How do you add a DNS server to a connection's existing list, rather than replacing it?",Prefix the property with a plus sign: +ipv4.dns <DNS_SERVER>,2025-09-25T19:24:29-04:00,medium
+How do you configure a connection to ignore DNS servers provided automatically by DHCP?,nmcli con mod <CONNECTION_NAME> ipv4.ignore-auto-dns yes,2025-09-25T19:24:29-04:00,medium
+How do you activate a connection named 'CorpNet'?,nmcli con up CorpNet,2025-09-25T19:24:29-04:00,medium
+How do you show a list of only the currently active connections?,nmcli con show --active,2025-09-25T19:24:29-04:00,medium
+How do you configure a connection to start automatically on system reboot?,nmcli con mod <CONNECTION_NAME> connection.autoconnect yes,2025-09-25T19:24:29-04:00,medium
+How do you prevent a connection from starting automatically on system reboot?,nmcli con mod <CONNECTION_NAME> connection.autoconnect no,2025-09-25T19:24:29-04:00,medium
+"What is the primary, recommended command to permanently set the system hostname?",hostnamectl set-hostname <NEW_HOSTNAME>,2025-09-25T19:24:29-04:00,medium
+"Which command, part of NetworkManager, can also be used to set the hostname?",nmcli general hostname <NEW_HOSTNAME>,2025-09-25T19:24:29-04:00,medium
+What is the text-based user interface (TUI) that provides a menu to change the hostname?,nmtui,2025-09-25T19:24:29-04:00,medium
+Which configuration file contains the system's hostname (though direct editing is not recommended)?,/etc/hostname,2025-09-25T19:24:29-04:00,medium
+Which command can be used to view the current hostname and other related system information?,hostnamectl,2025-09-25T19:24:29-04:00,medium
+What command checks the current status of SELinux?,getenforce,2025-09-25T19:24:29-04:00,medium
+What are the three possible modes for SELinux?,"Enforcing, Permissive, and Disabled",2025-09-25T19:24:29-04:00,medium
+Which file must be edited to change the SELinux mode if it is disabled?,/etc/sysconfig/selinux,2025-09-25T19:24:29-04:00,medium
+"In the /etc/sysconfig/selinux file, what value should the 'SELINUX=' parameter be set to for enforcing mode?",enforcing,2025-09-25T19:24:29-04:00,medium
+What is required for a change from 'disabled' to 'enforcing' or 'permissive' in the config file to take effect?,A system reboot,2025-09-25T19:24:29-04:00,medium
+What command installs the Apache web server package?,yum install -y httpd,2025-09-25T19:24:29-04:00,medium
+What firewall-cmd command adds a permanent rule to allow HTTP traffic?,firewall-cmd --permanent --add-service=http,2025-09-25T19:24:29-04:00,medium
+"After adding a permanent firewall rule, what command must be run to apply the changes?",firewall-cmd --reload,2025-09-25T19:24:29-04:00,medium
+Which systemctl command ensures the Apache (httpd) service starts automatically on boot?,systemctl enable httpd,2025-09-25T19:24:29-04:00,medium
+Which systemctl command starts the Apache (httpd) service immediately?,systemctl start httpd,2025-09-25T19:24:29-04:00,medium
+What command helps diagnose SELinux denials by analyzing the audit log?,sealert -a /var/log/audit/audit.log,2025-09-25T19:24:29-04:00,medium
+What is the specific SELinux boolean that must be enabled to allow Apache to serve files from an NFS mount?,httpd_use_nfs,2025-09-25T19:24:29-04:00,medium
+What command permanently enables the 'httpd_use_nfs' SELinux boolean?,setsebool -P httpd_use_nfs 1,2025-09-25T19:24:29-04:00,medium
+What three commands should you run in sequence to check all LVM components in the system?,"pvs, vgs, lvs",2025-09-25T19:24:29-04:00,medium
+Can XFS filesystems be shrunk/downsized?,"No, XFS filesystems can only be grown/expanded",2025-09-25T19:24:29-04:00,medium
+What flag in lvextend resizes both the logical volume and the filesystem on it?,-r,2025-09-25T19:24:29-04:00,medium
+Complete command to extend a logical volume to exactly 200MB including filesystem resize,lvextend --size 200M -r /dev/VOLUME_GROUP/LOGICAL_VOLUME,2025-09-25T19:24:29-04:00,medium
+What must you do before adding a label to an XFS filesystem?,Unmount the filesystem first,2025-09-25T19:24:29-04:00,medium
+What command adds a label 'myFS' to an XFS filesystem?,"xfs_admin -L ""myFS"" /dev/VOLUME_GROUP/LOGICAL_VOLUME",2025-09-25T19:24:29-04:00,medium
+What are the three steps to add a label to a mounted XFS filesystem?,"1. umount the filesystem 2. xfs_admin -L ""label"" /dev/path 3. mount the filesystem",2025-09-25T19:24:29-04:00,medium
+What command finds which package provides the semanage tool?,yum whatprovides */semanage,2025-09-25T19:24:29-04:00,medium
+What package typically contains the semanage command on RHEL/CentOS?,policycoreutils-python,2025-09-25T19:24:29-04:00,medium
+Why should you avoid using the chcon command for SELinux contexts?,It's not advised except for restoring root password - changes are not permanent,2025-09-25T19:24:29-04:00,medium
+What flag shows SELinux contexts when listing files and directories?,-Z,2025-09-25T19:24:29-04:00,medium
+What command shows the SELinux context of home directories?,ls -Z /home,2025-09-25T19:24:29-04:00,medium
+What is the SELinux context type for user home directories?,user_home_dir_t,2025-09-25T19:24:29-04:00,medium
+Complete command to assign user_home_dir_t context to /xfs directory permanently,"semanage fcontext -a -t user_home_dir_t ""/xfs(/.*)?""",2025-09-25T19:24:29-04:00,medium
+"After setting SELinux file contexts with semanage, what command applies them to the filesystem?",restorecon -R /xfs,2025-09-25T19:24:29-04:00,medium
+What are the two steps to permanently assign SELinux contexts to a directory?,1. semanage fcontext -a -t [context] [path] 2. restorecon -R [path],2025-09-25T19:24:29-04:00,medium
+What are the main commands for user creation and modification?,useradd and usermod,2025-09-25T19:24:29-04:00,medium
+What flag specifies a custom UID when creating a user?,-u,2025-09-25T19:24:29-04:00,medium
+Command to create user 'john' with UID 2000,useradd -u 2000 john,2025-09-25T19:24:29-04:00,medium
+What command sets a password for an existing user?,passwd [username],2025-09-25T19:24:29-04:00,medium
+What command shows account aging information for a user?,chage -l [username],2025-09-25T19:24:29-04:00,medium
+What command sets account expiration date for a user?,chage -E [date] [username],2025-09-25T19:24:29-04:00,medium
+How do you set an account to expire in 30 days using chage?,chage -E $(date -d +30days +%Y-%m-%d) [username],2025-09-25T19:24:29-04:00,medium
+What's the difference between password expiration and account expiration?,Password expiration prevents login until password is changed; account expiration completely disables the account,2025-09-25T19:24:29-04:00,medium
+What command is used to add/remove users to/from groups?,usermod (not groupmod),2025-09-25T19:24:29-04:00,medium
+What happens if you try to create a user with an already taken UID?,An error occurs,2025-09-25T19:24:29-04:00,medium
+What directory provides the template structure for new user home directories?,/etc/skel,2025-09-25T19:24:29-04:00,medium
+What command changes ownership of files and directories?,chown,2025-09-25T19:24:29-04:00,medium
+Complete command to change ownership of /home/john to user davis recursively,chown -R davis:davis /home/john,2025-09-25T19:24:29-04:00,medium
+What does ACL stand for in Linux permissions?,Access Control Lists,2025-09-25T19:24:29-04:00,medium
+What command is used to set ACLs?,setfacl,2025-09-25T19:24:29-04:00,medium
+Complete command to give user davis full ACL permissions to /home/john recursively,setfacl -R -m u:davis:rwx /home/john,2025-09-25T19:24:29-04:00,medium
+What command shows ACL permissions for a file or directory?,getfacl [path],2025-09-25T19:24:29-04:00,medium
+What prefix is used in setfacl to apply ACLs to newly created files and folders?,d: (default),2025-09-25T19:24:29-04:00,medium
+Complete command to set ACLs for both existing and future files in /home/john for user davis,"setfacl -R -m u:davis:rwx,d:u:davis:rwx /home/john",2025-09-25T19:24:29-04:00,medium
+What symbol indicates that a file/directory has ACLs applied?,+ (plus) sign at the end of permissions in ls -l,2025-09-25T19:24:29-04:00,medium
+What mount option must be enabled for a partition to support ACLs?,acl,2025-09-25T19:24:29-04:00,medium
+Which command is used to remove ACLs?,setfacl (with appropriate flags),2025-09-25T19:24:29-04:00,medium
+What command creates a new directory?,mkdir,2025-09-25T19:24:29-04:00,medium
+What command creates a new group?,groupadd,2025-09-25T19:24:29-04:00,medium
+What command changes the group ownership of files and directories?,chgrp,2025-09-25T19:24:29-04:00,medium
+Complete command to create a group called 'team',groupadd team,2025-09-25T19:24:29-04:00,medium
+Complete command to set group ownership of /common to 'team',chgrp team /common,2025-09-25T19:24:29-04:00,medium
+What does SGID stand for?,Set Group ID,2025-09-25T19:24:29-04:00,medium
+What numeric permission value sets SGID on a directory?,"2 (as a prefix, e.g., 2770)",2025-09-25T19:24:29-04:00,medium
+What does SGID do when set on a directory?,Users operating on files in the directory get the same permissions as the group owner,2025-09-25T19:24:29-04:00,medium
+Complete command to set SGID and full group permissions on /common,chmod 2770 /common,2025-09-25T19:24:29-04:00,medium
+What flag in usermod adds a user to additional groups without removing them from existing groups?,-aG,2025-09-25T19:24:29-04:00,medium
+Complete command to add user john to the team group,usermod -aG team john,2025-09-25T19:24:29-04:00,medium
+What command temporarily changes a user's primary group for the current session?,newgrp,2025-09-25T19:24:29-04:00,medium
+What command creates a new logical volume?,lvcreate,2025-09-25T19:24:29-04:00,medium
+Complete command to create a 100MB logical volume named lv_xfs in volume group vg,lvcreate --size 100M --name lv_xfs /dev/vg,2025-09-25T19:24:29-04:00,medium
+What command creates an XFS filesystem on a device?,mkfs.xfs [device],2025-09-25T19:24:29-04:00,medium
+Alternative command to create an XFS filesystem,mkfs -t xfs [device],2025-09-25T19:24:29-04:00,medium
+What command shows the UUID of a block device?,blkid,2025-09-25T19:24:29-04:00,medium
+Quick way to add a device's UUID entry to /etc/fstab,blkid | grep [device] >> /etc/fstab,2025-09-25T19:24:29-04:00,medium
+What file controls permanent filesystem mounts?,/etc/fstab,2025-09-25T19:24:29-04:00,medium
+What are the typical fstab values for dump and fsck for non-root partitions?,1 2,2025-09-25T19:24:29-04:00,medium
+What command mounts all filesystems listed in /etc/fstab?,mount -a,2025-09-25T19:24:29-04:00,medium
+"In fstab, what does the first number (dump field) control?",How often the partition is backed up by dump program,2025-09-25T19:24:29-04:00,medium
+"In fstab, what does the second number (fsck field) control?","Level of filesystem integrity check at boot (0=no check, 1=root only, 2=other partitions)",2025-09-25T19:24:29-04:00,medium
+What's the difference between partition label and filesystem name?,Partition label is metadata on the partition; filesystem name/label is metadata within the filesystem,2025-09-25T19:24:29-04:00,medium
+What command is used to configure kernel boot parameters?,grubby,2025-09-25T19:24:29-04:00,medium
+Complete command to add console=ttyS0 parameter to all installed kernels,"grubby --update-kernel=ALL --args=""console=ttyS0""",2025-09-25T19:24:29-04:00,medium
+What does the --update-kernel=ALL flag do in grubby?,Updates all kernels installed on the system with the specified arguments,2025-09-25T19:24:29-04:00,medium
+How many previous kernel versions are kept by default on RHEL systems?,4,2025-09-25T19:24:29-04:00,medium
+Are kernel updates actually updates or new installations?,"New installations - kernels are installed as new ones, not updated",2025-09-25T19:24:29-04:00,medium
+What command creates a swap area on a device?,mkswap,2025-09-25T19:24:29-04:00,medium
+What command activates a swap area?,swapon,2025-09-25T19:24:29-04:00,medium
+Complete command to create 200MB logical volume named lv_swap2,lvcreate --size 200M --name lv_swap2 /dev/vg,2025-09-25T19:24:29-04:00,medium
+What are the three steps to create and activate swap on a logical volume?,1. lvcreate (create LV) 2. mkswap (format as swap) 3. swapon (activate),2025-09-25T19:24:29-04:00,medium
+What is the fstab entry format for a swap partition?,[device] swap swap defaults 0 0,2025-09-25T19:24:29-04:00,medium
+What command shows current swap usage summary?,swapon -s,2025-09-25T19:24:29-04:00,medium
+What command shows memory and swap usage statistics?,free -k,2025-09-25T19:24:29-04:00,medium
+What flags allow mkswap and swapon to use labels and UUIDs?,-L (label) and -U (UUID),2025-09-25T19:24:29-04:00,medium
+What file must be edited to make swap changes permanent?,/etc/fstab,2025-09-25T19:24:29-04:00,medium
+What command provides system activity reporting?,sar,2025-09-25T19:24:29-04:00,medium
+What package contains the sar command?,sysstat,2025-09-25T19:24:29-04:00,medium
+What service must be enabled for sar to work properly?,sysstat,2025-09-25T19:24:29-04:00,medium
+What command lists current user's cron jobs?,crontab -l,2025-09-25T19:24:29-04:00,medium
+What command edits current user's cron jobs?,crontab -e,2025-09-25T19:24:29-04:00,medium
+What is the cron format for 11PM every day?,0 23 * * *,2025-09-25T19:24:29-04:00,medium
+Complete cron entry to run sar at 11PM daily and log to /var/log/consumption.log,0 23 * * * /usr/bin/sar -A > /var/log/consumption.log,2025-09-25T19:24:29-04:00,medium
+What flag allows root to edit another user's crontab?,-u [username],2025-09-25T19:24:29-04:00,medium
+What files control cron access permissions?,/etc/cron.allow and /etc/cron.deny,2025-09-25T19:24:29-04:00,medium
+Does the log file need to exist before cron writes to it?,"No, it will be created automatically",2025-09-25T19:24:29-04:00,medium
+What command sets the default systemd target?,systemctl set-default [target],2025-09-25T19:24:29-04:00,medium
+What command shows the current default systemd target?,systemctl get-default,2025-09-25T19:24:29-04:00,medium
+What is the systemd target equivalent to runlevel 5 (graphical)?,graphical.target,2025-09-25T19:24:29-04:00,medium
+Complete command to set default boot target to graphical mode,systemctl set-default graphical.target,2025-09-25T19:24:29-04:00,medium
+What systemd target corresponds to runlevel 0?,poweroff.target,2025-09-25T19:24:29-04:00,medium
+What systemd target corresponds to runlevel 1?,rescue.target,2025-09-25T19:24:29-04:00,medium
+"What systemd targets correspond to runlevels 2, 3, and 4?",multi-user.target,2025-09-25T19:24:29-04:00,medium
+What systemd target corresponds to runlevel 6?,reboot.target,2025-09-25T19:24:29-04:00,medium
+What deprecated file was previously used to set default runlevel?,/etc/inittab,2025-09-25T19:24:29-04:00,medium
+What is the main YUM configuration file?,/etc/yum.conf,2025-09-25T19:24:29-04:00,medium
+What command shows YUM configuration with formatting?,yum-config-manager,2025-09-25T19:24:29-04:00,medium
+What package contains yum-config-manager?,yum-utils,2025-09-25T19:24:29-04:00,medium
+What directory contains YUM repository configuration files?,/etc/yum.repos.d,2025-09-25T19:24:29-04:00,medium
+What file extension is used for YUM repository configuration files?,.repo,2025-09-25T19:24:29-04:00,medium
+What are the required fields in a YUM repo file?,"[repo_name], name=, baseurl=, enabled=",2025-09-25T19:24:29-04:00,medium
+Complete repo file content for my_custom_repo at http://local.repo/rhel7,[my_custom_repo]\nname=my_custom_repo\nbaseurl=http://local.repo/rhel7\nenabled=1,2025-09-25T19:24:29-04:00,medium
+Command to add a repo using yum-config-manager,"yum-config-manager --add-repo=""[URL]""",2025-09-25T19:24:29-04:00,medium
+What command lists all YUM repositories?,yum repolist,2025-09-25T19:24:29-04:00,medium
+What command shows specific repository configuration?,yum-config-manager [repo_name],2025-09-25T19:24:29-04:00,medium
+What setting disables GPG signature checking for a repo?,gpgcheck=0,2025-09-25T19:24:29-04:00,medium
+What command lists block devices in a tree format?,lsblk,2025-09-25T19:24:29-04:00,medium
+What commands show disk partition information?,fdisk -l and parted -l,2025-09-25T19:24:29-04:00,medium
+How can you identify if a partition table uses MBR or GPT?,"If label shows DOS = MBR, otherwise = GPT",2025-09-25T19:24:29-04:00,medium
+What is the maximum number of primary partitions on MBR?,4,2025-09-25T19:24:29-04:00,medium
+What is the maximum number of logical partitions on MBR?,15,2025-09-25T19:24:29-04:00,medium
+What command creates partitions on MBR devices?,fdisk /dev/device,2025-09-25T19:24:29-04:00,medium
+What command creates partitions on GPT devices?,parted /dev/device,2025-09-25T19:24:29-04:00,medium
+What key creates a new partition in fdisk?,n,2025-09-25T19:24:29-04:00,medium
+What key saves changes in fdisk?,w,2025-09-25T19:24:29-04:00,medium
+What command notifies kernel of partition table changes?,partprobe /dev/device,2025-09-25T19:24:29-04:00,medium
+What command creates a filesystem on a partition?,mkfs -t [type] /dev/partition,2025-09-25T19:24:29-04:00,medium
+What is the default filesystem type in RHEL?,XFS,2025-09-25T19:24:29-04:00,medium
+What are shortcut commands for creating filesystems?,"mkfs.ext4, mkfs.xfs, etc.",2025-09-25T19:24:29-04:00,medium
+What command installs a new kernel?,yum install kernel,2025-09-25T19:24:29-04:00,medium
+How many previous kernel versions are kept by default?,4,2025-09-25T19:24:29-04:00,medium
+What command lists all installed kernels?,grubby --info=ALL,2025-09-25T19:24:29-04:00,medium
+Which kernel index boots by default?,Index 0,2025-09-25T19:24:29-04:00,medium
+What command sets the default kernel?,grubby --set-default-index [index],2025-09-25T19:24:29-04:00,medium
+What flag prevents shell access when creating a user?,-s /sbin/nologin,2025-09-25T19:24:29-04:00,medium
+What command shows user group memberships?,id [username],2025-09-25T19:24:29-04:00,medium
+What command lists members of a specific group?,groupmems -g [group] -l,2025-09-25T19:24:29-04:00,medium
+What flag creates parent directories if needed in mkdir?,-p,2025-09-25T19:24:29-04:00,medium
+"Even if root creates a file in an SGID directory, what group will own it?",The SGID group of the directory,2025-09-25T19:24:29-04:00,medium
+What packages are needed for LDAP authentication?,"auth*, sssd, sssd-client",2025-09-25T19:24:29-04:00,medium
+What GUI tool configures LDAP authentication (deprecated in RHEL8)?,authconfig-gtk,2025-09-25T19:24:29-04:00,medium
+What modern tool replaces authconfig-gtk in RHEL8?,authselect,2025-09-25T19:24:29-04:00,medium
+What service handles LDAP communication?,SSSD,2025-09-25T19:24:29-04:00,medium
+What command checks if an LDAP user exists locally?,getent passwd [username],2025-09-25T19:24:29-04:00,medium
+What package provides autofs functionality?,autofs,2025-09-25T19:24:29-04:00,medium
+What directory contains autofs master configuration files?,/etc/auto.master.d,2025-09-25T19:24:29-04:00,medium
+What file extension is required for autofs configuration files in auto.master.d?,.autofs,2025-09-25T19:24:29-04:00,medium
+What does the wildcard * mean in autofs configuration?,Matches any username,2025-09-25T19:24:29-04:00,medium
+What does the & symbol mean in autofs paths?,Substitutes the matched username,2025-09-25T19:24:29-04:00,medium
+Sample autofs configuration for NFS home directories,"* -rw,sync nfs.server.com:/home/&",2025-09-25T19:24:29-04:00,medium
+What service provides NTP functionality in modern RHEL?,chrony (chronyd daemon),2025-09-25T19:24:29-04:00,medium
+What is the chrony configuration file?,/etc/chrony.conf,2025-09-25T19:24:29-04:00,medium
+What command enables NTP synchronization?,timedatectl set-ntp 1,2025-09-25T19:24:29-04:00,medium
+What command shows chrony time sources?,chronyc sources -v,2025-09-25T19:24:29-04:00,medium
+What does 'iburst' mean in chrony.conf?,Initial burst of requests for faster sync,2025-09-25T19:24:29-04:00,medium
+What command sets specific file ACL permissions?,setfacl -m u:user:perms [file],2025-09-25T19:24:29-04:00,medium
+How do you deny all permissions to a user via ACL?,setfacl -m u:user:--- [file],2025-09-25T19:24:29-04:00,medium
+What command creates a physical volume?,pvcreate [device],2025-09-25T19:24:29-04:00,medium
+What flag sets extent size when creating a volume group?,-s [size],2025-09-25T19:24:29-04:00,medium
+Complete command to create VG 'datacontainer' with 16MB extents,vgcreate -s 16M datacontainer [device],2025-09-25T19:24:29-04:00,medium
+What flag specifies extents (not size) when creating LV?,-l [number],2025-09-25T19:24:29-04:00,medium
+Complete command to create LV 'datacopy' with 50 extents,lvcreate -l 50 -n datacopy [vg_name],2025-09-25T19:24:29-04:00,medium
+What command creates a VFAT filesystem?,mkfs.vfat [device],2025-09-25T19:24:29-04:00,medium
+What command reduces logical volume size?,lvreduce,2025-09-25T19:24:29-04:00,medium
+Complete command to reduce LV size by 400MB,lvreduce -L -400M /dev/[lv_path],2025-09-25T19:24:29-04:00,medium
+Must you unmount a filesystem before reducing its LV?,Yes,2025-09-25T19:24:29-04:00,medium
+What tar flags create a gzip-compressed archive?,-cvzf,2025-09-25T19:24:29-04:00,medium
+Complete command to create /root/local.tgz from /usr/local,tar -cvzf /root/local.tgz /usr/local,2025-09-25T19:24:29-04:00,medium
+What's the difference between > and >> redirection?,"> overwrites file contents, >> appends",2025-09-25T19:24:29-04:00,medium
+Complete command to search 'sarah' in /etc/passwd and append to /root/lines,grep sarah /etc/passwd >> /root/lines,2025-09-25T19:24:29-04:00,medium
+What file configures journald behavior?,/etc/systemd/journald.conf,2025-09-25T19:24:29-04:00,medium
+What setting makes journald logs persistent across reboots?,Storage=persistent,2025-09-25T19:24:29-04:00,medium
+What service must be restarted after changing journald.conf?,systemd-journald.service,2025-09-25T19:24:29-04:00,medium
+What packages are needed for VDO?,vdo and kmod-kvdo,2025-09-25T19:24:29-04:00,medium
+What command creates a VDO volume?,vdo create --name=[name] --device=[device] --vdoLogicalSize=[size],2025-09-25T19:24:29-04:00,medium
+What's the typical size multiplier for VDO with containers?,Up to 10 times the physical device size,2025-09-25T19:24:29-04:00,medium
+What's the typical size multiplier for VDO with object storage?,Up to 3 times the physical device size,2025-09-25T19:24:29-04:00,medium
+What flag prevents block discarding when creating XFS on VDO?,-K,2025-09-25T19:24:29-04:00,medium
+What flag prevents block discarding when creating ext4 on VDO?,-E nodiscard,2025-09-25T19:24:29-04:00,medium
+What command refreshes device registers after VDO filesystem creation?,udevadm settle,2025-09-25T19:24:29-04:00,medium
+What fstab options are required for VDO mounts?,"_netdev,x-systemd.device-timeout=0,x-systemd.requires=vdo.service",2025-09-25T19:24:29-04:00,medium
+How much RAM is required per TB of VDO storage?,Over 500MB of RAM per TB,2025-09-25T19:24:29-04:00,medium
+What commands check VDO status and statistics?,vdo and vdostats,2025-09-25T19:24:29-04:00,medium
+What is the primary command for searching files in Linux?,find,2025-09-25T19:24:29-04:00,medium
+What flag limits find to files only (not directories)?,-type f,2025-09-25T19:24:29-04:00,medium
+What flag limits find search to current directory only (no subdirectories)?,-maxdepth 1,2025-09-25T19:24:29-04:00,medium
+What flag finds files modified more than N days ago?,-mtime +N,2025-09-25T19:24:29-04:00,medium
+Complete find command to copy files in /etc modified >180 days ago to /var/tmp/pvt,find /etc -type f -maxdepth 1 -mtime +180 -exec cp {} /var/tmp/pvt \\;,2025-09-25T19:24:29-04:00,medium
+What command searches for text content within files?,grep,2025-09-25T19:24:29-04:00,medium
+What flag makes grep ignore case?,-i,2025-09-25T19:24:29-04:00,medium
+What flag makes grep list only filenames (not content)?,-l,2025-09-25T19:24:29-04:00,medium
+What flag makes grep skip directories?,-d skip,2025-09-25T19:24:29-04:00,medium
+What flag makes grep suppress error messages?,-s,2025-09-25T19:24:29-04:00,medium
+Complete grep command to find files in /etc containing 'chrony' (case insensitive),grep -il chrony /etc/* or grep -lis chrony /etc/*,2025-09-25T19:24:29-04:00,medium
+What does UUOC stand for?,Unnecessary Use of Cat,2025-09-25T19:24:29-04:00,medium
+What tool manages layered storage in RHEL 8?,Stratis,2025-09-25T19:24:29-04:00,medium
+What programming language is Stratis written in?,Rust,2025-09-25T19:24:29-04:00,medium
+What command authenticates to a container registry?,podman login,2025-09-25T19:24:29-04:00,medium
+What command creates a container with port mapping and volume mount?,podman create -d -v [src]:[dst] -p [host_port]:[container_port] --name [name] [image],2025-09-25T19:24:29-04:00,medium
+What command generates systemd service files for containers?,podman generate systemd [container_name],2025-09-25T19:24:29-04:00,medium
+Where should user systemd service files be placed?,~/.config/systemd/user/,2025-09-25T19:24:29-04:00,medium
+What command enables and starts user systemd services?,systemctl --user enable --now [service],2025-09-25T19:24:29-04:00,medium
+What command allows user services to start without login?,loginctl enable-linger,2025-09-25T19:24:29-04:00,medium
+What SELinux context type is used for container files?,container_file_t,2025-09-25T19:24:29-04:00,medium
+What podman flag automatically sets SELinux contexts for volumes?,":z (e.g., -v src:dst:z)",2025-09-25T19:24:29-04:00,medium
