@@ -31,18 +31,20 @@ const (
 
 // Main model
 type model struct {
-	state      appState
-	flashcards []flashcard
-	currentIdx int
-	textarea   textarea.Model
-	spinner    spinner.Model
-	question   string
-	userAnswer string
-	evaluation string
-	correct    bool
-	loadingMsg string
-	width      int
-	height     int
+	state           appState
+	flashcards      []flashcard
+	currentIdx      int
+	sessionProgress int // Track cards completed in this session
+	totalCards      int // Total cards that were due at start
+	textarea        textarea.Model
+	spinner         spinner.Model
+	question        string
+	userAnswer      string
+	evaluation      string
+	correct         bool
+	loadingMsg      string
+	width           int
+	height          int
 }
 
 // Flashcard represents a single flashcard with spaced repetition data
@@ -153,11 +155,13 @@ func initialModel() model {
 	s.Style = lipgloss.NewStyle()
 
 	return model{
-		state:      stateLoading,
-		flashcards: cards,
-		textarea:   ta,
-		spinner:    s,
-		loadingMsg: "Getting your flashcard ready",
+		state:           stateLoading,
+		flashcards:      cards,
+		sessionProgress: 0,
+		totalCards:      len(cards),
+		textarea:        ta,
+		spinner:         s,
+		loadingMsg:      "Getting your flashcard ready",
 	}
 }
 
@@ -220,6 +224,8 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					"1": "Again", "2": "Hard", "3": "Good", "4": "Easy",
 				}[msg.String()]
 				m.updateCardDifficulty(difficulty)
+
+				m.sessionProgress++
 
 				cards, err := loadFlashcards("flashcards.csv")
 				if err != nil {
@@ -306,9 +312,9 @@ func (m model) View() string {
 
 	case stateShowingAnswer:
 		if m.correct {
-			s.WriteString(renderWidth.Render("✅ Correct! " + m.evaluation) + "\n\n")
+			s.WriteString(renderWidth.Render("✅ Correct! "+m.evaluation) + "\n\n")
 		} else {
-			s.WriteString(renderWidth.Render("❌ Not quite. " + m.evaluation) + "\n\n")
+			s.WriteString(renderWidth.Render("❌ Not quite. "+m.evaluation) + "\n\n")
 		}
 		s.WriteString(answerStyle.Width(width-4).Render("Correct answer: "+m.flashcards[m.currentIdx].Back) + "\n\n")
 		if m.userAnswer != "(showed answer)" {
@@ -319,7 +325,7 @@ func (m model) View() string {
 		s.WriteString(renderWidth.Render("\nPress 1-4 to continue • Ctrl+C to quit"))
 	}
 
-	s.WriteString(fmt.Sprintf("\n\n%s Card %d of %d", "Progress:", m.currentIdx+1, len(m.flashcards)))
+	s.WriteString(fmt.Sprintf("\n\n%s Card %d of %d", "Progress:", m.sessionProgress+1, m.totalCards))
 	return s.String()
 }
 
