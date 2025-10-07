@@ -1,10 +1,10 @@
 Front,Back,NextReview,Difficulty
-Key to press at the GRUB boot screen to edit kernel options,e,2025-09-27T21:08:59-04:00,Good
+Key to press at the GRUB boot screen to edit kernel options,e,2025-09-27T21:57:11-04:00,Good
 Parameter to add at the end of the 'linux16' line to interrupt the boot process,rd.break,2025-09-26T02:09:28-04:00,Hard
 Key combination to boot the system after adding 'rd.break',Ctrl-x,2025-09-26T16:07:06-04:00,Again
 "On RHEL 8, what parameters should be removed from the 'linux16' line?",ro and crashkernel=...,2025-09-26T23:07:30-04:00,Hard
-Command to remount the /sysroot filesystem with read-write access,"mount -o remount,rw /sysroot",2025-09-25T19:24:29-04:00,medium
-Command to change the apparent root directory to /sysroot,chroot /sysroot,2025-09-25T19:24:29-04:00,medium
+Command to remount the /sysroot filesystem with read-write access,"mount -o remount,rw /sysroot",2025-09-27T04:44:01-04:00,Hard
+Command to change the apparent root directory to /sysroot,chroot /sysroot,2025-09-27T05:33:58-04:00,Hard
 Command used to change the root password once inside the chroot environment,passwd,2025-09-25T19:24:29-04:00,medium
 What is the easiest way to ensure SELinux contexts are corrected after a password reset?,Create an empty file named .autorelabel in the root directory (touch /.autorelabel),2025-09-25T19:24:29-04:00,medium
 How do you exit the rd.break shell to resume booting?,Type 'exit' twice,2025-09-25T19:24:29-04:00,medium
@@ -237,3 +237,142 @@ What command enables and starts user systemd services?,systemctl --user enable -
 What command allows user services to start without login?,loginctl enable-linger,2025-09-25T19:24:29-04:00,medium
 What SELinux context type is used for container files?,container_file_t,2025-09-25T19:24:29-04:00,medium
 What podman flag automatically sets SELinux contexts for volumes?,":z (e.g., -v src:dst:z)",2025-09-25T19:24:29-04:00,medium
+Command to generate SSH keys,ssh-keygen,2025-10-06T19:24:29-04:00,medium
+Command to copy SSH public key to remote server,ssh-copy-id -i ~/.ssh/KEY.pub USER@SERVER,2025-10-06T19:24:29-04:00,medium
+Commands to set up non-interactive SSH passphrase management,"eval $(ssh-agent); ssh-add ~/.ssh/KEY",2025-10-06T19:24:29-04:00,medium
+Command to start Cockpit web UI service,systemctl start cockpit.service,2025-10-06T19:24:29-04:00,medium
+Default port for Cockpit web interface,9090,2025-10-06T19:24:29-04:00,medium
+Command to generate sosreport,sos report,2025-10-06T19:24:29-04:00,medium
+Command to register system with Red Hat Insights,insights-client --register,2025-10-06T19:24:29-04:00,medium
+URL for Red Hat Insights console,https://console.redhat.com/insights,2025-10-06T19:24:29-04:00,medium
+Command to create hard link,ln SRC_FILE LINKED_FILE,2025-10-06T19:24:29-04:00,medium
+Command to create soft/symbolic link,ln -s SRC_FILE LINKED_FILE,2025-10-06T19:24:29-04:00,medium
+Commands to add user and set password,"useradd USERNAME; passwd USERNAME",2025-10-06T19:24:29-04:00,medium
+Command to create group with specific GID,groupadd -g GID GROUP_NAME,2025-10-06T19:24:29-04:00,medium
+File to edit for sudoers configuration,/etc/sudoers,2025-10-06T19:24:29-04:00,medium
+Sudoers syntax to allow group access,%GROUP ALL=(ALL:ALL) ALL,2025-10-06T19:24:29-04:00,medium
+Sudoers syntax to allow user access,USER ALL=(ALL) ALL,2025-10-06T19:24:29-04:00,medium
+Command to append user to supplemental group,usermod -aG GROUP USER,2025-10-06T19:24:29-04:00,medium
+Command to change user's primary group,usermod -g GROUP USER,2025-10-06T19:24:29-04:00,medium
+File containing password configuration settings,/etc/shadow,2025-10-06T19:24:29-04:00,medium
+Command to change password configuration for user,chage [options] USER,2025-10-06T19:24:29-04:00,medium
+Command to lock a user account,usermod -L USER,2025-10-06T19:24:29-04:00,medium
+Special permission for files: executes as file owner,u+s (setuid),2025-10-06T19:24:29-04:00,medium
+Special permission for files: executes as group owner,g+s (setgid),2025-10-06T19:24:29-04:00,medium
+Special permission for directories: files inherit parent group,g+s (setgid on directory),2025-10-06T19:24:29-04:00,medium
+Special permission for directories: users can only remove files they own,o+t (sticky bit),2025-10-06T19:24:29-04:00,medium
+Command to change group ownership only,chown :GROUP directory/file,2025-10-06T19:24:29-04:00,medium
+Command to temporarily change default file permissions,umask,2025-10-06T19:24:29-04:00,medium
+File for permanent umask setting,/etc/login.defs,2025-10-06T19:24:29-04:00,medium
+Command to recursively change ownership,chown -R USER:GROUP dir/file,2025-10-06T19:24:29-04:00,medium
+Command to temporarily set SELinux to permissive,setenforce 0,2025-10-06T19:24:29-04:00,medium
+Command to restore default SELinux context on directory,restorecon -Rv /path/to/dir,2025-10-06T19:24:29-04:00,medium
+Commands to set SELinux context on directory,"semanage fcontext -a -t CONTEXT '/directory(/.*)?'; restorecon -Rv /directory",2025-10-06T19:24:29-04:00,medium
+Command to find SELinux boolean,semanage boolean -l | grep BOOLEAN,2025-10-06T19:24:29-04:00,medium
+Command to temporarily set SELinux boolean,setsebool BOOLEAN {on|off},2025-10-06T19:24:29-04:00,medium
+Command to permanently set SELinux boolean,setsebool -P BOOLEAN {on|off},2025-10-06T19:24:29-04:00,medium
+Command to verify SELinux boolean setting,semanage boolean -l -C,2025-10-06T19:24:29-04:00,medium
+Main SELinux audit log location,/var/log/audit/audit.log,2025-10-06T19:24:29-04:00,medium
+Command to analyze SELinux audit log,sealert -a /var/log/audit/audit.log,2025-10-06T19:24:29-04:00,medium
+Command to search for SELinux violations,ausearch -m avc,2025-10-06T19:24:29-04:00,medium
+Commands to check/set SELinux enforcement,"getenforce, setenforce",2025-10-06T19:24:29-04:00,medium
+Command to list available signals,kill -l,2025-10-06T19:24:29-04:00,medium
+Command to send signal to process,kill -SIGNAL_NUMBER PID,2025-10-06T19:24:29-04:00,medium
+Command to find processes by user,pgrep -l -u USER,2025-10-06T19:24:29-04:00,medium
+Command to kill processes by user,pkill -u USER,2025-10-06T19:24:29-04:00,medium
+Command to see background jobs,jobs,2025-10-06T19:24:29-04:00,medium
+Command to stop background job,kill -SIGSTOP %INDEX,2025-10-06T19:24:29-04:00,medium
+Command to see logged in users,w,2025-10-06T19:24:29-04:00,medium
+Command to enable tuned service,systemctl enable --now tuned,2025-10-06T19:24:29-04:00,medium
+Command to see active tuned profile,tuned-adm active,2025-10-06T19:24:29-04:00,medium
+Command to list tuned profiles,tuned-adm list,2025-10-06T19:24:29-04:00,medium
+Command to set tuned profile,tuned-adm profile NEW_PROFILE,2025-10-06T19:24:29-04:00,medium
+Command to disable tuned,tuned-adm off,2025-10-06T19:24:29-04:00,medium
+Location of tuned profile configurations,/usr/lib/tuned/PROFILE/tuned.conf,2025-10-06T19:24:29-04:00,medium
+Command to start process with specific priority,nice -n 15 COMMAND,2025-10-06T19:24:29-04:00,medium
+Command to change process priority,renice -n 15 PID,2025-10-06T19:24:29-04:00,medium
+Command to list user cron jobs,crontab -l,2025-10-06T19:24:29-04:00,medium
+Command to edit user cron jobs,crontab -e,2025-10-06T19:24:29-04:00,medium
+Cron job format,"Minutes Hours Day_of_month Month Day_of_week COMMAND",2025-10-06T19:24:29-04:00,medium
+File for system cron jobs,/etc/cron.d/jobname,2025-10-06T19:24:29-04:00,medium
+File for anacron jobs,/etc/anacrontab,2025-10-06T19:24:29-04:00,medium
+Anacron job format,"Period_in_days Delay_in_minutes Job_identifier command",2025-10-06T19:24:29-04:00,medium
+Package required for sysstat timer modification,sysstat,2025-10-06T19:24:29-04:00,medium
+Location of systemd timer templates,/usr/lib/systemd/system/,2025-10-06T19:24:29-04:00,medium
+Command to reload systemd after timer changes,systemctl daemon-reload,2025-10-06T19:24:29-04:00,medium
+Location for temporary file cleanup configuration,/etc/tmpfiles.d/,2025-10-06T19:24:29-04:00,medium
+Command to create temporary directories/files,systemd-tmpfiles --create /etc/tmpfiles.d/myconf.conf,2025-10-06T19:24:29-04:00,medium
+Command to clean temporary files,systemd-tmpfiles --clean /etc/tmpfiles.d/myconf.conf,2025-10-06T19:24:29-04:00,medium
+Location of Red Hat product certificates,/etc/pki/product,2025-10-06T19:24:29-04:00,medium
+Location of Red Hat account registration certificates,/etc/pki/consumer,2025-10-06T19:24:29-04:00,medium
+Location of Red Hat subscription entitlements,/etc/pki/entitlement,2025-10-06T19:24:29-04:00,medium
+Commands to create partition and filesystem,"parted /dev/vdX; mklabel gpt; mkpart; udevadm settle; mkfs.xfs /dev/vdX",2025-10-06T19:24:29-04:00,medium
+Command to refresh device information after partition changes,udevadm settle,2025-10-06T19:24:29-04:00,medium
+Commands to create swap partition,"parted /dev/vdX; mklabel gpt; mkpart (linux-swap); udevadm settle; mkswap /dev/vdX; swapon /dev/vdX",2025-10-06T19:24:29-04:00,medium
+Commands to create LVM filesystem,"parted /dev/vdX; set 1 lvm on; pvcreate /dev/vdX; vgcreate vg01 /dev/vdX; lvcreate -n NAME -L SIZE vg01; mkfs.xfs /dev/vg01/lv01",2025-10-06T19:24:29-04:00,medium
+Commands to extend volume group,"pvcreate /dev/vdY; vgextend vg01 /dev/vdY; lvextend -L +500M /dev/vg01/lv01; xfs_growfs /mnt/data",2025-10-06T19:24:29-04:00,medium
+Command to grow XFS filesystem,xfs_growfs /mountpoint,2025-10-06T19:24:29-04:00,medium
+Command to resize ext4 filesystem,resize2fs /dev/vg01/lv01,2025-10-06T19:24:29-04:00,medium
+Commands to extend swap partition,"swapoff /dev/vg01/swap; lvextend -L +500M /dev/vg01/swap; mkswap /dev/vg01/swap; swapon /dev/vg01/swap",2025-10-06T19:24:29-04:00,medium
+Commands to reduce volume group,"pvmove /dev/vdX; vgreduce vg01 /dev/vdX",2025-10-06T19:24:29-04:00,medium
+Commands to remove volume group,"umount; lvremove /dev/path; vgremove; pvremove",2025-10-06T19:24:29-04:00,medium
+Command to set default boot target at runtime,systemctl set-default graphical.target,2025-10-06T19:24:29-04:00,medium
+Boot parameter to set target at boot time,systemd.target=rescue.target,2025-10-06T19:24:29-04:00,medium
+Boot parameter to break before root mount,rd.break,2025-10-06T19:24:29-04:00,medium
+Commands to reset root password from boot,"mount -o remount,rw /; chroot /sysroot; passwd; touch /.autorelabel",2025-10-06T19:24:29-04:00,medium
+File to create custom rsyslog configuration,/etc/rsyslog.d/myconf.conf,2025-10-06T19:24:29-04:00,medium
+Rsyslog configuration format,facility.priority /path/to/file,2025-10-06T19:24:29-04:00,medium
+Command to send manual log message,"logger -p facility.priority ""Log message""",2025-10-06T19:24:29-04:00,medium
+File to configure journal storage,/etc/systemd/journald.conf,2025-10-06T19:24:29-04:00,medium
+Journal storage options,"volatile, persistent, auto",2025-10-06T19:24:29-04:00,medium
+Directory for persistent journal storage,/var/log/journal,2025-10-06T19:24:29-04:00,medium
+Command to view previous boot journal,journalctl -b 1,2025-10-06T19:24:29-04:00,medium
+Command to view current timezone,timedatectl,2025-10-06T19:24:29-04:00,medium
+Command to select timezone interactively,tzselect,2025-10-06T19:24:29-04:00,medium
+Command to set timezone,timedatectl set-timezone ZONE,2025-10-06T19:24:29-04:00,medium
+Command to enable/disable NTP,timedatectl set-ntp {true|false},2025-10-06T19:24:29-04:00,medium
+File to configure chrony NTP server,/etc/chrony.conf,2025-10-06T19:24:29-04:00,medium
+Command to check chrony sources,chronyc sources -v,2025-10-06T19:24:29-04:00,medium
+Command to trace network route,tracepath website.com,2025-10-06T19:24:29-04:00,medium
+Command to show network socket statistics,ss -ta (tcp) or ss -ua (udp),2025-10-06T19:24:29-04:00,medium
+Command to create static IP network connection,nmcli con add con-name NAME ifname INTERFACE type ethernet ipv4.method manual ipv4.addresses IP/24 ipv4.gateway GATEWAY,2025-10-06T19:24:29-04:00,medium
+Command to modify network connection,nmcli con mod NAME ipv4.addresses IP ipv4.gateway GATEWAY connection.autoconnect yes,2025-10-06T19:24:29-04:00,medium
+Command to reload network connections,nmcli con reload,2025-10-06T19:24:29-04:00,medium
+Directory for NetworkManager connection files,/etc/NetworkManager/system-connections/,2025-10-06T19:24:29-04:00,medium
+Command to set hostname,hostnamectl hostname NEW_HOSTNAME,2025-10-06T19:24:29-04:00,medium
+File for local hostname resolution,/etc/hosts,2025-10-06T19:24:29-04:00,medium
+Command to add DNS server to connection,nmcli con mod +ipv4.dns IP,2025-10-06T19:24:29-04:00,medium
+Command to ignore auto DNS on interface,nmcli con mod ipv4.ignore-auto-dns yes,2025-10-06T19:24:29-04:00,medium
+Directory for NFS exports configuration,/etc/exports,2025-10-06T19:24:29-04:00,medium
+Command to mount NFS share,"mount -t nfs -o rw,sync server:/export /mountpoint",2025-10-06T19:24:29-04:00,medium
+Package required for autofs,autofs nfs-utils,2025-10-06T19:24:29-04:00,medium
+Directory for autofs master configuration,/etc/auto.master.d/,2025-10-06T19:24:29-04:00,medium
+Extension required for autofs files,.autofs,2025-10-06T19:24:29-04:00,medium
+Autofs indirect mount configuration format,/shares /etc/auto.demo,2025-10-06T19:24:29-04:00,medium
+Autofs wildcard mount format,"* -rw,sync server:/export/&",2025-10-06T19:24:29-04:00,medium
+Autofs direct mount configuration format,/- /etc/auto.direct,2025-10-06T19:24:29-04:00,medium
+Command to get default firewall zone,firewall-cmd --get-default-zone,2025-10-06T19:24:29-04:00,medium
+Command to set default firewall zone,firewall-cmd --set-default-zone=ZONE,2025-10-06T19:24:29-04:00,medium
+Command to add service to firewall zone,firewall-cmd --zone=ZONE --add-service SERVICE --permanent,2025-10-06T19:24:29-04:00,medium
+Command to add port to firewall zone,firewall-cmd --zone=ZONE --add-port PORT --permanent,2025-10-06T19:24:29-04:00,medium
+Command to reload firewall configuration,firewall-cmd --reload,2025-10-06T19:24:29-04:00,medium
+Command to list SELinux port contexts,semanage port -l | grep SERVICE,2025-10-06T19:24:29-04:00,medium
+Command to set SELinux port context,semanage port -a -t PORT_LABEL -p tcp|udp PORTNUMBER,2025-10-06T19:24:29-04:00,medium
+Directory for container registry configuration,~/.config/containers/,2025-10-06T19:24:29-04:00,medium
+File for container registries configuration,~/.config/containers/registries.conf,2025-10-06T19:24:29-04:00,medium
+Command to login to container registry,podman login URL.com,2025-10-06T19:24:29-04:00,medium
+Package group for container tools,container-tools,2025-10-06T19:24:29-04:00,medium
+Command to search container images,podman search NAME,2025-10-06T19:24:29-04:00,medium
+Command to inspect container image,skopeo inspect docker://URL.com/image,2025-10-06T19:24:29-04:00,medium
+Command to run container in background,podman run -d --name NAME registry.com/image sleep infinity,2025-10-06T19:24:29-04:00,medium
+Command to build container from Containerfile,podman build -t NAME:TAG DIR_TO_CONTAINER_FILE,2025-10-06T19:24:29-04:00,medium
+Commands to remove container,"podman stop NAME; podman rm NAME; podman rmi registry.com/image",2025-10-06T19:24:29-04:00,medium
+Command to check user ID in container,podman exec -it CONTAINER grep USER /etc/passwd,2025-10-06T19:24:29-04:00,medium
+Command to change ownership for container volume,podman unshare chown UID:GID /host/directory,2025-10-06T19:24:29-04:00,medium
+Command to create container network,podman network create --gateway GATEWAY --subnet SUBNET/24 NETWORK_NAME,2025-10-06T19:24:29-04:00,medium
+Command to run container with volume and network,podman run -d --name NAME -e ENV_VAR=VALUE -v /host:/container:Z -p HOST_PORT:CONTAINER_PORT --network NETWORK IMAGE,2025-10-06T19:24:29-04:00,medium
+Command to connect container to additional network,podman network connect NETWORK CONTAINER,2025-10-06T19:24:29-04:00,medium
+Directory for user systemd service files,~/.config/systemd/user/,2025-10-06T19:24:29-04:00,medium
+Command to generate systemd service for container,podman generate systemd --name NAME --new --files,2025-10-06T19:24:29-04:00,medium
+Command to enable user systemd service,systemctl --user enable --now SERVICE.service,2025-10-06T19:24:29-04:00,medium
+Command to enable user services without login,loginctl enable-linger,2025-10-06T19:24:29-04:00,medium

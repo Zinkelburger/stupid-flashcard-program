@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"os/exec"
 	"sort"
 	"strings"
 	"time"
@@ -90,6 +91,46 @@ const (
 	OLLAMA_URL = "http://localhost:11434/api/generate"
 	MODEL_NAME = "llama3.2"
 )
+
+// --- Ollama Service Management ---
+
+// checkOllamaRunning checks if Ollama is running by making a health check request
+func checkOllamaRunning() bool {
+	client := &http.Client{Timeout: 2 * time.Second}
+	resp, err := client.Get("http://localhost:11434/api/tags")
+	if err != nil {
+		return false
+	}
+	defer resp.Body.Close()
+	return resp.StatusCode == 200
+}
+
+// startOllama starts Ollama in the background if it's not already running
+func startOllama() error {
+	if checkOllamaRunning() {
+		return nil // Already running
+	}
+
+	log.Println("Ollama not detected, starting Ollama service...")
+
+	// Start ollama serve in the background
+	cmd := exec.Command("ollama", "serve")
+	err := cmd.Start()
+	if err != nil {
+		return fmt.Errorf("failed to start Ollama: %v", err)
+	}
+
+	// Wait a moment for Ollama to start
+	time.Sleep(2 * time.Second)
+
+	// Check if it's now running
+	if !checkOllamaRunning() {
+		return fmt.Errorf("Ollama failed to start properly")
+	}
+
+	log.Println("Ollama service started successfully")
+	return nil
+}
 
 func callOllama(prompt, msgType string) tea.Cmd {
 	return func() tea.Msg {
@@ -443,6 +484,11 @@ func saveFlashcards(filename string, cards []flashcard) error {
 }
 
 func main() {
+	// Ensure Ollama is running before starting the application
+	if err := startOllama(); err != nil {
+		log.Fatalf("Failed to start Ollama: %v\nPlease ensure Ollama is installed and accessible in PATH", err)
+	}
+
 	p := tea.NewProgram(initialModel(), tea.WithAltScreen())
 	if _, err := p.Run(); err != nil {
 		log.Fatal(err)
