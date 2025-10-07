@@ -95,31 +95,31 @@ What command temporarily changes a user's primary group for the current session?
 What command creates a new logical volume?,lvcreate,2025-09-25T19:24:29-04:00,medium
 Complete command to create a 100MB logical volume named lv_xfs in volume group vg,lvcreate --size 100M --name lv_xfs /dev/vg,2025-09-25T19:24:29-04:00,medium
 What command creates an XFS filesystem on a device?,mkfs.xfs [device],2025-09-25T19:24:29-04:00,medium
-Alternative command to create an XFS filesystem,mkfs -t xfs [device],2025-09-25T19:24:29-04:00,medium
-What command shows the UUID of a block device?,blkid,2025-09-25T19:24:29-04:00,medium
-Quick way to add a device's UUID entry to /etc/fstab,blkid | grep [device] >> /etc/fstab,2025-09-25T19:24:29-04:00,medium
-What file controls permanent filesystem mounts?,/etc/fstab,2025-09-25T19:24:29-04:00,medium
-What are the typical fstab values for dump and fsck for non-root partitions?,1 2,2025-09-25T19:24:29-04:00,medium
-What command mounts all filesystems listed in /etc/fstab?,mount -a,2025-09-25T19:24:29-04:00,medium
-"In fstab, what does the first number (dump field) control?",How often the partition is backed up by dump program,2025-09-25T19:24:29-04:00,medium
-"In fstab, what does the second number (fsck field) control?","Level of filesystem integrity check at boot (0=no check, 1=root only, 2=other partitions)",2025-09-25T19:24:29-04:00,medium
-What's the difference between partition label and filesystem name?,Partition label is metadata on the partition; filesystem name/label is metadata within the filesystem,2025-09-25T19:24:29-04:00,medium
-What command is used to configure kernel boot parameters?,grubby,2025-09-25T19:24:29-04:00,medium
-Complete command to add console=ttyS0 parameter to all installed kernels,"grubby --update-kernel=ALL --args=""console=ttyS0""",2025-09-25T19:24:29-04:00,medium
-What does the --update-kernel=ALL flag do in grubby?,Updates all kernels installed on the system with the specified arguments,2025-09-25T19:24:29-04:00,medium
-How many previous kernel versions are kept by default on RHEL systems?,4,2025-09-25T19:24:29-04:00,medium
-Are kernel updates actually updates or new installations?,"New installations - kernels are installed as new ones, not updated",2025-09-25T19:24:29-04:00,medium
-What command creates a swap area on a device?,mkswap,2025-09-25T19:24:29-04:00,medium
-What command activates a swap area?,swapon,2025-09-25T19:24:29-04:00,medium
-Complete command to create 200MB logical volume named lv_swap2,lvcreate --size 200M --name lv_swap2 /dev/vg,2025-09-25T19:24:29-04:00,medium
-What are the three steps to create and activate swap on a logical volume?,1. lvcreate (create LV) 2. mkswap (format as swap) 3. swapon (activate),2025-09-25T19:24:29-04:00,medium
-What is the fstab entry format for a swap partition?,[device] swap swap defaults 0 0,2025-09-25T19:24:29-04:00,medium
+Alternative command to create an XFS filesystem,mkfs -t xfs [device],2025-10-07T00:00:45-04:00,Again
+What command shows the UUID of a block device?,blkid,2025-10-07T00:00:52-04:00,Again
+Quick way to add a device's UUID entry to /etc/fstab,blkid | grep [device] >> /etc/fstab,2025-10-07T00:00:04-04:00,Again
+What file controls permanent filesystem mounts?,/etc/fstab,2025-10-07T05:59:16-04:00,Hard
+What are the typical fstab values for dump and fsck for non-root partitions?,1 2,2025-10-06T23:57:33-04:00,Again
+What command mounts all filesystems listed in /etc/fstab?,mount -a,2025-10-06T23:57:39-04:00,Again
+"In fstab, what does the first number (dump field) control?",How often the partition is backed up by dump program,2025-10-06T23:56:53-04:00,Again
+"In fstab, what does the second number (fsck field) control?","Level of filesystem integrity check at boot (0=no check, 1=root only, 2=other partitions)",2025-10-06T23:57:03-04:00,Again
+What's the difference between partition label and filesystem name?,Partition label is metadata on the partition; filesystem name/label is metadata within the filesystem,2025-10-07T05:55:05-04:00,Hard
+What command is used to configure kernel boot parameters?,grubby,2025-10-07T05:55:20-04:00,Hard
+Complete command to add console=ttyS0 parameter to all installed kernels,"grubby --update-kernel=ALL --args=""console=ttyS0""",2025-10-06T23:54:24-04:00,Again
+What does the --update-kernel=ALL flag do in grubby?,Updates all kernels installed on the system with the specified arguments,2025-10-06T23:54:38-04:00,Again
+How many previous kernel versions are kept by default on RHEL systems?,4,2025-10-06T23:51:46-04:00,Again
+Are kernel updates actually updates or new installations?,"New installations - kernels are installed as new ones, not updated",2025-10-07T23:52:38-04:00,Good
+What command creates a swap area on a device?,mkswap,2025-10-06T23:48:32-04:00,Again
+What command activates a swap area?,swapon,2025-10-06T23:48:41-04:00,Again
+Complete command to create 200MB logical volume named lv_swap2,lvcreate --size 200M --name lv_swap2 /dev/vg,2025-10-06T23:27:58-04:00,Again
+What are the three steps to create and activate swap on a logical volume?,1. lvcreate (create LV) 2. mkswap (format as swap) 3. swapon (activate),2025-10-06T23:28:23-04:00,Again
+What is the fstab entry format for a swap partition?,[device] swap swap defaults 0 0,2025-10-06T23:47:10-04:00,Again
 What command shows current swap usage summary?,swapon -s,2025-09-25T19:24:29-04:00,medium
 What command shows memory and swap usage statistics?,free -k,2025-09-25T19:24:29-04:00,medium
 What flags allow mkswap and swapon to use labels and UUIDs?,-L (label) and -U (UUID),2025-09-25T19:24:29-04:00,medium
 What file must be edited to make swap changes permanent?,/etc/fstab,2025-09-25T19:24:29-04:00,medium
-What command provides system activity reporting?,sar,2025-09-25T19:24:29-04:00,medium
-What package contains the sar command?,sysstat,2025-09-25T19:24:29-04:00,medium
+What command provides system activity reporting?,sar,2025-10-06T22:47:12-04:00,Again
+What package contains the sar command?,sysstat,2025-10-06T23:25:30-04:00,Again
 What service must be enabled for sar to work properly?,sysstat,2025-09-25T19:24:29-04:00,medium
 What command lists current user's cron jobs?,crontab -l,2025-09-25T19:24:29-04:00,medium
 What command edits current user's cron jobs?,crontab -e,2025-09-25T19:24:29-04:00,medium
@@ -183,17 +183,17 @@ What does the wildcard * mean in autofs configuration?,Matches any username,2025
 What does the & symbol mean in autofs paths?,Substitutes the matched username,2025-09-25T19:24:29-04:00,medium
 Sample autofs configuration for NFS home directories,"* -rw,sync nfs.server.com:/home/&",2025-09-25T19:24:29-04:00,medium
 What service provides NTP functionality in modern RHEL?,chrony (chronyd daemon),2025-09-25T19:24:29-04:00,medium
-What is the chrony configuration file?,/etc/chrony.conf,2025-09-25T19:24:29-04:00,medium
+What is the chrony configuration file?,/etc/chrony.conf,2025-10-06T23:27:30-04:00,Again
 What command enables NTP synchronization?,timedatectl set-ntp 1,2025-09-25T19:24:29-04:00,medium
-What command shows chrony time sources?,chronyc sources -v,2025-09-25T19:24:29-04:00,medium
-What does 'iburst' mean in chrony.conf?,Initial burst of requests for faster sync,2025-09-25T19:24:29-04:00,medium
-What command sets specific file ACL permissions?,setfacl -m u:user:perms [file],2025-09-25T19:24:29-04:00,medium
-How do you deny all permissions to a user via ACL?,setfacl -m u:user:--- [file],2025-09-25T19:24:29-04:00,medium
-What command creates a physical volume?,pvcreate [device],2025-09-25T19:24:29-04:00,medium
-What flag sets extent size when creating a volume group?,-s [size],2025-09-25T19:24:29-04:00,medium
+What command shows chrony time sources?,chronyc sources -v,2025-10-06T23:26:51-04:00,Again
+What does 'iburst' mean in chrony.conf?,Initial burst of requests for faster sync,2025-10-06T23:26:10-04:00,Again
+What command sets specific file ACL permissions?,setfacl -m u:user:perms [file],2025-10-06T23:26:22-04:00,Again
+How do you deny all permissions to a user via ACL?,setfacl -m u:user:--- [file],2025-10-06T23:26:30-04:00,Again
+What command creates a physical volume?,pvcreate [device],2025-10-06T23:27:05-04:00,Again
+What flag sets extent size when creating a volume group?,-s [size],2025-10-07T04:35:29-04:00,Hard
 Complete command to create VG 'datacontainer' with 16MB extents,vgcreate -s 16M datacontainer [device],2025-09-25T19:24:29-04:00,medium
-What flag specifies extents (not size) when creating LV?,-l [number],2025-09-25T19:24:29-04:00,medium
-Complete command to create LV 'datacopy' with 50 extents,lvcreate -l 50 -n datacopy [vg_name],2025-09-25T19:24:29-04:00,medium
+What flag specifies extents (not size) when creating LV?,-l [number],2025-10-06T22:35:21-04:00,Again
+Complete command to create LV 'datacopy' with 50 extents,lvcreate -l 50 -n datacopy [vg_name],2025-10-06T22:35:45-04:00,Again
 What command creates a VFAT filesystem?,mkfs.vfat [device],2025-09-25T19:24:29-04:00,medium
 What command reduces logical volume size?,lvreduce,2025-09-25T19:24:29-04:00,medium
 Complete command to reduce LV size by 400MB,lvreduce -L -400M /dev/[lv_path],2025-09-25T19:24:29-04:00,medium
@@ -220,26 +220,26 @@ What flag limits find to files only (not directories)?,-type f,2025-09-25T19:24:
 What flag limits find search to current directory only (no subdirectories)?,-maxdepth 1,2025-09-25T19:24:29-04:00,medium
 What flag finds files modified more than N days ago?,-mtime +N,2025-09-25T19:24:29-04:00,medium
 Complete find command to copy files in /etc modified >180 days ago to /var/tmp/pvt,find /etc -type f -maxdepth 1 -mtime +180 -exec cp {} /var/tmp/pvt \\;,2025-09-25T19:24:29-04:00,medium
-What command searches for text content within files?,grep,2025-09-25T19:24:29-04:00,medium
-What flag makes grep ignore case?,-i,2025-09-25T19:24:29-04:00,medium
-What flag makes grep list only filenames (not content)?,-l,2025-09-25T19:24:29-04:00,medium
-What flag makes grep skip directories?,-d skip,2025-09-25T19:24:29-04:00,medium
-What flag makes grep suppress error messages?,-s,2025-09-25T19:24:29-04:00,medium
-Complete grep command to find files in /etc containing 'chrony' (case insensitive),grep -il chrony /etc/* or grep -lis chrony /etc/*,2025-09-25T19:24:29-04:00,medium
-What does UUOC stand for?,Unnecessary Use of Cat,2025-09-25T19:24:29-04:00,medium
-What tool manages layered storage in RHEL 8?,Stratis,2025-09-25T19:24:29-04:00,medium
-What programming language is Stratis written in?,Rust,2025-09-25T19:24:29-04:00,medium
-What command authenticates to a container registry?,podman login,2025-09-25T19:24:29-04:00,medium
-What command creates a container with port mapping and volume mount?,podman create -d -v [src]:[dst] -p [host_port]:[container_port] --name [name] [image],2025-09-25T19:24:29-04:00,medium
-What command generates systemd service files for containers?,podman generate systemd [container_name],2025-09-25T19:24:29-04:00,medium
-Where should user systemd service files be placed?,~/.config/systemd/user/,2025-09-25T19:24:29-04:00,medium
-What command enables and starts user systemd services?,systemctl --user enable --now [service],2025-09-25T19:24:29-04:00,medium
-What command allows user services to start without login?,loginctl enable-linger,2025-09-25T19:24:29-04:00,medium
-What SELinux context type is used for container files?,container_file_t,2025-09-25T19:24:29-04:00,medium
-What podman flag automatically sets SELinux contexts for volumes?,":z (e.g., -v src:dst:z)",2025-09-25T19:24:29-04:00,medium
+What command searches for text content within files?,grep,2025-10-08T00:00:07-04:00,Good
+What flag makes grep ignore case?,-i,2025-10-07T06:00:00-04:00,Hard
+What flag makes grep list only filenames (not content)?,-l,2025-10-07T05:59:35-04:00,Hard
+What flag makes grep skip directories?,-d skip,2025-10-07T00:00:27-04:00,Again
+What flag makes grep suppress error messages?,-s,2025-10-06T23:59:51-04:00,Again
+Complete grep command to find files in /etc containing 'chrony' (case insensitive),grep -il chrony /etc/* or grep -lis chrony /etc/*,2025-10-06T23:59:45-04:00,Again
+What does UUOC stand for?,Unnecessary Use of Cat,2025-10-06T23:57:17-04:00,Again
+What tool manages layered storage in RHEL 8?,Stratis,2025-10-06T23:57:12-04:00,Again
+What programming language is Stratis written in?,Rust,2025-10-06T23:56:41-04:00,Again
+What command authenticates to a container registry?,podman login,2025-10-06T23:56:34-04:00,Again
+What command creates a container with port mapping and volume mount?,podman create -d -v [src]:[dst] -p [host_port]:[container_port] --name [name] [image],2025-10-07T05:54:57-04:00,Hard
+What command generates systemd service files for containers?,podman generate systemd [container_name],2025-10-06T23:54:52-04:00,Again
+Where should user systemd service files be placed?,~/.config/systemd/user/,2025-10-06T23:54:10-04:00,Again
+What command enables and starts user systemd services?,systemctl --user enable --now [service],2025-10-07T05:53:02-04:00,Hard
+What command allows user services to start without login?,loginctl enable-linger,2025-10-06T23:51:36-04:00,Again
+What SELinux context type is used for container files?,container_file_t,2025-10-06T23:48:58-04:00,Again
+What podman flag automatically sets SELinux contexts for volumes?,":z (e.g., -v src:dst:z)",2025-10-06T23:47:33-04:00,Again
 Command to generate SSH keys,ssh-keygen,2025-10-06T19:24:29-04:00,medium
 Command to copy SSH public key to remote server,ssh-copy-id -i ~/.ssh/KEY.pub USER@SERVER,2025-10-06T19:24:29-04:00,medium
-Commands to set up non-interactive SSH passphrase management,"eval $(ssh-agent); ssh-add ~/.ssh/KEY",2025-10-06T19:24:29-04:00,medium
+Commands to set up non-interactive SSH passphrase management,eval $(ssh-agent); ssh-add ~/.ssh/KEY,2025-10-06T19:24:29-04:00,medium
 Command to start Cockpit web UI service,systemctl start cockpit.service,2025-10-06T19:24:29-04:00,medium
 Default port for Cockpit web interface,9090,2025-10-06T19:24:29-04:00,medium
 Command to generate sosreport,sos report,2025-10-06T19:24:29-04:00,medium
@@ -247,7 +247,7 @@ Command to register system with Red Hat Insights,insights-client --register,2025
 URL for Red Hat Insights console,https://console.redhat.com/insights,2025-10-06T19:24:29-04:00,medium
 Command to create hard link,ln SRC_FILE LINKED_FILE,2025-10-06T19:24:29-04:00,medium
 Command to create soft/symbolic link,ln -s SRC_FILE LINKED_FILE,2025-10-06T19:24:29-04:00,medium
-Commands to add user and set password,"useradd USERNAME; passwd USERNAME",2025-10-06T19:24:29-04:00,medium
+Commands to add user and set password,useradd USERNAME; passwd USERNAME,2025-10-06T19:24:29-04:00,medium
 Command to create group with specific GID,groupadd -g GID GROUP_NAME,2025-10-06T19:24:29-04:00,medium
 File to edit for sudoers configuration,/etc/sudoers,2025-10-06T19:24:29-04:00,medium
 Sudoers syntax to allow group access,%GROUP ALL=(ALL:ALL) ALL,2025-10-06T19:24:29-04:00,medium
@@ -267,7 +267,7 @@ File for permanent umask setting,/etc/login.defs,2025-10-06T19:24:29-04:00,mediu
 Command to recursively change ownership,chown -R USER:GROUP dir/file,2025-10-06T19:24:29-04:00,medium
 Command to temporarily set SELinux to permissive,setenforce 0,2025-10-06T19:24:29-04:00,medium
 Command to restore default SELinux context on directory,restorecon -Rv /path/to/dir,2025-10-06T19:24:29-04:00,medium
-Commands to set SELinux context on directory,"semanage fcontext -a -t CONTEXT '/directory(/.*)?'; restorecon -Rv /directory",2025-10-06T19:24:29-04:00,medium
+Commands to set SELinux context on directory,semanage fcontext -a -t CONTEXT '/directory(/.*)?'; restorecon -Rv /directory,2025-10-06T19:24:29-04:00,medium
 Command to find SELinux boolean,semanage boolean -l | grep BOOLEAN,2025-10-06T19:24:29-04:00,medium
 Command to temporarily set SELinux boolean,setsebool BOOLEAN {on|off},2025-10-06T19:24:29-04:00,medium
 Command to permanently set SELinux boolean,setsebool -P BOOLEAN {on|off},2025-10-06T19:24:29-04:00,medium
@@ -293,10 +293,10 @@ Command to start process with specific priority,nice -n 15 COMMAND,2025-10-06T19
 Command to change process priority,renice -n 15 PID,2025-10-06T19:24:29-04:00,medium
 Command to list user cron jobs,crontab -l,2025-10-06T19:24:29-04:00,medium
 Command to edit user cron jobs,crontab -e,2025-10-06T19:24:29-04:00,medium
-Cron job format,"Minutes Hours Day_of_month Month Day_of_week COMMAND",2025-10-06T19:24:29-04:00,medium
+Cron job format,Minutes Hours Day_of_month Month Day_of_week COMMAND,2025-10-06T19:24:29-04:00,medium
 File for system cron jobs,/etc/cron.d/jobname,2025-10-06T19:24:29-04:00,medium
 File for anacron jobs,/etc/anacrontab,2025-10-06T19:24:29-04:00,medium
-Anacron job format,"Period_in_days Delay_in_minutes Job_identifier command",2025-10-06T19:24:29-04:00,medium
+Anacron job format,Period_in_days Delay_in_minutes Job_identifier command,2025-10-06T19:24:29-04:00,medium
 Package required for sysstat timer modification,sysstat,2025-10-06T19:24:29-04:00,medium
 Location of systemd timer templates,/usr/lib/systemd/system/,2025-10-06T19:24:29-04:00,medium
 Command to reload systemd after timer changes,systemctl daemon-reload,2025-10-06T19:24:29-04:00,medium
@@ -306,16 +306,16 @@ Command to clean temporary files,systemd-tmpfiles --clean /etc/tmpfiles.d/myconf
 Location of Red Hat product certificates,/etc/pki/product,2025-10-06T19:24:29-04:00,medium
 Location of Red Hat account registration certificates,/etc/pki/consumer,2025-10-06T19:24:29-04:00,medium
 Location of Red Hat subscription entitlements,/etc/pki/entitlement,2025-10-06T19:24:29-04:00,medium
-Commands to create partition and filesystem,"parted /dev/vdX; mklabel gpt; mkpart; udevadm settle; mkfs.xfs /dev/vdX",2025-10-06T19:24:29-04:00,medium
+Commands to create partition and filesystem,parted /dev/vdX; mklabel gpt; mkpart; udevadm settle; mkfs.xfs /dev/vdX,2025-10-06T19:24:29-04:00,medium
 Command to refresh device information after partition changes,udevadm settle,2025-10-06T19:24:29-04:00,medium
-Commands to create swap partition,"parted /dev/vdX; mklabel gpt; mkpart (linux-swap); udevadm settle; mkswap /dev/vdX; swapon /dev/vdX",2025-10-06T19:24:29-04:00,medium
-Commands to create LVM filesystem,"parted /dev/vdX; set 1 lvm on; pvcreate /dev/vdX; vgcreate vg01 /dev/vdX; lvcreate -n NAME -L SIZE vg01; mkfs.xfs /dev/vg01/lv01",2025-10-06T19:24:29-04:00,medium
-Commands to extend volume group,"pvcreate /dev/vdY; vgextend vg01 /dev/vdY; lvextend -L +500M /dev/vg01/lv01; xfs_growfs /mnt/data",2025-10-06T19:24:29-04:00,medium
+Commands to create swap partition,parted /dev/vdX; mklabel gpt; mkpart (linux-swap); udevadm settle; mkswap /dev/vdX; swapon /dev/vdX,2025-10-06T19:24:29-04:00,medium
+Commands to create LVM filesystem,parted /dev/vdX; set 1 lvm on; pvcreate /dev/vdX; vgcreate vg01 /dev/vdX; lvcreate -n NAME -L SIZE vg01; mkfs.xfs /dev/vg01/lv01,2025-10-06T19:24:29-04:00,medium
+Commands to extend volume group,pvcreate /dev/vdY; vgextend vg01 /dev/vdY; lvextend -L +500M /dev/vg01/lv01; xfs_growfs /mnt/data,2025-10-06T19:24:29-04:00,medium
 Command to grow XFS filesystem,xfs_growfs /mountpoint,2025-10-06T19:24:29-04:00,medium
 Command to resize ext4 filesystem,resize2fs /dev/vg01/lv01,2025-10-06T19:24:29-04:00,medium
-Commands to extend swap partition,"swapoff /dev/vg01/swap; lvextend -L +500M /dev/vg01/swap; mkswap /dev/vg01/swap; swapon /dev/vg01/swap",2025-10-06T19:24:29-04:00,medium
-Commands to reduce volume group,"pvmove /dev/vdX; vgreduce vg01 /dev/vdX",2025-10-06T19:24:29-04:00,medium
-Commands to remove volume group,"umount; lvremove /dev/path; vgremove; pvremove",2025-10-06T19:24:29-04:00,medium
+Commands to extend swap partition,swapoff /dev/vg01/swap; lvextend -L +500M /dev/vg01/swap; mkswap /dev/vg01/swap; swapon /dev/vg01/swap,2025-10-06T19:24:29-04:00,medium
+Commands to reduce volume group,pvmove /dev/vdX; vgreduce vg01 /dev/vdX,2025-10-06T19:24:29-04:00,medium
+Commands to remove volume group,umount; lvremove /dev/path; vgremove; pvremove,2025-10-06T19:24:29-04:00,medium
 Command to set default boot target at runtime,systemctl set-default graphical.target,2025-10-06T19:24:29-04:00,medium
 Boot parameter to set target at boot time,systemd.target=rescue.target,2025-10-06T19:24:29-04:00,medium
 Boot parameter to break before root mount,rd.break,2025-10-06T19:24:29-04:00,medium
@@ -366,7 +366,7 @@ Command to search container images,podman search NAME,2025-10-06T19:24:29-04:00,
 Command to inspect container image,skopeo inspect docker://URL.com/image,2025-10-06T19:24:29-04:00,medium
 Command to run container in background,podman run -d --name NAME registry.com/image sleep infinity,2025-10-06T19:24:29-04:00,medium
 Command to build container from Containerfile,podman build -t NAME:TAG DIR_TO_CONTAINER_FILE,2025-10-06T19:24:29-04:00,medium
-Commands to remove container,"podman stop NAME; podman rm NAME; podman rmi registry.com/image",2025-10-06T19:24:29-04:00,medium
+Commands to remove container,podman stop NAME; podman rm NAME; podman rmi registry.com/image,2025-10-06T19:24:29-04:00,medium
 Command to check user ID in container,podman exec -it CONTAINER grep USER /etc/passwd,2025-10-06T19:24:29-04:00,medium
 Command to change ownership for container volume,podman unshare chown UID:GID /host/directory,2025-10-06T19:24:29-04:00,medium
 Command to create container network,podman network create --gateway GATEWAY --subnet SUBNET/24 NETWORK_NAME,2025-10-06T19:24:29-04:00,medium

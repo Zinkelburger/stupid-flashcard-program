@@ -26,8 +26,19 @@ const (
 	stateFlashcard appState = iota
 	stateWaitingForAnswer
 	stateShowingAnswer
+	stateViewingFront
+	stateViewingOriginal
 	stateLoading
 	stateQuit
+)
+
+// LLM behavior modes
+type llmMode int
+
+const (
+	llmAskAndGrade llmMode = iota // LLM asks varied questions and grades
+	llmGradeOnly                  // LLM only grades, shows original question
+	llmOff                        // No LLM, manual grading only
 )
 
 // Main model
@@ -46,6 +57,7 @@ type model struct {
 	loadingMsg      string
 	width           int
 	height          int
+	llmMode         llmMode // Current LLM behavior setting
 }
 
 // Flashcard represents a single flashcard with spaced repetition data
@@ -191,6 +203,18 @@ func initialModel() model {
 	ta.SetWidth(60)
 	ta.ShowLineNumbers = false
 
+	// Remove borders and make it cleaner
+	ta.BlurredStyle.Base = lipgloss.NewStyle()
+	ta.FocusedStyle.Base = lipgloss.NewStyle()
+	ta.BlurredStyle.CursorLine = lipgloss.NewStyle()
+	ta.FocusedStyle.CursorLine = lipgloss.NewStyle()
+	ta.BlurredStyle.Placeholder = lipgloss.NewStyle().Foreground(lipgloss.Color("240"))
+	ta.FocusedStyle.Placeholder = lipgloss.NewStyle().Foreground(lipgloss.Color("240"))
+	ta.BlurredStyle.Text = lipgloss.NewStyle()
+	ta.FocusedStyle.Text = lipgloss.NewStyle()
+	ta.BlurredStyle.Prompt = lipgloss.NewStyle()
+	ta.FocusedStyle.Prompt = lipgloss.NewStyle()
+
 	s := spinner.New()
 	s.Spinner = spinner.Points
 	s.Style = lipgloss.NewStyle()
@@ -203,15 +227,26 @@ func initialModel() model {
 		textarea:        ta,
 		spinner:         s,
 		loadingMsg:      "Getting your flashcard ready",
+		llmMode:         llmAskAndGrade, // Default to full LLM functionality
 	}
 }
 
 func (m model) Init() tea.Cmd {
 	if len(m.flashcards) > 0 {
-		return tea.Batch(
-			m.spinner.Tick,
-			getVariedQuestion(m.flashcards[m.currentIdx].Front),
-		)
+		if m.llmMode == llmAskAndGrade {
+			return tea.Batch(
+				m.spinner.Tick,
+				getVariedQuestion(m.flashcards[m.currentIdx].Front),
+			)
+		} else {
+			// For llmGradeOnly and llmOff, skip to waiting state
+			return func() tea.Msg {
+				return aiResponseMsg{
+					content: m.flashcards[m.currentIdx].Front,
+					msgType: "original_question",
+				}
+			}
+		}
 	}
 	return nil
 }
@@ -236,13 +271,23 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			case "enter":
 				if m.textarea.Value() != "" {
 					m.userAnswer = m.textarea.Value()
-					m.state = stateLoading
-					m.loadingMsg = "Evaluating your answer"
 					m.textarea.Reset()
-					return m, tea.Batch(
-						m.spinner.Tick,
-						evaluateAnswer(m.flashcards[m.currentIdx].Back, m.userAnswer),
-					)
+
+					if m.llmMode == llmOff {
+						// No LLM evaluation, go straight to showing answer
+						m.state = stateShowingAnswer
+						m.evaluation = "Manual grading mode - you decide how well you knew this."
+						m.correct = false
+						return m, nil
+					} else {
+						// Use LLM for evaluation
+						m.state = stateLoading
+						m.loadingMsg = "Evaluating your answer"
+						return m, tea.Batch(
+							m.spinner.Tick,
+							evaluateAnswer(m.flashcards[m.currentIdx].Back, m.userAnswer),
+						)
+					}
 				}
 			case "ctrl+s":
 				m.userAnswer = "(showed answer)"
@@ -250,6 +295,34 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.evaluation = "You chose to see the answer."
 				m.correct = false
 				return m, nil
+			case "ctrl+o":
+				m.state = stateViewingOriginal
+				return m, nil
+			case "ctrl+l":
+				// Cycle through LLM modes
+				switch m.llmMode {
+				case llmAskAndGrade:
+					m.llmMode = llmGradeOnly
+				case llmGradeOnly:
+					m.llmMode = llmOff
+				case llmOff:
+					m.llmMode = llmAskAndGrade
+				}
+
+				// Update question immediately based on new mode
+				if m.llmMode == llmAskAndGrade {
+					// Switch to LLM question generation
+					m.state = stateLoading
+					m.loadingMsg = "Generating AI question"
+					return m, tea.Batch(
+						m.spinner.Tick,
+						getVariedQuestion(m.flashcards[m.currentIdx].Front),
+					)
+				} else {
+					// Switch to original question immediately
+					m.question = m.flashcards[m.currentIdx].Front
+					return m, nil
+				}
 			default:
 				m.textarea, cmd = m.textarea.Update(msg)
 				return m, cmd
@@ -260,6 +333,12 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			case "ctrl+c":
 				m.state = stateQuit
 				return m, tea.Quit
+			case "ctrl+s":
+				m.state = stateViewingFront
+				return m, nil
+			case "ctrl+o":
+				m.state = stateViewingOriginal
+				return m, nil
 			case "1", "2", "3", "4":
 				difficulty := map[string]string{
 					"1": "Again", "2": "Hard", "3": "Good", "4": "Easy",
@@ -283,16 +362,128 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.currentIdx = 0
 				m.state = stateLoading
 				m.loadingMsg = "Getting next flashcard"
-				return m, tea.Batch(
-					m.spinner.Tick,
-					getVariedQuestion(m.flashcards[m.currentIdx].Front),
-				)
+				if m.llmMode == llmAskAndGrade {
+					return m, tea.Batch(
+						m.spinner.Tick,
+						getVariedQuestion(m.flashcards[m.currentIdx].Front),
+					)
+				} else {
+					return m, func() tea.Msg {
+						return aiResponseMsg{
+							content: m.flashcards[m.currentIdx].Front,
+							msgType: "original_question",
+						}
+					}
+				}
+			}
+
+		case stateViewingFront:
+			switch msg.String() {
+			case "ctrl+c":
+				m.state = stateQuit
+				return m, tea.Quit
+			case "ctrl+s":
+				m.state = stateShowingAnswer
+				return m, nil
+			case "ctrl+o":
+				m.state = stateViewingOriginal
+				return m, nil
+			case "1", "2", "3", "4":
+				difficulty := map[string]string{
+					"1": "Again", "2": "Hard", "3": "Good", "4": "Easy",
+				}[msg.String()]
+				m.updateCardDifficulty(difficulty)
+
+				m.sessionProgress++
+
+				cards, err := loadFlashcards("flashcards.csv")
+				if err != nil {
+					m.evaluation = "Error loading flashcards: " + err.Error()
+					return m, nil
+				}
+				m.flashcards = cards
+
+				if len(m.flashcards) == 0 {
+					m.evaluation = "No more cards due for review! Great job! 🎉"
+					return m, nil
+				}
+
+				m.currentIdx = 0
+				m.state = stateLoading
+				m.loadingMsg = "Getting next flashcard"
+				if m.llmMode == llmAskAndGrade {
+					return m, tea.Batch(
+						m.spinner.Tick,
+						getVariedQuestion(m.flashcards[m.currentIdx].Front),
+					)
+				} else {
+					return m, func() tea.Msg {
+						return aiResponseMsg{
+							content: m.flashcards[m.currentIdx].Front,
+							msgType: "original_question",
+						}
+					}
+				}
+			}
+
+		case stateViewingOriginal:
+			switch msg.String() {
+			case "ctrl+c":
+				m.state = stateQuit
+				return m, tea.Quit
+			case "ctrl+s":
+				m.state = stateShowingAnswer
+				return m, nil
+			case "ctrl+o":
+				m.state = stateWaitingForAnswer
+				return m, nil
+			case "1", "2", "3", "4":
+				difficulty := map[string]string{
+					"1": "Again", "2": "Hard", "3": "Good", "4": "Easy",
+				}[msg.String()]
+				m.updateCardDifficulty(difficulty)
+
+				m.sessionProgress++
+
+				cards, err := loadFlashcards("flashcards.csv")
+				if err != nil {
+					m.evaluation = "Error loading flashcards: " + err.Error()
+					return m, nil
+				}
+				m.flashcards = cards
+
+				if len(m.flashcards) == 0 {
+					m.evaluation = "No more cards due for review! Great job! 🎉"
+					return m, nil
+				}
+
+				m.currentIdx = 0
+				m.state = stateLoading
+				m.loadingMsg = "Getting next flashcard"
+				if m.llmMode == llmAskAndGrade {
+					return m, tea.Batch(
+						m.spinner.Tick,
+						getVariedQuestion(m.flashcards[m.currentIdx].Front),
+					)
+				} else {
+					return m, func() tea.Msg {
+						return aiResponseMsg{
+							content: m.flashcards[m.currentIdx].Front,
+							msgType: "original_question",
+						}
+					}
+				}
 			}
 		}
 
 	case aiResponseMsg:
 		switch msg.msgType {
 		case "question":
+			m.question = msg.content
+			m.state = stateWaitingForAnswer
+			m.textarea.Focus()
+			return m, textarea.Blink
+		case "original_question":
 			m.question = msg.content
 			m.state = stateWaitingForAnswer
 			m.textarea.Focus()
@@ -349,7 +540,7 @@ func (m model) View() string {
 	case stateWaitingForAnswer:
 		s.WriteString(questionStyle.Width(width-4).Render(m.question) + "\n\n")
 		s.WriteString(m.textarea.View() + "\n\n")
-		s.WriteString(renderWidth.Render("Press Enter to submit • Ctrl+S to show answer • Ctrl+C to quit"))
+		s.WriteString(renderWidth.Render("Press Enter to submit • Ctrl+S to show answer • Ctrl+O to view original • Ctrl+L to change LLM mode • Ctrl+C to quit"))
 
 	case stateShowingAnswer:
 		if m.correct {
@@ -363,10 +554,37 @@ func (m model) View() string {
 		}
 		s.WriteString("How well did you know this?\n")
 		s.WriteString(renderWidth.Render("  [1] Again (didn't know)   [2] Hard   [3] Good   [4] Easy\n"))
-		s.WriteString(renderWidth.Render("\nPress 1-4 to continue • Ctrl+C to quit"))
+		s.WriteString(renderWidth.Render("\nPress 1-4 to continue • Ctrl+S to view front • Ctrl+O to view original • Ctrl+C to quit"))
+
+	case stateViewingFront:
+		s.WriteString(renderWidth.Render("📝 AI Generated Question:") + "\n\n")
+		s.WriteString(answerStyle.Width(width-4).Render(m.question) + "\n\n")
+		if m.userAnswer != "(showed answer)" {
+			s.WriteString(answerStyle.Width(width-4).Render("Your answer: "+m.userAnswer) + "\n\n")
+		}
+		s.WriteString("How well did you know this?\n")
+		s.WriteString(renderWidth.Render("  [1] Again (didn't know)   [2] Hard   [3] Good   [4] Easy\n"))
+		s.WriteString(renderWidth.Render("\nPress 1-4 to continue • Ctrl+S to view answer • Ctrl+O to view original • Ctrl+C to quit"))
+
+	case stateViewingOriginal:
+		s.WriteString(renderWidth.Render("📋 Original Flashcard Question:") + "\n\n")
+		s.WriteString(answerStyle.Width(width-4).Render(m.flashcards[m.currentIdx].Front) + "\n\n")
+		if m.userAnswer != "(showed answer)" {
+			s.WriteString(answerStyle.Width(width-4).Render("Your answer: "+m.userAnswer) + "\n\n")
+		}
+		s.WriteString("How well did you know this?\n")
+		s.WriteString(renderWidth.Render("  [1] Again (didn't know)   [2] Hard   [3] Good   [4] Easy\n"))
+		s.WriteString(renderWidth.Render("\nPress 1-4 to continue • Ctrl+S to view answer • Ctrl+O to go back • Ctrl+C to quit"))
 	}
 
-	s.WriteString(fmt.Sprintf("\n\n%s Card %d of %d", "Progress:", m.sessionProgress+1, m.totalCards))
+	// Add LLM mode status
+	llmModeText := map[llmMode]string{
+		llmAskAndGrade: "Ask+Grade",
+		llmGradeOnly:   "Grade Only",
+		llmOff:         "Manual",
+	}[m.llmMode]
+
+	s.WriteString(fmt.Sprintf("\n\n%s Card %d of %d • LLM Mode: %s", "Progress:", m.sessionProgress+1, m.totalCards, llmModeText))
 	return s.String()
 }
 
