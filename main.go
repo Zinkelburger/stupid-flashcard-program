@@ -249,7 +249,19 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					m.userAnswer = m.textarea.Value()
 					m.textarea.Reset()
 
-					// Use LLM for evaluation
+					// Check for exact match first (case-insensitive)
+					correctAnswer := strings.TrimSpace(m.flashcards[m.currentIdx].Back)
+					userAnswerTrimmed := strings.TrimSpace(m.userAnswer)
+
+					if strings.EqualFold(correctAnswer, userAnswerTrimmed) {
+						// 100% match - mark as correct without LLM
+						m.evaluation = "Perfect match!"
+						m.correct = true
+						m.state = stateShowingAnswer
+						return m, nil
+					}
+
+					// No exact match - use LLM for evaluation
 					m.state = stateLoading
 					m.loadingMsg = "Evaluating your answer"
 					return m, tea.Batch(
