@@ -1,0 +1,3 @@
+This patch addresses a classic race condition between module reference counting and resource allocation. In the Linux kernel, if a module is in the process of being unloaded (rmmod), any new attempts to use that module must be blocked.
+
+The original code in nbd_alloc_config was calling try_module_get(THIS_MODULE) but wasn't checking the return value. This meant the kernel could continue allocating NBD configurations even when the module was marked for deletion, leading to memory leaks and NULL pointer dereferences (Oops) when worker threads tried to execute code that was no longer in memory.

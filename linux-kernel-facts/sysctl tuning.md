@@ -1,0 +1,4 @@
+Sysctl Tuning Applied
+The test modifies kernel parameters to handle the extreme load:
+runtest.shLines 321-330
+    rlRun "sysctl -w fs.file-max=2000000"    rlRun "sysctl -w net.core.somaxconn=2000000"    rlRun "sysctl -w net.core.netdev_max_backlog=2000000"    rlRun "sysctl -w net.ipv4.tcp_max_syn_backlog=2000000"    rlRun "sysctl -w net.ipv4.ip_local_port_range='1024 65535'"    rlRun "sysctl -w net.ipv4.tcp_fin_timeout=15"    rlRun "sysctl -w net.ipv4.tcp_tw_reuse=1"    rlRun "sysctl -w net.ipv4.tcp_mem='524288 2097152 4194304'"    rlRun "sysctl -w net.ipv4.tcp_rmem='4096 87380 8388608'"    rlRun "sysctl -w net.ipv4.tcp_wmem='4096 87380 8388608'
