@@ -27,9 +27,13 @@ Every nice level corresponds to a "weight." For every 1-point drop in nice value
 The Debt System: Every time a task runs, it builds up "debt" (called negative lag).
 The "You Must Be This Fair" Line: A task is only eligible to run if its lag is ≥0. This means it hasn't already taken more than its fair share of the CPU
 
-The kernel doesn't actually allow preemption to happen at an infinite frequency. There is a setting called sched_min_granularity_ns (usually around 1.5ms to 3ms).
+The kernel doesn't actually allow preemption to happen at an infinite frequency.
 
-Even if a GUI task wakes up and says, "My deadline is now!", the scheduler will generally let the current "throughput" task finish its minimum window. This ensures that the CPU caches stay "warm" and the system doesn't waste all its cycles on the overhead of switching between tasks.
+Under CFS (pre-6.6 kernels), this was controlled by sched_min_granularity_ns (usually 1.5ms to 3ms). This sysctl set a floor on how long a task ran before being preempted, regardless of vruntime differences.
+
+Under EEVDF (kernel 6.6+), sched_min_granularity_ns was removed. Instead, the minimum timeslice is determined by each task's requested "slice" parameter. The scheduler uses the virtual deadline to decide preemption — a newly-woken task with a shorter deadline can preempt the current task, but only if the current task has already received its fair share (its lag is non-positive). The slice length itself acts as the natural granularity floor.
+
+In both cases, the principle is the same: don't context-switch so frequently that you waste all your cycles on overhead and trash the CPU caches.
 
 The core of CFS was simple: Total CPU time should be equal. * Every process had a variable called vruntime (virtual runtime).
 If Task A ran for 10ms, its vruntime increased by 10.

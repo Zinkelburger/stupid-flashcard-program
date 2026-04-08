@@ -94,3 +94,23 @@ If you ever want to revert to automatic settings, run these two commands:
 
 1. `sudo nmcli con mod "Your Connection Name" ipv4.method auto`
 2. `sudo nmcli con up "Your Connection Name"`
+
+---
+1. The Handshake: DHCP (How you get an IP)
+
+Before you can do anything, your computer (the Client) needs an IP address. Since it doesn’t have one yet, it yells at everyone on the network using the DORA process.
+
+In Wireshark, filter for bootp or dhcp. You will see four specific packets:
+
+    Discover: Your laptop sends a broadcast to 255.255.255.255.
+
+        What you see: Source IP is 0.0.0.0 (because you don't have one). Destination is all ff:ff:ff:ff:ff:ff (broadcast).
+
+    Offer: The Router (DHCP Server) hears the yell and says, "Hey, I have 192.168.1.50 available. Want it?"
+
+    Request: Your laptop replies, "Yes! I'd like 192.168.1.50, please."
+
+    Acknowledgement (ACK): The Router says, "Cool. It's yours for the next 24 hours. Here is your Subnet Mask and Default Gateway."
+
+
+Look for "Transaction ID" (it stays the same for all 4 steps).

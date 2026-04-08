@@ -1,12 +1,10 @@
 spin_lock_irqsave(&ndlp->lock, iflags);
 
-A spinlock is a simple integer in memory (usually 0 for unlocked, 1 for locked).
+A spinlock is a lock where the waiting CPU "spins" (busy-waits) rather than sleeping. If the lock is held by another CPU, the waiting CPU loops until it becomes available.
 
-When a CPU wants the lock, it performs an Atomic Swap. It tries to write a 1 and read what was there before.
+Early Linux used a simple test-and-set integer (0/1). This was replaced by ticket spinlocks (like a bakery number — each waiter gets a ticket and waits for their number to be called, guaranteeing FIFO fairness). Modern kernels (4.2+) use queued spinlocks (qspinlocks), where each waiting CPU spins on its own per-CPU variable rather than hammering a shared cache line. This dramatically reduces cache-line bouncing on large NUMA systems.
 
-If it reads a 0, it "wins" the lock and continues.
-
-If it reads a 1, it means someone else has it. The CPU literally runs a while(lock == 1); loop, "spinning" at full speed until the other CPU sets it back to 0.
+The core idea is the same: the lock holder executes the critical section while everyone else busy-waits. Spinlocks are only appropriate when the critical section is very short (a few instructions) because the waiting CPUs are burning cycles doing nothing useful.
 
 Irqsave:
 If the cpu is interrupted:

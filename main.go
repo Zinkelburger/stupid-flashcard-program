@@ -453,6 +453,8 @@ func loadAllFlashcards(filename string) ([]flashcard, error) {
 	defer f.Close()
 
 	r := csv.NewReader(f)
+	r.Comma = '\t'
+	r.LazyQuotes = true
 	records, err := r.ReadAll()
 	if err != nil {
 		return nil, err
@@ -513,6 +515,7 @@ func saveFlashcards(filename string, cards []flashcard) error {
 	defer f.Close()
 
 	w := csv.NewWriter(f)
+	w.Comma = '\t'
 	defer w.Flush()
 
 	w.Write([]string{"Front", "Back", "NextReview", "Difficulty"})
