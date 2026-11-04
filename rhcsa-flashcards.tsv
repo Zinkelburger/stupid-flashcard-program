@@ -1,291 +1,421 @@
-FRONT	BACK
-[Tools] Redirect stdout to a file, overwriting it	command > file
-[Tools] Redirect stdout to a file, appending	command >> file
-[Tools] Redirect only stderr to a file	command 2> file
-[Tools] Discard error messages from a find command	find / -name '*.conf' 2>/dev/null
-[Tools] Redirect both stdout and stderr to one file (two ways)	command &> file — or — command > file 2>&1 (the 2>&1 must come AFTER the >)
-[Tools] What does the pipe | do?	Connects stdout of the left command to stdin of the right command
-[Tools] Write command output to a file AND still see it on screen	command | tee file (tee -a to append)
-[Tools] grep flag: case-insensitive	grep -i
-[Tools] grep flag: invert match (lines NOT matching)	grep -v
-[Tools] grep flag: search directories recursively	grep -r
-[Tools] grep flag: show line numbers	grep -n
-[Tools] grep flag: count matching lines	grep -c
-[Tools] grep flag: show only filenames that match	grep -l
-[Tools] Enable extended regex (| + ? () {}) in grep	grep -E (e.g. grep -E 'error|warning' /var/log/messages)
-[Tools] Regex: match start of line / end of line	^ start, $ end (e.g. grep '^root' /etc/passwd)
-[Tools] Regex: any single character / zero-or-more of previous	. any char, * zero or more
-[Tools] Regex: character class and negated class	[abc] matches a, b, or c; [^abc] matches anything else
-[Tools] SSH to a remote host as a specific user	ssh user@hostname
-[Tools] SSH on a non-standard port	ssh -p PORT user@host
-[Tools] SSH using a specific private key	ssh -i ~/.ssh/keyfile user@host
-[Tools] Copy a local file to a remote host	scp file user@host:/path
-[Tools] Copy a remote file to the local machine	scp user@host:/path/file .
-[Tools] Copy a whole directory over SSH	scp -r dir user@host:/path
-[Tools] Interactive FTP-like file transfer over SSH	sftp user@host (get/put commands inside)
-[Tools] Difference between su and su -	su keeps your current environment; su - is a full login shell with the target user's environment (always prefer su -)
-[Tools] Run one command as a different (non-root) user with sudo	sudo -u USERNAME command
-[Tools] Open a root login shell with sudo	sudo -i
-[Tools] Create a tar archive of /etc	tar cf /tmp/etc.tar /etc
-[Tools] Extract a tar archive into /target	tar xf archive.tar -C /target
-[Tools] List the contents of a tar archive without extracting	tar tf archive.tar
-[Tools] Create a gzip-compressed tar archive	tar czf archive.tar.gz files (z = gzip)
-[Tools] Create a bzip2-compressed tar archive	tar cjf archive.tar.bz2 files (j = bzip2)
-[Tools] Extract a .tar.gz / a .tar.bz2	tar xzf file.tar.gz / tar xjf file.tar.bz2
-[Tools] tar flags to preserve SELinux contexts, ACLs, and extended attributes	tar --selinux --acls --xattrs (add -p to preserve permissions on extract)
-[Tools] Compress / decompress a single file with gzip	gzip file (makes file.gz) / gunzip file.gz
-[Tools] Compress / decompress a single file with bzip2	bzip2 file / bunzip2 file.bz2
-[Tools] vim: enter insert mode / return to normal mode	i to insert, Esc to return to normal mode
-[Tools] vim: save and quit / quit WITHOUT saving	:wq (or ZZ) saves and quits; :q! quits discarding changes
-[Tools] vim: delete a line / copy a line / paste	dd deletes, yy copies (yanks), p pastes below
-[Tools] vim: search for text / undo	/pattern then n for next match; u undoes
-[Tools] Create an empty file or update its timestamp	touch file
-[Tools] Copy a directory preserving ALL attributes (perms, times, links)	cp -a srcdir dstdir (-r copies recursively but -a also preserves attributes)
-[Tools] Create nested directories in one command	mkdir -p path/to/deep/dir
-[Tools] Delete a directory and everything in it	rm -rf dir (rmdir only works on empty dirs)
-[Tools] Create a hard link	ln target linkname
-[Tools] Create a symbolic (soft) link	ln -s target linkname
-[Tools] Hard link vs soft link: inodes	Hard links share the SAME inode (ls -i shows it); a soft link has its own inode containing a pathname
-[Tools] Which link type survives deleting the original file?	Hard link (it is an equal name for the same inode); a soft link becomes dangling/broken
-[Tools] Which link type can cross filesystems and link directories?	Soft (symbolic) links only; hard links cannot do either
-[Tools] chmod symbolic: give owner execute / remove write from group and others	chmod u+x file / chmod go-w file (u=user g=group o=others a=all; + - =)
-[Tools] chmod octal: what do the digits mean?	r=4 w=2 x=1, summed per digit; three digits = owner, group, others (755 = rwxr-xr-x, 644 = rw-r--r--)
-[Tools] Change owner AND group of a file recursively	chown -R user:group dir
-[Tools] Change only the group of a file (two ways)	chown :group file — or — chgrp group file
-[Tools] What does SUID do and how do you set it?	File executes with the OWNER's identity (e.g. /usr/bin/passwd); chmod u+s file or chmod 4755
-[Tools] What does SGID on a directory do and how do you set it?	New files created inside inherit the directory's GROUP; chmod g+s dir or chmod 2775
-[Tools] What does the sticky bit on a directory do and how do you set it?	Only a file's owner (or root) can delete files in the dir (e.g. /tmp); chmod o+t dir or chmod 1777
-[Tools] Find all SUID files on the system	find / -perm -4000
-[Tools] Search man pages by keyword	man -k KEYWORD (same as apropos)
-[Tools] Man page sections: 1, 5, 8	1 = user commands, 5 = file formats, 8 = admin commands (man 5 passwd = the FILE format, not the command)
-[Tools] Where is package documentation stored outside man/info pages?	/usr/share/doc/ (list a package's docs with rpm -qd PACKAGE)
-[Tools] find: by name / by owner	find / -name '*.conf' / find /home -user bob
-[Tools] find: files modified more than 7 days ago	find /tmp -mtime +7 (-7 = less than 7 days)
-[Tools] find: files larger than 100MB	find / -size +100M
-[Tools] Run a command on every file find matches	find /path -name '*.log' -exec rm {} \; ({} = the match, \; ends the command, + batches for speed)
-[Tools] Show first 5 / last 5 lines of a file	head -n 5 file / tail -n 5 file
-[Tools] Watch a log file live as lines are appended	tail -f file
-[Tools] Count lines in a file	wc -l file
-[Tools] Sort numerically / in reverse	sort -n / sort -r
-[Tools] Extract field 1 of colon-delimited lines (e.g. usernames from /etc/passwd)	cut -d: -f1 /etc/passwd
-[Tools] Remove duplicate lines from output	sort file | uniq (uniq only removes ADJACENT duplicates, so sort first)
-[Software] Where do repo config files live and what extension?	/etc/yum.repos.d/*.repo
-[Software] Minimum contents of a .repo file	[repo-id] then name=, baseurl=, enabled=1, gpgcheck=1 (gpgkey= if checking)
-[Software] Add a repo from a URL in one command	dnf config-manager --add-repo URL
-[Software] Install / remove a package	dnf install PKG / dnf remove PKG
-[Software] Update all packages	dnf update
-[Software] Search packages by keyword / show package details	dnf search KEYWORD / dnf info PKG
-[Software] List installed packages	dnf list installed
-[Software] Find which package provides a file or command	dnf provides /usr/sbin/semanage (or dnf provides '*/filename')
-[Software] Which package owns an already-installed file?	rpm -qf /path/to/file
-[Software] List all files installed by a package	rpm -ql PACKAGE
-[Software] List / install a package group	dnf group list / dnf group install 'Group Name'
-[Software] View DNF transaction history / undo a transaction	dnf history / dnf history undo ID
-[Software] Import a repo GPG key manually	rpm --import URL_or_file
-[Software] Install a local RPM file WITH dependency resolution	dnf install ./package.rpm (plain rpm -i does not resolve deps)
-[Software] Register a system to the Red Hat CDN	subscription-manager register (then dnf install works from Red Hat repos)
-[Software] Add the Flathub Flatpak remote	flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-[Software] List configured Flatpak remotes	flatpak remotes
-[Software] Install / remove a Flatpak app	flatpak install REMOTE APP_ID / flatpak remove APP_ID
-[Software] List installed Flatpaks / update all	flatpak list / flatpak update
-[Software] Run / search for a Flatpak app	flatpak run APP_ID / flatpak search KEYWORD
-[Software] How do Flatpaks differ from RPMs?	Flatpaks are sandboxed and bundle their own dependencies (desktop apps); RPMs install system-wide with shared libraries
-[Scripts] First line of every bash script	#!/bin/bash (the shebang — tells the kernel the interpreter)
-[Scripts] Make a script executable	chmod +x script.sh
-[Scripts] if/else syntax in bash	if [ CONDITION ]; then COMMANDS; elif ...; then ...; else COMMANDS; fi
-[Scripts] File test: is a regular file / is a directory / exists	-f FILE / -d FILE / -e FILE (e.g. if [ -f /etc/hosts ])
-[Scripts] File test: readable / writable / executable / non-empty	-r / -w / -x / -s
-[Scripts] Integer comparisons inside [ ]	-eq -ne -gt -lt -ge -le (e.g. [ $count -gt 10 ])
-[Scripts] String comparisons inside [ ]	= (equal), != (not equal), -z (empty), -n (non-empty)
-[Scripts] Why quote variables in [ ] tests?	Unquoted empty variables vanish and cause syntax errors — always [ "$var" = "value" ]
-[Scripts] for loop syntax	for VAR in LIST; do COMMANDS; done (e.g. for f in /etc/*.conf; do wc -l "$f"; done)
-[Scripts] while loop that reads a file line by line	while read line; do echo "$line"; done < file
-[Scripts] Positional parameters: script name / arg 1 / arg 10	$0 / $1 / ${10} (braces needed past 9)
-[Scripts] All arguments / argument count	$@ (all args as separate words) / $# (count)
-[Scripts] Capture a command's output into a variable	var=$(command) (e.g. today=$(date +%F))
-[Scripts] Exit code of the last command / meaning of 0	$? — 0 means success, non-zero means failure
-[Scripts] Set your script's own exit code	exit 0 (success) or exit 1 (failure)
-[Scripts] Prompt the user for input into a variable	read -p 'Enter name: ' name (-s silent for passwords)
-[Ops] Start / stop / restart a service now	systemctl start SVC / systemctl stop SVC / systemctl restart SVC
-[Ops] Reload a service's config without a full restart	systemctl reload SVC
-[Ops] Make a service start at boot AND start it right now	systemctl enable --now SVC
-[Ops] enable vs start — the exam trap	start = running now but NOT after reboot; enable = after reboot but NOT now. The exam grades after a reboot — use enable --now
-[Ops] Check whether a service is running / enabled	systemctl is-active SVC / systemctl is-enabled SVC (systemctl status SVC for full detail)
-[Ops] Completely prevent a service from ever starting	systemctl mask SVC (symlinks it to /dev/null; unmask to undo — stronger than disable)
-[Ops] List all failed units	systemctl --failed
-[Ops] List all installed service unit files and their enable state	systemctl list-unit-files --type=service
-[Ops] The four main boot targets	multi-user.target (text server), graphical.target (GUI), rescue.target (single-user root shell), emergency.target (minimal, root fs read-only)
-[Ops] Set the default boot target / check it	systemctl set-default multi-user.target / systemctl get-default
-[Ops] Switch to another target immediately without rebooting	systemctl isolate rescue.target
-[Ops] Boot into a specific target for ONE boot only	At GRUB press e, append systemd.unit=rescue.target to the linux line, Ctrl+x to boot
-[Ops] rescue.target vs emergency.target	rescue mounts all local filesystems and starts some services; emergency mounts only / read-only and starts almost nothing
-[Ops] Root password reset procedure (7 steps)	1) at GRUB press e, add rd.break to linux line, Ctrl+x 2) mount -o remount,rw /sysroot 3) chroot /sysroot 4) passwd root 5) touch /.autorelabel 6) exit 7) exit
-[Ops] Why touch /.autorelabel after a root password reset?	The chroot bypassed SELinux so /etc/shadow got the wrong label; autorelabel fixes all labels on next boot — without it you cannot log in
-[Ops] Edit kernel boot parameters for a single boot	At the GRUB menu press e, edit the linux line, press Ctrl+x to boot (temporary, one boot only)
-[Ops] top: sort by memory / by CPU / kill a process	Press M (memory), P (CPU), k (kill)
-[Ops] List processes sorted by memory use	ps aux --sort=-%mem (or --sort=-%cpu for CPU)
-[Ops] Gracefully terminate / force-kill a process by PID	kill PID (SIGTERM, graceful) / kill -9 PID (SIGKILL, forced — last resort)
-[Ops] Kill processes by name or pattern	killall NAME or pkill PATTERN
-[Ops] Start a command at low priority / change priority of a running process	nice -n 10 command / renice -n 10 -p PID
-[Ops] nice value range and who can go negative	-20 (highest priority) to 19 (lowest); only root can set negative values
-[Ops] List tuning profiles / show the active one	tuned-adm list / tuned-adm active
-[Ops] Switch tuning profile / get the recommended one	tuned-adm profile NAME / tuned-adm recommend
-[Ops] Common tuned profiles to recognize	throughput-performance (servers), virtual-guest (VMs), balanced (default compromise), powersave
-[Ops] View logs for one service unit	journalctl -u SERVICE
-[Ops] View only error-and-worse log messages	journalctl -p err
-[Ops] Follow the journal live	journalctl -f
-[Ops] View logs from the current boot / the previous boot	journalctl -b / journalctl -b -1
-[Ops] Filter journal by time	journalctl --since '1 hour ago' (also --since yesterday, --since '2026-01-15 10:00:00' --until '...')
-[Ops] Make the journal persist across reboots	mkdir -p /var/log/journal && systemctl restart systemd-journald (or Storage=persistent in /etc/systemd/journald.conf)
-[Ops] Where does the journal live if NOT persistent?	/run/log/journal (tmpfs — wiped every reboot)
-[Ops] Key files in /var/log	messages (general), secure (auth/sudo), cron (cron jobs), boot.log (boot)
-[Ops] Reboot / power off via systemctl	systemctl reboot / systemctl poweroff
-[Ops] Schedule a reboot in 5 minutes with a warning / cancel it	shutdown -r +5 'message' / shutdown -c
-[Ops] Override part of a unit file safely	systemctl edit SVC (creates drop-in /etc/systemd/system/SVC.d/override.conf), then systemctl daemon-reload
-[Ops] When must you run systemctl daemon-reload?	After editing/creating any unit file or /etc/fstab — systemd caches units until reload
-[Storage] Show block devices as a tree with mountpoints	lsblk (lsblk -f adds fstype, label, UUID)
-[Storage] Show UUID, LABEL, and filesystem type of block devices	blkid
-[Storage] fdisk: create a GPT partition table on a new disk	fdisk /dev/sdX then g (GPT), then n for new partitions, w to write
-[Storage] fdisk: create a new partition of 2GB	n (new), accept defaults for number/first sector, +2G for size, then w to write
-[Storage] fdisk: set partition type for LVM / for swap on a GPT disk	t then type the alias: lvm / swap (the codes 8e and 82 are MBR-only, NOT GPT)
-[Storage] Make the kernel see partition table changes without rebooting	partprobe (run after fdisk writes)
-[Storage] LVM: what are PV, VG, LV?	PV = disk/partition initialized for LVM; VG = pool of PVs; LV = virtual partition carved from a VG
-[Storage] Initialize a partition as an LVM physical volume	pvcreate /dev/sdb1
-[Storage] Show PVs (summary / detailed)	pvs / pvdisplay
-[Storage] Create a volume group from PVs	vgcreate myvg /dev/sdb1 /dev/sdc1
-[Storage] Add another PV to an existing volume group	vgextend myvg /dev/sdd1
-[Storage] Show VGs (summary / detailed)	vgs / vgdisplay
-[Storage] Create a 500MB logical volume named mylv in myvg	lvcreate -L 500M -n mylv myvg
-[Storage] Create an LV using ALL remaining free space in the VG	lvcreate -l 100%FREE -n mylv myvg (-l = extents, -L = exact size)
-[Storage] Show LVs (summary / detailed)	lvs / lvdisplay
-[Storage] Delete an LV / full LVM teardown order	lvremove /dev/myvg/mylv — full teardown: umount, lvremove, vgremove, pvremove
-[Storage] Grow an LV by 500MB (LV only, filesystem not yet)	lvextend -L +500M /dev/myvg/mylv
-[Storage] Grow an LV AND its filesystem in ONE command	lvextend -r -L +500M /dev/myvg/mylv (-r auto-runs xfs_growfs or resize2fs — use this on the exam)
-[Storage] Device path for LV mylv in VG myvg	/dev/myvg/mylv (also /dev/mapper/myvg-mylv)
-[Storage] Turn a partition or LV into swap and activate it	mkswap /dev/myvg/swaplv then swapon /dev/myvg/swaplv
-[Storage] Verify active swap	swapon --show (or free -h)
-[Storage] fstab line for a swap LV	/dev/myvg/swaplv swap swap defaults 0 0
-[Storage] Create a 1GB swap FILE (4 steps)	dd if=/dev/zero of=/swapfile bs=1M count=1024; chmod 600 /swapfile; mkswap /swapfile; swapon /swapfile
-[Storage] The six /etc/fstab fields in order	DEVICE MOUNTPOINT FSTYPE OPTIONS DUMP PASS (e.g. UUID=abc /data xfs defaults 0 0)
-[Storage] fstab: why mount by UUID instead of /dev/sdX?	Device names can change between boots; UUIDs are persistent. Get the UUID with blkid
-[Storage] Test all fstab entries without rebooting	systemctl daemon-reload then mount -a (ALWAYS do this before the exam reboot)
-[Storage] fstab option that prevents a failed mount from halting boot	nofail
-[Storage] Recover a system that fails to boot from a bad fstab line	Boot with systemd.unit=emergency.target, mount -o remount,rw /, fix /etc/fstab, systemctl daemon-reload, reboot
-[Storage] What does adding storage 'non-destructively' mean on the exam?	Add partitions/LVs/swap using free space without unmounting, reformatting, or destroying existing data
-[FS] Create an XFS filesystem	mkfs.xfs /dev/myvg/mylv (XFS is the RHEL default)
-[FS] Create an ext4 / a VFAT filesystem	mkfs.ext4 /dev/sdX1 / mkfs.vfat /dev/sdX1
-[FS] Can XFS be shrunk?	No — XFS can only GROW (ext4 can be shrunk while unmounted)
-[FS] Grow an XFS filesystem after extending its LV	xfs_growfs /mountpoint — takes the MOUNT POINT, not the device, and must be mounted
-[FS] Grow an ext4 filesystem after extending its LV	resize2fs /dev/myvg/mylv — takes the DEVICE, not the mount point; works while mounted
-[FS] Mount a filesystem read-only	mount -o ro /dev/sdX1 /mnt
-[FS] Unmount fails with 'target is busy' — find what's using it	lsof /mnt or fuser -m /mnt
-[FS] Mount options: noexec, nosuid, nodev	noexec = no running binaries; nosuid = ignore SUID bits; nodev = ignore device files
-[FS] Mount an NFS share manually	mount -t nfs server:/export/share /mnt/nfs
-[FS] fstab line for an NFS share	server:/export/share /mnt/nfs nfs _netdev 0 0 (_netdev waits for the network)
-[FS] List what an NFS server exports	showmount -e SERVER
-[FS] What is autofs for?	Mounts filesystems on demand when accessed and unmounts after idle — avoids boot failures from unavailable NFS servers
-[FS] autofs setup step 1: install and the master map line	dnf install autofs; in /etc/auto.master add: /mnt/auto /etc/auto.shares
-[FS] autofs setup step 2: the map file line and start	In /etc/auto.shares add: data -rw,sync server:/export/data — then systemctl enable --now autofs (access /mnt/auto/data to trigger)
-[FS] autofs indirect vs direct maps	Indirect: keys are subdirs of a parent (/mnt/auto + key). Direct: absolute mount points, master map uses /- /etc/auto.direct
-[FS] Set a label on an XFS filesystem	umount first, then xfs_admin -L mylabel /dev/sdX1
-[FS] Set a label on an ext4 filesystem	e2label /dev/sdX1 mylabel
-[FS] Mount by label in fstab	LABEL=mylabel /mnt/data xfs defaults 0 0 (verify labels with lsblk -f or blkid)
-[FS] Diagnose a permission problem on a deep path	namei -l /path/to/file shows perms of EVERY directory in the path; also check ls -lZ for SELinux
-[Deploy] Schedule a one-time job with at	at 3pm (or at now + 30 minutes) — type commands, Ctrl+D to finish; needs the atd service
-[Deploy] List / remove pending at jobs	atq / atrm JOBNUM
-[Deploy] The five crontab fields in order	MINUTE HOUR DAY-OF-MONTH MONTH DAY-OF-WEEK (0-59, 0-23, 1-31, 1-12, 0-7 with 0 and 7 = Sunday)
-[Deploy] Cron line: run /script.sh at 2:30 AM every Monday	30 2 * * 1 /script.sh
-[Deploy] Cron line: run every 15 minutes	*/15 * * * * /script.sh
-[Deploy] Edit / list / remove your crontab	crontab -e / crontab -l / crontab -r (add -u USER as root to manage another user's)
-[Deploy] Run a script daily without writing cron syntax	Drop it in /etc/cron.daily/ (also hourly/, weekly/, monthly/)
-[Deploy] Cron special strings	@reboot, @hourly, @daily, @weekly, @monthly, @yearly
-[Deploy] What two files make up a systemd timer?	A .timer unit (with [Timer] section) and a matching .service unit it triggers
-[Deploy] OnCalendar= line for every day at 2:30 AM	OnCalendar=*-*-* 02:30:00 (format: DayOfWeek Year-Month-Day HH:MM:SS)
-[Deploy] Validate an OnCalendar expression	systemd-analyze calendar 'Mon *-*-* 09:00:00'
-[Deploy] What does Persistent=true do in a timer?	Runs the job at next boot if the system was off when the timer should have fired
-[Deploy] Activate a new timer	systemctl daemon-reload then systemctl enable --now mytimer.timer (enable the TIMER, not the service)
-[Deploy] List active timers with next fire times	systemctl list-timers
-[Deploy] Set the system timezone	timedatectl set-timezone America/New_York (timedatectl list-timezones to browse)
-[Deploy] Enable NTP time sync	timedatectl set-ntp true (uses chronyd)
-[Deploy] What is chrony and where is its config?	The default NTP client on RHEL; /etc/chrony.conf (server/pool lines), restart chronyd after edits
-[Deploy] Verify chrony is syncing	chronyc sources (list time sources) / chronyc tracking (sync status)
-[Deploy] Make a persistent kernel boot parameter change (GRUB config way)	Edit GRUB_CMDLINE_LINUX in /etc/default/grub, then grub2-mkconfig -o /boot/grub2/grub.cfg
-[Deploy] grub2-mkconfig output path on UEFI systems	/boot/efi/EFI/redhat/grub.cfg (BIOS: /boot/grub2/grub.cfg)
-[Deploy] Add a kernel argument to all kernels with grubby	grubby --update-kernel=ALL --args='console=ttyS0' (takes effect immediately, no mkconfig needed)
-[Deploy] Remove a kernel argument with grubby	grubby --update-kernel=ALL --remove-args='rhgb quiet'
-[Deploy] Show kernel boot entries / the default kernel	grubby --info=ALL / grubby --default-kernel
-[Net] Add a new static-IP ethernet connection with nmcli	nmcli con add type ethernet con-name myconn ifname eth0 ipv4.addresses 192.168.1.100/24 ipv4.gateway 192.168.1.1 ipv4.dns 8.8.8.8 ipv4.method manual
-[Net] Add a DHCP connection with nmcli	nmcli con add type ethernet con-name dhcp-conn ifname eth0 ipv4.method auto
-[Net] Change the IP of an existing connection	nmcli con mod CONN ipv4.addresses 10.0.0.50/24 — then nmcli con up CONN to apply
-[Net] Set / append a DNS server on a connection	nmcli con mod CONN ipv4.dns 8.8.8.8 / nmcli con mod CONN +ipv4.dns 1.1.1.1 (+ appends)
-[Net] The step people forget after nmcli con mod	nmcli con up CONN — modifications don't apply until the connection is re-activated
-[Net] Set a static IPv6 address on a connection	nmcli con mod CONN ipv6.addresses fd00::10/64 ipv6.method manual (then con up)
-[Net] List connections / list devices and their states	nmcli con show / nmcli dev status
-[Net] Make a connection auto-start at boot	nmcli con mod CONN connection.autoconnect yes (default for new connections, but verify)
-[Net] nmcli con down vs nmcli dev disconnect	con down deactivates the profile (another may auto-activate); dev disconnect takes the device down and blocks auto-activation
-[Net] Show IP addresses / routing table / link state	ip a / ip r / ip link (add -6 for IPv6)
-[Net] Set the hostname persistently	hostnamectl set-hostname server1.example.com (stored in /etc/hostname)
-[Net] Where do static hostname-to-IP mappings go?	/etc/hosts (checked before DNS per /etc/nsswitch.conf 'files dns' order)
-[Net] Why not edit /etc/resolv.conf directly?	NetworkManager overwrites it — set DNS with nmcli con mod CONN ipv4.dns instead
-[Net] Forgot nmcli syntax on the exam — fallback?	nmtui (text UI for connections and hostname) — or nmcli's tab completion
-[Users] Create a user with bash shell and a supplementary group	useradd -s /bin/bash -G wheel bob (-u UID, -d homedir, -c comment, -m force home creation)
-[Users] Add a user to a supplementary group — the trap	usermod -aG wheel bob — WITHOUT -a, -G REPLACES all supplementary groups
-[Users] Prevent a user from logging in interactively but let services run	usermod -s /sbin/nologin user
-[Users] Lock / unlock a user account	usermod -L user / usermod -U user (or passwd -l / passwd -u)
-[Users] nologin shell vs locked account	nologin blocks interactive login only; locking (!) blocks password auth but NOT SSH keys — use both for full lockout
-[Users] Delete a user including home dir and mail	userdel -r user
-[Users] Force a user to change password at next login	passwd -e user (or chage -d 0 user)
-[Users] Show a user's password aging info	chage -l user
-[Users] Set max password age to 90 days / min to 7 / warning to 14	chage -M 90 user / chage -m 7 user / chage -W 14 user
-[Users] Expire an account on a date / immediately / never	chage -E 2026-12-31 user / chage -E 0 user / chage -E -1 user
-[Users] The seven /etc/passwd fields	username:x:UID:GID:comment:homedir:shell (x = password lives in /etc/shadow)
-[Users] UID conventions	0 = root, 1-999 = system accounts, 1000+ = regular users
-[Users] What do !! or ! mean in an /etc/shadow password field?	Account is locked / has no usable password
-[Users] Create a group / with a specific GID	groupadd mygroup / groupadd -g 2000 mygroup
-[Users] Rename / delete a group	groupmod -n newname oldname / groupdel groupname (fails if it's someone's primary group)
-[Users] Add / remove a user from a group with gpasswd	gpasswd -a user group / gpasswd -d user group
-[Users] Show a user's UID, GID, and all groups	id username
-[Users] Safely edit sudo config	visudo (syntax-checks before saving) — or drop a file in /etc/sudoers.d/ (chmod 440, no dots in filename)
-[Users] sudoers line: full sudo for user bob / for group wheel	bob ALL=(ALL) ALL / %wheel ALL=(ALL) ALL
-[Users] sudoers line: sudo without password prompt	user ALL=(ALL) NOPASSWD: ALL
-[Users] Where are defaults like PASS_MAX_DAYS for NEW users set?	/etc/login.defs (affects users created after the change; use chage for existing users)
-[Users] What does umask do?	Subtracts permission bits from new files (base 666) and dirs (base 777) — it only removes, never adds
-[Users] Resulting perms with umask 022 / umask 077	022: files 644, dirs 755. 077: files 600, dirs 700
-[Users] Set a persistent umask	Add umask 077 to /etc/profile (system-wide) or ~/.bashrc (per user)
-[Security] Generate a modern SSH keypair	ssh-keygen -t ed25519 (creates ~/.ssh/id_ed25519 and id_ed25519.pub)
-[Security] Install your public key on a remote host	ssh-copy-id user@host (appends to remote ~/.ssh/authorized_keys)
-[Security] Required SSH permissions	~/.ssh = 700, authorized_keys and private key = 600 (wrong perms silently break key auth)
-[Security] sshd_config: disable root login / disable password auth	PermitRootLogin no / PasswordAuthentication no — then systemctl restart sshd
-[Security] Extra steps when changing the SSH port	semanage port -a -t ssh_port_t -p tcp NEWPORT and firewall-cmd --add-port=NEWPORT/tcp --permanent
-[Security] List firewalld zones / the default zone	firewall-cmd --get-zones / firewall-cmd --get-default-zone
-[Security] Set the default firewalld zone	firewall-cmd --set-default-zone=ZONE
-[Security] Allow the http service through the firewall PERSISTENTLY	firewall-cmd --add-service=http --permanent && firewall-cmd --reload
-[Security] Allow TCP port 8080 through the firewall persistently	firewall-cmd --add-port=8080/tcp --permanent && firewall-cmd --reload
-[Security] The firewalld exam trap	Without --permanent the rule dies at reboot; with --permanent it doesn't apply until --reload. Always: --permanent then --reload
-[Security] Remove a firewall service/port rule	firewall-cmd --remove-service=http --permanent (or --remove-port=8080/tcp --permanent) then --reload
-[Security] Show the current zone's full firewall config	firewall-cmd --list-all
-[Security] List all predefined firewalld service names / what ports one covers	firewall-cmd --get-services / firewall-cmd --info-service=http
-[Security] The three SELinux modes	Enforcing (blocks and logs), Permissive (logs only), Disabled (off — needs reboot + full relabel to re-enable)
-[Security] Show / temporarily change SELinux mode	getenforce / setenforce 0 (permissive) or setenforce 1 (enforcing)
-[Security] Make an SELinux mode change persistent	Edit /etc/selinux/config: SELINUX=enforcing (to/from disabled requires reboot)
-[Security] SELinux context format and the field that matters most	user:role:type:level (e.g. system_u:object_r:httpd_sys_content_t:s0) — the TYPE drives Type Enforcement decisions
-[Security] Show SELinux contexts of files / processes	ls -Z / ps -Z
-[Security] Fix wrong SELinux labels on files	restorecon -Rv /path (restores policy defaults)
-[Security] The classic SELinux mistake: mv vs cp	mv keeps the file's OLD label; cp inherits the DESTINATION dir's label. Moved a file into /var/www/html and it 403s? restorecon -Rv it
-[Security] Permanently label a custom directory for httpd content	semanage fcontext -a -t httpd_sys_content_t '/custom/www(/.*)?' then restorecon -Rv /custom/www (BOTH steps — semanage writes the rule, restorecon applies it)
-[Security] List SELinux file context rules	semanage fcontext -l
-[Security] Allow httpd to listen on port 8080 per SELinux	semanage port -a -t http_port_t -p tcp 8080
-[Security] List SELinux port labels	semanage port -l (grep for the service, e.g. | grep http)
-[Security] Which package provides semanage?	policycoreutils-python-utils (find it with dnf provides '*/semanage')
-[Security] List all SELinux booleans / set one persistently	getsebool -a / setsebool -P boolean_name on (WITHOUT -P it resets at reboot)
-[Security] SELinux boolean example worth knowing	httpd_can_network_connect (lets httpd make outbound network connections)
-[Security] Find recent SELinux denials	ausearch -m avc -ts recent (or grep AVC /var/log/audit/audit.log; sealert -a for human-readable analysis)
-[Security] SELinux troubleshooting order	1) confirm with setenforce 0 test 2) read denials: ausearch -m avc -ts recent 3) fix: restorecon (wrong label) → setsebool -P (boolean) → semanage fcontext/port (custom rule)
-[Security] End-of-exam persistence checklist	firewall rules --permanent + --reload; services enabled (not just started); mounts in fstab + daemon-reload + mount -a; setsebool used -P; nmcli con mod applied with con up. Then REBOOT AND VERIFY
-[Tools] Read the detailed GNU documentation for a command	info COMMAND (more detailed than man; man, info, and /usr/share/doc are all available DURING the exam)
-[Tools] How can you tell a file has an ACL from ls -l?	A + at the end of the permission string (e.g. -rw-r--r--+)
-[Tools] View the ACLs on a file	getfacl file
-[Tools] Give user bob read+write on a file via ACL	setfacl -m u:bob:rw file (g:group:perms for groups)
-[Tools] Remove one ACL entry / all ACLs from a file	setfacl -x u:bob file / setfacl -b file
-[Tools] Make new files in a directory inherit an ACL	setfacl -m d:u:bob:rw dir (d: = default ACL, applies to newly created files)
-[Net] Add a static route to a connection	nmcli con mod CONN +ipv4.routes '192.168.5.0/24 10.0.0.1' then nmcli con up CONN
+#separator:tab
+#html:false
+#notetype:Basic
+#deck:RHCSA EX200 (RHEL 10)
+#guid column:1
+#tags column:4
+rh10-tools-001	[Tools] Redirect stdout to a file, overwriting it	cmd > file	rhcsa::tools
+rh10-tools-002	[Tools] Redirect stdout to a file, appending	cmd >> file	rhcsa::tools
+rh10-tools-003	[Tools] Redirect only stderr to a file	cmd 2> file	rhcsa::tools
+rh10-tools-004	[Tools] Run find across / but throw away the 'Permission denied' noise	find / -name '*.conf' 2>/dev/null	rhcsa::tools
+rh10-tools-005	[Tools] Send stdout AND stderr to one file (two ways)	cmd &> file   —or—   cmd > file 2>&1   (order matters: 2>&1 must come AFTER > file)	rhcsa::tools
+rh10-tools-006	[Tools] Feed a file into a command's stdin	cmd < file	rhcsa::tools
+rh10-tools-007	[Tools] Save output to a file and still see it on screen	cmd | tee file   (tee -a appends)	rhcsa::tools
+rh10-tools-008	[Tools] What does the pipe | do?	Connects stdout of the left command to stdin of the right one (stderr is NOT piped unless you add 2>&1)	rhcsa::tools
+rh10-tools-009	[Tools] Write several lines into a file straight from the shell (heredoc)	cat > file <<'EOF'  …lines…  EOF   (quoting 'EOF' stops $variables from expanding)	rhcsa::tools
+rh10-tools-010	[Tools] grep: case-insensitive	grep -i	rhcsa::tools
+rh10-tools-011	[Tools] grep: print lines that do NOT match	grep -v	rhcsa::tools
+rh10-tools-012	[Tools] grep: search a whole directory tree	grep -r PATTERN /dir	rhcsa::tools
+rh10-tools-013	[Tools] grep: show line numbers	grep -n	rhcsa::tools
+rh10-tools-014	[Tools] grep: count matching lines	grep -c	rhcsa::tools
+rh10-tools-015	[Tools] grep: print only the names of files that match	grep -l	rhcsa::tools
+rh10-tools-016	[Tools] grep: match a whole word only (root but not chroot)	grep -w root	rhcsa::tools
+rh10-tools-017	[Tools] grep: use extended regex so | + ? {} () work unescaped	grep -E 'error|warn' file	rhcsa::tools
+rh10-tools-018	[Tools] Task: save every line of /etc/passwd containing 'nologin' into /root/nologin.txt, in original order	grep nologin /etc/passwd > /root/nologin.txt   (then cat it to verify)	rhcsa::tools
+rh10-tools-019	[Tools] Show a config file without comment lines and blank lines	grep -Ev '^(#|$)' file	rhcsa::tools
+rh10-tools-020	[Tools] Regex: anchor to start / end of line	^ = start, $ = end   (grep '^root:' /etc/passwd ; grep 'bash$' /etc/passwd)	rhcsa::tools
+rh10-tools-021	[Tools] Regex: . and *	. = any single character; * = zero or more of the PREVIOUS item (so .* = anything)	rhcsa::tools
+rh10-tools-022	[Tools] Regex: [abc] vs [^abc]	[abc] = one of a/b/c; [^abc] = any character except a/b/c	rhcsa::tools
+rh10-tools-023	[Tools] Regex: match a completely empty line	^$	rhcsa::tools
+rh10-tools-024	[Tools] Print only field 1 of a colon-separated file (two tools)	cut -d: -f1 /etc/passwd   —or—   awk -F: '{print $1}' /etc/passwd	rhcsa::tools
+rh10-tools-025	[Tools] Sort numerically / in reverse / by the 3rd colon-separated field	sort -n / sort -r / sort -t: -k3 -n	rhcsa::tools
+rh10-tools-026	[Tools] Remove duplicate lines	sort file | uniq   (uniq only drops ADJACENT duplicates, so sort first)	rhcsa::tools
+rh10-tools-027	[Tools] First 5 / last 5 lines of a file	head -n 5 file / tail -n 5 file	rhcsa::tools
+rh10-tools-028	[Tools] Watch a log file live	tail -f file	rhcsa::tools
+rh10-tools-029	[Tools] Count lines in a file	wc -l file	rhcsa::tools
+rh10-tools-030	[Tools] SSH to a host as a specific user	ssh user@host	rhcsa::tools
+rh10-tools-031	[Tools] Run a single command on a remote host over SSH	ssh user@host 'command'   (e.g. ssh root@node2 'systemctl is-active httpd')	rhcsa::tools
+rh10-tools-032	[Tools] SSH on a non-standard port	ssh -p 2222 user@host	rhcsa::tools
+rh10-tools-033	[Tools] SSH with a specific private key	ssh -i ~/.ssh/keyfile user@host	rhcsa::tools
+rh10-tools-034	[Tools] Copy a local file to a remote host	scp file user@host:/path/	rhcsa::tools
+rh10-tools-035	[Tools] Copy a remote file to the current local directory	scp user@host:/path/file .	rhcsa::tools
+rh10-tools-036	[Tools] Copy a directory with scp	scp -r dir user@host:/path/	rhcsa::tools
+rh10-tools-037	[Tools] scp to a host on port 2222 — the flag trap	scp -P 2222 …   (CAPITAL P for scp; ssh uses lowercase -p)	rhcsa::tools
+rh10-tools-038	[Tools] Sync a directory to another host preserving perms, times and links	rsync -av /src/ user@host:/dst/   (-a = archive; trailing / on src copies its CONTENTS, not the dir itself)	rhcsa::tools
+rh10-tools-039	[Tools] Interactive file transfer over SSH	sftp user@host   then get / put / ls / cd; quit with bye	rhcsa::tools
+rh10-tools-040	[Tools] su vs su -	su keeps your current environment (PATH, cwd); su - starts a full login shell as the target user. Prefer su -	rhcsa::tools
+rh10-tools-041	[Tools] Run one command as another (non-root) user	sudo -u USER command	rhcsa::tools
+rh10-tools-042	[Tools] Get a root login shell via sudo	sudo -i	rhcsa::tools
+rh10-tools-043	[Tools] Create a tar archive of /etc	tar cf /root/etc.tar /etc	rhcsa::tools
+rh10-tools-044	[Tools] Create a gzip-compressed tar archive	tar czf archive.tar.gz dir   (z = gzip)	rhcsa::tools
+rh10-tools-045	[Tools] Create a bzip2-compressed tar archive	tar cjf archive.tar.bz2 dir   (j = bzip2)	rhcsa::tools
+rh10-tools-046	[Tools] Create an xz-compressed tar archive	tar cJf archive.tar.xz dir   (capital J = xz)	rhcsa::tools
+rh10-tools-047	[Tools] Extract any tar archive (compressed or not)	tar xf archive   (GNU tar auto-detects gz/bz2/xz when reading a file)	rhcsa::tools
+rh10-tools-048	[Tools] Extract a tar archive into /target	tar xf archive.tar -C /target	rhcsa::tools
+rh10-tools-049	[Tools] List a tar archive's contents without extracting	tar tf archive.tar	rhcsa::tools
+rh10-tools-050	[Tools] tar options to keep SELinux contexts, ACLs and xattrs	tar --selinux --acls --xattrs -cpf …   (-p preserves permissions)	rhcsa::tools
+rh10-tools-051	[Tools] Compress / decompress a single file with gzip	gzip file → file.gz (original removed; -k keeps it) / gunzip file.gz	rhcsa::tools
+rh10-tools-052	[Tools] Compress / decompress a single file with bzip2	bzip2 file → file.bz2 / bunzip2 file.bz2	rhcsa::tools
+rh10-tools-053	[Tools] Figure out what kind of file or archive something is	file NAME	rhcsa::tools
+rh10-tools-054	[Tools] vim: enter insert mode / back to normal mode	i inserts; Esc returns to normal mode	rhcsa::tools
+rh10-tools-055	[Tools] vim: save and quit / quit discarding changes	:wq (or ZZ) / :q!	rhcsa::tools
+rh10-tools-056	[Tools] vim: delete a line / copy a line / paste	dd / yy / p	rhcsa::tools
+rh10-tools-057	[Tools] vim: search forward, next match, undo	/pattern, n, u	rhcsa::tools
+rh10-tools-058	[Tools] vim: jump to top / bottom / line 42	gg / G / :42	rhcsa::tools
+rh10-tools-059	[Tools] vim: replace every 'old' with 'new' in the file	:%s/old/new/g	rhcsa::tools
+rh10-tools-060	[Tools] vim: show line numbers	:set nu	rhcsa::tools
+rh10-tools-061	[Tools] Create an empty file or update its timestamp	touch file	rhcsa::tools
+rh10-tools-062	[Tools] Create nested directories in one go	mkdir -p /a/b/c	rhcsa::tools
+rh10-tools-063	[Tools] cp -r vs cp -a	-r copies recursively; -a also preserves owner, perms, timestamps and links (use -a for backups)	rhcsa::tools
+rh10-tools-064	[Tools] Rename or move a file	mv old new	rhcsa::tools
+rh10-tools-065	[Tools] Delete a directory and everything in it	rm -rf dir   (rmdir only removes EMPTY directories)	rhcsa::tools
+rh10-tools-066	[Tools] Create a hard link / a symbolic link	ln target linkname / ln -s target linkname	rhcsa::tools
+rh10-tools-067	[Tools] Hard link vs symlink: inodes	Hard links share the SAME inode (see ls -i); a symlink has its own inode that just stores a path	rhcsa::tools
+rh10-tools-068	[Tools] Which link type survives deleting the original file?	The hard link — it's an equal name for the same data. A symlink becomes dangling	rhcsa::tools
+rh10-tools-069	[Tools] Which link type can cross filesystems and point at directories?	Only symlinks	rhcsa::tools
+rh10-tools-070	[Tools] Symlink trap: ln -s ../file /tmp/link — what does the link point to?	A relative target is resolved relative to the LINK's location, not your cwd. Use absolute targets when in doubt	rhcsa::tools
+rh10-tools-071	[Tools] Read an ls -l permission string like drwxr-x---	1st char = type (- file, d dir, l link); then rwx for user, group, others	rhcsa::tools
+rh10-tools-072	[Tools] chmod symbolic: add execute for owner; remove write from group and others	chmod u+x file ; chmod go-w file   (u g o a, with + - =)	rhcsa::tools
+rh10-tools-073	[Tools] chmod octal: what do the digits mean?	r=4 w=2 x=1, summed; digits = user, group, others (755 = rwxr-xr-x, 644 = rw-r--r--)	rhcsa::tools
+rh10-tools-074	[Tools] Octal for rwxr-x---	750	rhcsa::tools
+rh10-tools-075	[Tools] What do r, w, x mean on a DIRECTORY?	r = list names; w = create/delete/rename entries (needs x too); x = enter/traverse it (cd, reach files inside)	rhcsa::tools
+rh10-tools-076	[Tools] Change owner and group recursively	chown -R user:group dir	rhcsa::tools
+rh10-tools-077	[Tools] Change only the group of a file (two ways)	chown :group file   —or—   chgrp group file	rhcsa::tools
+rh10-tools-078	[Tools] SUID: what it does and how to set it	Program runs with the file OWNER's identity (e.g. /usr/bin/passwd). chmod u+s file / chmod 4755 file	rhcsa::tools
+rh10-tools-079	[Tools] SGID on a directory: what it does and how to set it	New files inside inherit the directory's GROUP. chmod g+s dir / chmod 2770 dir	rhcsa::tools beyond-objectives
+rh10-tools-080	[Tools] Sticky bit on a directory: what it does and how to set it	Users can only delete their OWN files in it (like /tmp). chmod o+t dir / chmod 1777 dir	rhcsa::tools
+rh10-tools-081	[Tools] Task: /shared owned by group devs; members can create files; new files belong to devs; others get nothing	mkdir /shared ; chgrp devs /shared ; chmod 2770 /shared   (verify: ls -ld /shared → drwxrws---)	rhcsa::tools beyond-objectives
+rh10-tools-082	[Tools] Find all SUID files on the system	find / -perm -4000 2>/dev/null   (same as -perm -u=s)	rhcsa::tools
+rh10-tools-083	[Tools] find by name (case-sensitive / insensitive)	find / -name '*.conf' / find / -iname '*.conf'	rhcsa::tools
+rh10-tools-084	[Tools] find files owned by a user / a group	find / -user bob / find / -group devs	rhcsa::tools
+rh10-tools-085	[Tools] find only files / only directories	-type f / -type d	rhcsa::tools
+rh10-tools-086	[Tools] find files bigger than 100MB / between 30k and 50k	-size +100M / -size +30k -size -50k	rhcsa::tools
+rh10-tools-087	[Tools] find files modified more than 7 days ago / within the last 7 days	-mtime +7 / -mtime -7	rhcsa::tools
+rh10-tools-088	[Tools] find -perm 644 vs -perm -644 vs -perm /222	644 = exactly; -644 = at least all of these bits; /222 = any of these bits (e.g. writable by anyone)	rhcsa::tools
+rh10-tools-089	[Tools] Run a command on every file find matches	find … -exec CMD {} \;   ({} = the match, \; ends it; + instead of \; batches arguments)	rhcsa::tools
+rh10-tools-090	[Tools] Task: copy all files owned by user harry into /root/found, keeping attributes	mkdir -p /root/found ; find / -user harry -type f -exec cp -a {} /root/found/ \; 2>/dev/null	rhcsa::tools
+rh10-tools-091	[Tools] Search man pages by keyword	man -k KEYWORD (= apropos)	rhcsa::tools
+rh10-tools-092	[Tools] man -k returns 'nothing appropriate' for everything — fix?	Build the man index: mandb (as root)	rhcsa::tools
+rh10-tools-093	[Tools] Man page sections 1, 5, 8	1 = user commands, 5 = file formats, 8 = admin commands   (man 5 passwd = the FILE, man passwd = the command)	rhcsa::tools
+rh10-tools-094	[Tools] Search inside an open man page	/word then n for next, q to quit	rhcsa::tools
+rh10-tools-095	[Tools] Fastest reminder of a command's options	CMD --help   (pipe into grep: useradd --help | grep -i shell)	rhcsa::tools
+rh10-tools-096	[Tools] Detailed GNU docs for a command	info COMMAND	rhcsa::tools
+rh10-tools-097	[Tools] Where is extra package documentation?	/usr/share/doc/PACKAGE/   (rpm -qd PACKAGE lists a package's docs)	rhcsa::tools
+rh10-tools-098	[Tools] ACLs (no longer listed in v10 objectives): spot a file that has one	A + at the end of ls -l permissions (-rw-r--r--+) ; view with getfacl file	rhcsa::tools beyond-objectives
+rh10-tools-099	[Tools] ACL: give user bob rw on a file / remove all ACLs	setfacl -m u:bob:rw file / setfacl -b file	rhcsa::tools beyond-objectives
+rh10-tools-100	[Tools] ACL: make new files in a dir get an ACL automatically	setfacl -m d:u:bob:rw dir   (d: = default ACL)	rhcsa::tools beyond-objectives
+rh10-software-001	[Software] Where do DNF repo files live?	/etc/yum.repos.d/*.repo   (must end in .repo)	rhcsa::software
+rh10-software-002	[Software] Minimum contents of a .repo file	[repo-id]  name=…  baseurl=…  enabled=1  gpgcheck=1  (+ gpgkey=… when gpgcheck=1)	rhcsa::software
+rh10-software-003	[Software] Task: repos are at http://repo.example.com/BaseOS and /AppStream, no GPG key given — write the file	/etc/yum.repos.d/local.repo with two sections: [BaseOS] baseurl=http://repo.example.com/BaseOS gpgcheck=0 enabled=1 — and the same for [AppStream]	rhcsa::software
+rh10-software-004	[Software] Install fails: 'GPG key … is not installed' — three fixes	rpm --import KEY_URL_or_FILE ; or add gpgkey=… to the .repo ; or set gpgcheck=0 if the task allows it	rhcsa::software
+rh10-software-005	[Software] Add a repo from a URL in one command — and the catch	dnf config-manager --add-repo URL   — catch: it inherits gpgcheck=1 from dnf.conf, so you may still need gpgcheck=0 or a key	rhcsa::software
+rh10-software-006	[Software] Use the RHEL install ISO as a local repo	mkdir /mnt/iso ; mount -o loop,ro rhel-10.iso /mnt/iso ; repos with baseurl=file:///mnt/iso/BaseOS and file:///mnt/iso/AppStream	rhcsa::software
+rh10-software-007	[Software] fstab line to mount an ISO at boot	/root/rhel-10.iso /mnt/iso iso9660 loop,ro 0 0	rhcsa::software
+rh10-software-008	[Software] How many slashes in a file:// baseurl?	Three: file:///mnt/iso/BaseOS   (file:// + the absolute path /mnt/…)	rhcsa::software
+rh10-software-009	[Software] Verify which repos DNF sees	dnf repolist   (dnf repolist all includes disabled ones)	rhcsa::software
+rh10-software-010	[Software] Repo changes don't seem to take effect — clear cached metadata	dnf clean all   (then dnf makecache)	rhcsa::software
+rh10-software-011	[Software] Install / remove a package	dnf install PKG / dnf remove PKG	rhcsa::software
+rh10-software-012	[Software] Update all packages	dnf update   (dnf upgrade is the same)	rhcsa::software
+rh10-software-013	[Software] Search by keyword / show package details	dnf search WORD / dnf info PKG	rhcsa::software
+rh10-software-014	[Software] List installed packages	dnf list installed   (or rpm -qa)	rhcsa::software
+rh10-software-015	[Software] Find which package provides a file or command (even if not installed)	dnf provides '*/semanage'	rhcsa::software
+rh10-software-016	[Software] Which installed package owns this file?	rpm -qf /path/to/file	rhcsa::software
+rh10-software-017	[Software] List every file a package installed	rpm -ql PKG	rhcsa::software
+rh10-software-018	[Software] List a package's CONFIG files (find where a service is configured)	rpm -qc PKG	rhcsa::software
+rh10-software-019	[Software] List / install a package group	dnf group list / dnf group install 'Group Name'	rhcsa::software
+rh10-software-020	[Software] DNF transaction history / undo one	dnf history / dnf history undo ID	rhcsa::software
+rh10-software-021	[Software] Install a local .rpm WITH dependency resolution	dnf install ./package.rpm   (plain rpm -i won't pull dependencies)	rhcsa::software
+rh10-software-022	[Software] Does dnf update kernel replace the running kernel?	No — kernels install side by side (installonly); the new one becomes the default at next boot	rhcsa::software
+rh10-software-023	[Software] Register a system to the Red Hat CDN	subscription-manager register   (the exam has no internet — you'll use the repos they give you)	rhcsa::software
+rh10-software-024	[Software] Add a Flatpak remote from a URL	flatpak remote-add --if-not-exists NAME URL   (URL is often a .flatpakrepo file; on the exam it'll be a local server, not Flathub)	rhcsa::software
+rh10-software-025	[Software] Add a Flatpak remote that isn't GPG-signed	flatpak remote-add --no-gpg-verify NAME URL	rhcsa::software
+rh10-software-026	[Software] Add Flathub (home lab only — needs internet)	flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo	rhcsa::software
+rh10-software-027	[Software] List configured Flatpak remotes / what a remote offers	flatpak remotes / flatpak remote-ls NAME	rhcsa::software
+rh10-software-028	[Software] Install / remove a Flatpak app	flatpak install REMOTE APP_ID / flatpak uninstall APP_ID	rhcsa::software
+rh10-software-029	[Software] List installed Flatpaks / update them	flatpak list / flatpak update	rhcsa::software
+rh10-software-030	[Software] Run / search for / inspect a Flatpak app	flatpak run APP_ID / flatpak search WORD / flatpak info APP_ID	rhcsa::software
+rh10-software-031	[Software] Flatpak --system vs --user	--system (default, root) installs for all users under /var/lib/flatpak; --user installs only for you under ~/.local/share/flatpak	rhcsa::software
+rh10-software-032	[Software] What does a Flatpak app ID look like?	Reverse DNS, e.g. org.gnome.Calculator	rhcsa::software
+rh10-software-033	[Software] Remove a Flatpak remote / clean unused runtimes	flatpak remote-delete NAME / flatpak uninstall --unused	rhcsa::software
+rh10-software-034	[Software] Flatpak vs RPM	Flatpaks are sandboxed and bundle their runtime (desktop apps); RPMs install system-wide using shared libraries	rhcsa::software
+rh10-scripts-001	[Scripts] First line of a bash script	#!/bin/bash   (the shebang)	rhcsa::scripts
+rh10-scripts-002	[Scripts] Make a script executable and run it	chmod +x script.sh ; ./script.sh (or /full/path/script.sh)	rhcsa::scripts
+rh10-scripts-003	[Scripts] if / elif / else syntax	if [ COND ]; then …; elif [ COND ]; then …; else …; fi	rhcsa::scripts
+rh10-scripts-004	[Scripts] Why does [-f file] fail?	[ is a command — it needs spaces: [ -f file ]	rhcsa::scripts
+rh10-scripts-005	[Scripts] File tests: regular file / directory / exists	-f / -d / -e	rhcsa::scripts
+rh10-scripts-006	[Scripts] File tests: readable / writable / executable / non-empty	-r / -w / -x / -s	rhcsa::scripts
+rh10-scripts-007	[Scripts] Integer comparisons in [ ]	-eq -ne -gt -lt -ge -le	rhcsa::scripts
+rh10-scripts-008	[Scripts] String comparisons in [ ]	= equal, != not equal, -z empty, -n not empty	rhcsa::scripts
+rh10-scripts-009	[Scripts] Why quote variables in tests?	An empty unquoted $var vanishes and breaks the syntax — write [ "$var" = "yes" ]	rhcsa::scripts
+rh10-scripts-010	[Scripts] Run cmd2 only if cmd1 succeeds / only if it fails	cmd1 && cmd2 / cmd1 || cmd2	rhcsa::scripts
+rh10-scripts-011	[Scripts] for loop over a list	for f in /etc/*.conf; do wc -l "$f"; done	rhcsa::scripts
+rh10-scripts-012	[Scripts] for loop over numbers 1–10 (two ways)	for i in {1..10}; do …; done   —or—   for ((i=1; i<=10; i++)); do …; done	rhcsa::scripts
+rh10-scripts-013	[Scripts] Loop over each username in /etc/passwd	for u in $(cut -d: -f1 /etc/passwd); do echo "$u"; done	rhcsa::scripts
+rh10-scripts-014	[Scripts] Read a file line by line	while IFS= read -r line; do echo "$line"; done < file	rhcsa::scripts
+rh10-scripts-015	[Scripts] case statement syntax	case "$1" in start) …;; stop) …;; *) echo 'usage'; exit 1;; esac	rhcsa::scripts
+rh10-scripts-016	[Scripts] Script name / 1st argument / 10th argument	$0 / $1 / ${10}   (braces needed past 9)	rhcsa::scripts
+rh10-scripts-017	[Scripts] All arguments / number of arguments	$@ (write it as "$@" to keep each arg intact) / $#	rhcsa::scripts
+rh10-scripts-018	[Scripts] Drop $1 and shift the remaining arguments down	shift	rhcsa::scripts
+rh10-scripts-019	[Scripts] Script must get exactly 1 argument, else print usage and fail	if [ $# -ne 1 ]; then echo "Usage: $0 NAME" >&2; exit 1; fi	rhcsa::scripts
+rh10-scripts-020	[Scripts] Print a message to stderr	echo 'msg' >&2	rhcsa::scripts
+rh10-scripts-021	[Scripts] Assign a variable — the spacing rule	name=value  (NO spaces around =); read it with $name or ${name}	rhcsa::scripts
+rh10-scripts-022	[Scripts] Store a command's output in a variable	today=$(date +%F)	rhcsa::scripts
+rh10-scripts-023	[Scripts] Integer arithmetic in bash	$(( a + b ))   (e.g. count=$((count + 1)))	rhcsa::scripts
+rh10-scripts-024	[Scripts] Exit code of the last command; what does 0 mean?	$? — 0 = success, anything else = failure	rhcsa::scripts
+rh10-scripts-025	[Scripts] Set your script's exit code	exit 0 (success) / exit 1 (failure)	rhcsa::scripts
+rh10-scripts-026	[Scripts] Prompt the user for input	read -p 'Name: ' name   (-s hides input)	rhcsa::scripts
+rh10-scripts-027	[Scripts] Debug a script by tracing every command	bash -x script.sh	rhcsa::scripts
+rh10-ops-001	[Ops] Start / stop / restart a service now	systemctl start|stop|restart SVC	rhcsa::ops
+rh10-ops-002	[Ops] Reload a service's config without restarting it	systemctl reload SVC	rhcsa::ops
+rh10-ops-003	[Ops] Start a service now AND at every boot	systemctl enable --now SVC	rhcsa::ops
+rh10-ops-004	[Ops] start vs enable — the exam trap	start = running now, gone after reboot; enable = after reboot, not now. Grading happens after a reboot → enable --now	rhcsa::ops
+rh10-ops-005	[Ops] Is a service running? Is it enabled?	systemctl is-active SVC / systemctl is-enabled SVC   (status for detail)	rhcsa::ops
+rh10-ops-006	[Ops] Make a service impossible to start	systemctl mask SVC   (links it to /dev/null; unmask to undo)	rhcsa::ops
+rh10-ops-007	[Ops] List failed units	systemctl --failed	rhcsa::ops
+rh10-ops-008	[Ops] List service unit files and their enabled state	systemctl list-unit-files --type=service	rhcsa::ops
+rh10-ops-009	[Ops] Show the contents of a unit file (with drop-ins)	systemctl cat SVC	rhcsa::ops
+rh10-ops-010	[Ops] Override part of a unit safely	systemctl edit SVC   (writes /etc/systemd/system/SVC.service.d/override.conf)	rhcsa::ops
+rh10-ops-011	[Ops] When must you run systemctl daemon-reload?	After creating/editing unit files by hand, and after editing /etc/fstab	rhcsa::ops
+rh10-ops-012	[Ops] The four boot targets you need	multi-user.target (text), graphical.target (GUI), rescue.target, emergency.target	rhcsa::ops
+rh10-ops-013	[Ops] Set / show the default boot target	systemctl set-default multi-user.target / systemctl get-default	rhcsa::ops
+rh10-ops-014	[Ops] Switch to another target right now	systemctl isolate multi-user.target	rhcsa::ops
+rh10-ops-015	[Ops] Boot into a target for ONE boot only	At GRUB press e, append systemd.unit=rescue.target to the linux line, Ctrl+x	rhcsa::ops
+rh10-ops-016	[Ops] rescue.target vs emergency.target	rescue: mounts local filesystems, single-user root shell; emergency: only / mounted READ-ONLY, almost nothing started	rhcsa::ops
+rh10-ops-017	[Ops] GRUB menu flashes by too fast to press e	Reset the VM and tap an arrow key (or Esc) repeatedly as soon as it powers on	rhcsa::ops
+rh10-ops-018	[Ops] Root password reset on RHEL 10 (steps)	1) GRUB: e, append rd.break to linux line, Ctrl+x  2) mount -o remount,rw /sysroot  3) chroot /sysroot  4) passwd root  5) touch /.autorelabel  6) exit  7) exit	rhcsa::ops
+rh10-ops-019	[Ops] rd.break shell never appears on the VM console	Remove any console=ttyS0… arguments from the linux line too — the shell is being sent to a serial console	rhcsa::ops
+rh10-ops-020	[Ops] Why touch /.autorelabel after resetting root?	SELinux policy isn't loaded in the initramfs, so the new /etc/shadow gets a bad label — without the relabel nobody can log in	rhcsa::ops
+rh10-ops-021	[Ops] After the root reset the VM relabels and reboots again — broken?	No. The relabel takes a few minutes and triggers its own reboot. Wait for it	rhcsa::ops
+rh10-ops-022	[Ops] Edit kernel arguments for ONE boot	At GRUB press e, edit the linux line, Ctrl+x	rhcsa::ops
+rh10-ops-023	[Ops] Show the arguments the running kernel booted with	cat /proc/cmdline	rhcsa::ops
+rh10-ops-024	[Ops] top: sort by memory / by CPU / kill a process	M / P / k	rhcsa::ops
+rh10-ops-025	[Ops] Top 5 CPU-hungry processes in one command	ps aux --sort=-%cpu | head -6   (--sort=-%mem for memory)	rhcsa::ops
+rh10-ops-026	[Ops] Terminate a process gracefully / forcefully	kill PID (SIGTERM) / kill -9 PID (SIGKILL, last resort)	rhcsa::ops
+rh10-ops-027	[Ops] Kill processes by name	pkill NAME   (or killall NAME)	rhcsa::ops
+rh10-ops-028	[Ops] Start a command at lower priority / change a running process's priority	nice -n 10 cmd / renice -n 10 -p PID	rhcsa::ops
+rh10-ops-029	[Ops] nice range — and who may go negative	-20 (highest priority) to 19 (lowest); only root can lower a value	rhcsa::ops
+rh10-ops-030	[Ops] See the nice value of a process	ps -o pid,ni,comm -p PID   (NI column in top)	rhcsa::ops
+rh10-ops-031	[Ops] Memory and swap usage / system load	free -h / uptime (load averages for 1, 5, 15 min)	rhcsa::ops
+rh10-ops-032	[Ops] tuned-adm fails with 'cannot talk to TuneD daemon'	systemctl enable --now tuned	rhcsa::ops
+rh10-ops-033	[Ops] List tuned profiles / show the active one	tuned-adm list / tuned-adm active	rhcsa::ops
+rh10-ops-034	[Ops] Set a tuned profile / apply the recommended one	tuned-adm profile NAME / tuned-adm profile $(tuned-adm recommend)	rhcsa::ops
+rh10-ops-035	[Ops] Tuned profiles to recognize	virtual-guest (VMs), throughput-performance (servers), balanced, powersave	rhcsa::ops
+rh10-ops-036	[Ops] Logs for one service unit	journalctl -u SVC	rhcsa::ops
+rh10-ops-037	[Ops] Only error-and-worse journal messages	journalctl -p err	rhcsa::ops
+rh10-ops-038	[Ops] Follow the journal live	journalctl -f	rhcsa::ops
+rh10-ops-039	[Ops] Logs from this boot / the previous boot — and the catch	journalctl -b / journalctl -b -1   (-b -1 only works if the journal is persistent)	rhcsa::ops
+rh10-ops-040	[Ops] Journal entries from a time window	journalctl --since '1 hour ago'   (--since '2026-01-15 10:00' --until '…')	rhcsa::ops
+rh10-ops-041	[Ops] Make the journal persistent across reboots	Set Storage=persistent in /etc/systemd/journald.conf (or mkdir /var/log/journal), then systemctl restart systemd-journald	rhcsa::ops
+rh10-ops-042	[Ops] Prove the journal is persistent	ls /var/log/journal/ has a machine-id dir; after a reboot journalctl --list-boots shows more than one boot	rhcsa::ops
+rh10-ops-043	[Ops] Where does the journal live when NOT persistent?	/run/log/journal (tmpfs, wiped at reboot)	rhcsa::ops
+rh10-ops-044	[Ops] What goes in /var/log/messages, secure, cron?	messages = general; secure = logins/sudo/ssh; cron = cron jobs	rhcsa::ops
+rh10-ops-045	[Ops] Write a test message to the system log	logger 'hello'   (logger -p user.err 'msg' sets a priority)	rhcsa::ops
+rh10-ops-046	[Ops] Reboot / power off	systemctl reboot / systemctl poweroff	rhcsa::ops
+rh10-ops-047	[Ops] Reboot in 5 minutes with a warning / cancel it	shutdown -r +5 'msg' / shutdown -c	rhcsa::ops
+rh10-ops-048	[Ops] Show which ports are listening and which process owns them	ss -tulpn	rhcsa::ops
+rh10-storage-001	[Storage] Block devices as a tree with mountpoints	lsblk   (lsblk -f adds FS type, label, UUID)	rhcsa::storage
+rh10-storage-002	[Storage] UUID, LABEL and FS type of devices	blkid	rhcsa::storage
+rh10-storage-003	[Storage] Before partitioning — make sure you're on the right disk	lsblk: the disk holding / and /boot is the OS disk. Never touch it; the exam gives you a second disk	rhcsa::storage
+rh10-storage-004	[Storage] fdisk: put a new GPT label on an empty disk	fdisk /dev/vdb → g → (partitions) → w	rhcsa::storage
+rh10-storage-005	[Storage] fdisk: create a 2 GiB partition	n, accept number & first sector, +2G for last sector, then w	rhcsa::storage
+rh10-storage-006	[Storage] fdisk: set partition type to LVM / swap on GPT	t then type lvm or swap   (8e/82 are MBR codes, NOT GPT)	rhcsa::storage
+rh10-storage-007	[Storage] fdisk: print table / delete partition / quit WITHOUT saving	p / d / q	rhcsa::storage
+rh10-storage-008	[Storage] See how much unpartitioned space a disk has left	parted /dev/vdb print free   (or fdisk -l /dev/vdb)	rhcsa::storage
+rh10-storage-009	[Storage] Make the kernel re-read a partition table without rebooting	partprobe /dev/vdb	rhcsa::storage
+rh10-storage-010	[Storage] LVM: PV, VG, LV	PV = disk/partition prepared for LVM; VG = pool of PVs; LV = 'partition' carved from a VG	rhcsa::storage
+rh10-storage-011	[Storage] Initialize a partition as a physical volume	pvcreate /dev/vdb1	rhcsa::storage
+rh10-storage-012	[Storage] Create a volume group	vgcreate myvg /dev/vdb1	rhcsa::storage
+rh10-storage-013	[Storage] Create a VG with 16 MiB physical extents	vgcreate -s 16M myvg /dev/vdb1	rhcsa::storage
+rh10-storage-014	[Storage] Find a VG's extent size and free extents	vgdisplay myvg   (PE Size, Free PE / Size)	rhcsa::storage
+rh10-storage-015	[Storage] Add a PV to an existing VG	vgextend myvg /dev/vdc1	rhcsa::storage
+rh10-storage-016	[Storage] Summary listings for PVs / VGs / LVs	pvs / vgs / lvs   (…display for detail)	rhcsa::storage
+rh10-storage-017	[Storage] Create a 500 MiB LV named mylv	lvcreate -L 500M -n mylv myvg	rhcsa::storage
+rh10-storage-018	[Storage] Create an LV of exactly 60 extents	lvcreate -l 60 -n mylv myvg   (lowercase -l = extents)	rhcsa::storage
+rh10-storage-019	[Storage] Create an LV using all free space in the VG	lvcreate -l 100%FREE -n mylv myvg	rhcsa::storage
+rh10-storage-020	[Storage] Task says 512 MiB — what do you type for LVM and fdisk?	lvcreate -L 512M / fdisk +512M — both treat M and G as MiB/GiB	rhcsa::storage
+rh10-storage-021	[Storage] LV device paths	/dev/myvg/mylv   (also /dev/mapper/myvg-mylv)	rhcsa::storage
+rh10-storage-022	[Storage] Grow an LV by 500 MiB AND its filesystem in one step	lvextend -r -L +500M /dev/myvg/mylv   (-r runs xfs_growfs/resize2fs for you)	rhcsa::storage
+rh10-storage-023	[Storage] Grow an LV TO 1 GiB total (not by 1 GiB)	lvextend -r -L 1G /dev/myvg/mylv   (no + means final size)	rhcsa::storage
+rh10-storage-024	[Storage] Task: resize LV to between 830 and 865 MiB	lvextend -r -L 850M … then check lvs — sizes round up to whole extents, so pick a value safely inside the range	rhcsa::storage
+rh10-storage-025	[Storage] Delete an LV / full LVM teardown order	umount, remove fstab line, lvremove, vgremove, pvremove	rhcsa::storage
+rh10-storage-026	[Storage] Create and activate swap on a partition or LV	mkswap /dev/myvg/swaplv ; swapon /dev/myvg/swaplv	rhcsa::storage
+rh10-storage-027	[Storage] fstab line for swap	UUID=… none swap defaults 0 0   (or /dev/myvg/swaplv none swap defaults 0 0)	rhcsa::storage
+rh10-storage-028	[Storage] Activate all swap listed in fstab (test your line)	swapon -a	rhcsa::storage
+rh10-storage-029	[Storage] Verify active swap	swapon --show   (or free -h)	rhcsa::storage
+rh10-storage-030	[Storage] Create a 1 GiB swap file	dd if=/dev/zero of=/swapfile bs=1M count=1024 ; chmod 600 /swapfile ; mkswap /swapfile ; swapon /swapfile	rhcsa::storage
+rh10-storage-031	[Storage] Task: add 512 MiB swap without touching the existing swap	New partition/LV → mkswap → fstab line → swapon -a. Existing swap stays (verify swapon --show lists both)	rhcsa::storage
+rh10-storage-032	[Storage] The six /etc/fstab fields	DEVICE  MOUNTPOINT  FSTYPE  OPTIONS  DUMP  PASS   (UUID=… /data xfs defaults 0 0)	rhcsa::storage
+rh10-storage-033	[Storage] Why mount by UUID instead of /dev/vdb1?	Device names can change between boots; UUIDs don't	rhcsa::storage
+rh10-storage-034	[Storage] Get a UUID into fstab without typing it	blkid /dev/myvg/mylv >> /etc/fstab, then edit that line into fstab format in vim	rhcsa::storage
+rh10-storage-035	[Storage] Mount point doesn't exist — mount fails	mkdir -p the mount point first; fstab doesn't create it	rhcsa::storage
+rh10-storage-036	[Storage] Test fstab without rebooting	systemctl daemon-reload ; mount -a ; findmnt --verify	rhcsa::storage
+rh10-storage-037	[Storage] fstab option so a failed mount doesn't stop boot	nofail	rhcsa::storage
+rh10-storage-038	[Storage] Boot hangs/drops to emergency because of a bad fstab line	Log in as root at the emergency prompt, mount -o remount,rw /, fix /etc/fstab, systemctl daemon-reload, reboot	rhcsa::storage
+rh10-storage-039	[Storage] What does adding storage 'non-destructively' mean?	Use free space for new partitions/LVs/swap without reformatting, removing or unmounting anything that exists	rhcsa::storage
+rh10-fs-001	[FS] Create an XFS filesystem	mkfs.xfs /dev/myvg/mylv   (XFS is the RHEL default)	rhcsa::fs
+rh10-fs-002	[FS] Create an ext4 / a VFAT filesystem	mkfs.ext4 DEV / mkfs.vfat DEV	rhcsa::fs
+rh10-fs-003	[FS] fstab type names for XFS, ext4, VFAT	xfs / ext4 / vfat	rhcsa::fs
+rh10-fs-004	[FS] Can XFS be shrunk?	No — only grown. (ext4 can shrink, unmounted)	rhcsa::fs
+rh10-fs-005	[FS] Grow XFS after extending its LV	xfs_growfs /mountpoint   (mounted; takes the MOUNT POINT)	rhcsa::fs
+rh10-fs-006	[FS] Grow ext4 after extending its LV	resize2fs /dev/myvg/mylv   (takes the DEVICE; works mounted)	rhcsa::fs
+rh10-fs-007	[FS] Show what is mounted where, with options	findmnt   (findmnt /data for one; df -hT for sizes + types)	rhcsa::fs
+rh10-fs-008	[FS] Disk usage of a directory / free space on filesystems	du -sh dir / df -h	rhcsa::fs
+rh10-fs-009	[FS] Mount read-only	mount -o ro DEV /mnt	rhcsa::fs
+rh10-fs-010	[FS] umount says 'target is busy'	fuser -m /mnt or lsof /mnt to find the process — and make sure your own shell isn't cd'd inside it	rhcsa::fs
+rh10-fs-011	[FS] Mount options noexec, nosuid, nodev	noexec = can't run binaries; nosuid = ignore SUID/SGID; nodev = ignore device files	rhcsa::fs
+rh10-fs-012	[FS] Package needed to mount NFS	nfs-utils	rhcsa::fs
+rh10-fs-013	[FS] List what an NFS server exports	showmount -e SERVER	rhcsa::fs
+rh10-fs-014	[FS] Mount an NFS share by hand	mount -t nfs server:/export/share /mnt/nfs	rhcsa::fs
+rh10-fs-015	[FS] fstab line for NFS	server:/export/share /mnt/nfs nfs defaults,_netdev 0 0   (_netdev = wait for network)	rhcsa::fs
+rh10-fs-016	[FS] What is autofs for?	Mounts a share on first access, unmounts when idle — no boot failure if the server is down	rhcsa::fs
+rh10-fs-017	[FS] autofs package and service	dnf install autofs ; systemctl enable --now autofs	rhcsa::fs
+rh10-fs-018	[FS] autofs master map: where to add an entry	/etc/auto.master, or a file in /etc/auto.master.d/ whose name ENDS IN .autofs	rhcsa::fs
+rh10-fs-019	[FS] autofs master entry for an indirect map	/mnt/auto  /etc/auto.shares	rhcsa::fs
+rh10-fs-020	[FS] autofs map line: mount server:/export/data at /mnt/auto/data	in /etc/auto.shares:  data  -rw,sync  server:/export/data	rhcsa::fs
+rh10-fs-021	[FS] Task: remote home dirs — any user's home under /home/guests auto-mounts from server:/home/guests/USER	master: /home/guests /etc/auto.guests ; map: *  -rw,sync  server:/home/guests/&   (* = any key, & = that key)	rhcsa::fs
+rh10-fs-022	[FS] autofs direct map	master line /- /etc/auto.direct ; map uses absolute paths: /data/share -rw server:/export	rhcsa::fs
+rh10-fs-023	[FS] ls /mnt/auto is empty — is autofs broken?	No: indirect mounts appear only when accessed by name. cd /mnt/auto/data, then check findmnt	rhcsa::fs
+rh10-fs-024	[FS] After editing autofs maps	systemctl restart autofs	rhcsa::fs
+rh10-fs-025	[FS] Label an XFS / ext4 filesystem	xfs_admin -L name DEV (unmounted) / e2label DEV name	rhcsa::fs
+rh10-fs-026	[FS] Mount by label in fstab	LABEL=name /data xfs defaults 0 0	rhcsa::fs
+rh10-fs-027	[FS] Diagnose 'Permission denied' on a deep path	namei -l /full/path (perms of every dir), id USER (groups), ls -lZ (SELinux)	rhcsa::fs
+rh10-deploy-001	[Deploy] One-time job at 3 PM / 30 minutes from now	at 15:00 / at now + 30 minutes   — type commands, Ctrl+D to save (atd must be running)	rhcsa::deploy
+rh10-deploy-002	[Deploy] List / remove pending at jobs	atq / atrm JOB	rhcsa::deploy
+rh10-deploy-003	[Deploy] Five crontab fields	MIN HOUR DAY-OF-MONTH MONTH DAY-OF-WEEK   (0-59, 0-23, 1-31, 1-12, 0-7; 0 and 7 = Sunday)	rhcsa::deploy
+rh10-deploy-004	[Deploy] Cron: 2:30 AM every Monday	30 2 * * 1 CMD	rhcsa::deploy
+rh10-deploy-005	[Deploy] Cron: every 15 minutes	*/15 * * * * CMD	rhcsa::deploy
+rh10-deploy-006	[Deploy] Cron: 14:23 Monday through Friday	23 14 * * 1-5 CMD	rhcsa::deploy
+rh10-deploy-007	[Deploy] Cron: every 2 minutes, log 'hello' to syslog	*/2 * * * * logger hello	rhcsa::deploy
+rh10-deploy-008	[Deploy] Edit / list / remove a user's crontab as root	crontab -e -u USER / crontab -l -u USER / crontab -r -u USER	rhcsa::deploy
+rh10-deploy-009	[Deploy] /etc/crontab and /etc/cron.d lines — the extra field	They need a USERNAME between the time fields and the command (user crontabs don't)	rhcsa::deploy
+rh10-deploy-010	[Deploy] Run a script daily without writing cron syntax	Drop an executable into /etc/cron.daily/ (also hourly/weekly/monthly)	rhcsa::deploy
+rh10-deploy-011	[Deploy] Cron @strings	@reboot @hourly @daily @weekly @monthly @yearly	rhcsa::deploy
+rh10-deploy-012	[Deploy] Stop user bob from using cron	Add bob to /etc/cron.deny   (if /etc/cron.allow exists, ONLY users listed there may use cron)	rhcsa::deploy
+rh10-deploy-013	[Deploy] Did my cron job run?	/var/log/cron (or journalctl -u crond)	rhcsa::deploy
+rh10-deploy-014	[Deploy] Two units that make a systemd timer	NAME.timer (with [Timer]) + NAME.service it triggers — same base name	rhcsa::deploy
+rh10-deploy-015	[Deploy] Where to put your own unit files	/etc/systemd/system/	rhcsa::deploy
+rh10-deploy-016	[Deploy] Minimal .service for a timer	[Unit] Description=… ; [Service] Type=oneshot ExecStart=/usr/local/bin/job.sh	rhcsa::deploy
+rh10-deploy-017	[Deploy] Minimal .timer	[Timer] OnCalendar=daily Persistent=true ; [Install] WantedBy=timers.target	rhcsa::deploy
+rh10-deploy-018	[Deploy] OnCalendar for every day at 02:30	OnCalendar=*-*-* 02:30:00	rhcsa::deploy
+rh10-deploy-019	[Deploy] OnCalendar for weekdays at 09:00	OnCalendar=Mon..Fri *-*-* 09:00:00	rhcsa::deploy
+rh10-deploy-020	[Deploy] Check an OnCalendar expression	systemd-analyze calendar 'Mon..Fri *-*-* 09:00:00'	rhcsa::deploy
+rh10-deploy-021	[Deploy] Timer relative to boot / repeating after each run	OnBootSec=15min / OnUnitActiveSec=1h	rhcsa::deploy
+rh10-deploy-022	[Deploy] Persistent=true in a timer	If the machine was off at the scheduled time, run at next boot	rhcsa::deploy
+rh10-deploy-023	[Deploy] Activate a new timer	systemctl daemon-reload ; systemctl enable --now NAME.timer   (enable the TIMER, not the service)	rhcsa::deploy
+rh10-deploy-024	[Deploy] List timers and next run times	systemctl list-timers	rhcsa::deploy
+rh10-deploy-025	[Deploy] Set the timezone	timedatectl set-timezone America/New_York   (timedatectl list-timezones)	rhcsa::deploy
+rh10-deploy-026	[Deploy] Turn on NTP sync	timedatectl set-ntp true   (uses chronyd)	rhcsa::deploy
+rh10-deploy-027	[Deploy] Task: sync time from classroom.example.com	In /etc/chrony.conf comment out the pool line, add server classroom.example.com iburst ; systemctl restart chronyd ; systemctl enable chronyd	rhcsa::deploy
+rh10-deploy-028	[Deploy] Verify chrony	chronyc sources -v (^* = selected source) / chronyc tracking	rhcsa::deploy
+rh10-deploy-029	[Deploy] Persistent kernel argument — easiest way	grubby --update-kernel=ALL --args='ARG'   (applies from the next boot, no mkconfig needed)	rhcsa::deploy
+rh10-deploy-030	[Deploy] Remove a kernel argument persistently	grubby --update-kernel=ALL --remove-args='rhgb quiet'	rhcsa::deploy
+rh10-deploy-031	[Deploy] Show boot entries / the default kernel	grubby --info=ALL / grubby --default-kernel	rhcsa::deploy
+rh10-deploy-032	[Deploy] Change the default kernel	grubby --set-default=/boot/vmlinuz-VERSION	rhcsa::deploy
+rh10-deploy-033	[Deploy] Change GRUB_TIMEOUT or GRUB_CMDLINE_LINUX in /etc/default/grub — then what? (RHEL 10)	grub2-mkconfig -o /boot/grub2/grub.cfg --update-bls-cmdline   (without that flag, existing entries keep their old kernel args)	rhcsa::deploy
+rh10-deploy-034	[Deploy] grub.cfg path on a UEFI system (RHEL 9/10)	Still /boot/grub2/grub.cfg. The file in /boot/efi/EFI/redhat/ is a stub — overwriting it can break booting	rhcsa::deploy
+rh10-net-001	[Net] Add an ethernet connection with a static IPv4 address	nmcli con add type ethernet con-name myconn ifname eth0 ipv4.method manual ipv4.addresses 192.168.1.100/24 ipv4.gateway 192.168.1.1 ipv4.dns 192.168.1.1	rhcsa::net
+rh10-net-002	[Net] Add a DHCP connection	nmcli con add type ethernet con-name dhcp ifname eth0 ipv4.method auto	rhcsa::net
+rh10-net-003	[Net] Switch an existing DHCP connection to static — the step people miss	Set ipv4.method manual along with ipv4.addresses, otherwise DHCP keeps running	rhcsa::net
+rh10-net-004	[Net] Change the IPv4 address of an existing connection	nmcli con mod CONN ipv4.addresses 10.0.0.50/24 ; nmcli con up CONN	rhcsa::net
+rh10-net-005	[Net] Changes made with nmcli con mod don't apply — why?	They only take effect on reactivation: nmcli con up CONN	rhcsa::net
+rh10-net-006	[Net] Set DNS / append another DNS server	nmcli con mod CONN ipv4.dns 10.0.0.1 / nmcli con mod CONN +ipv4.dns 10.0.0.2	rhcsa::net
+rh10-net-007	[Net] Set a static IPv6 address and gateway	nmcli con mod CONN ipv6.method manual ipv6.addresses fd00::10/64 ipv6.gateway fd00::1 ; nmcli con up CONN	rhcsa::net
+rh10-net-008	[Net] Add a static route	nmcli con mod CONN +ipv4.routes '192.168.5.0/24 10.0.0.1' ; nmcli con up CONN	rhcsa::net
+rh10-net-009	[Net] List connections / devices	nmcli con show / nmcli dev status	rhcsa::net
+rh10-net-010	[Net] Show every setting of one connection	nmcli con show CONN   (pipe to grep ipv4)	rhcsa::net
+rh10-net-011	[Net] Make a connection start at boot	nmcli con mod CONN connection.autoconnect yes	rhcsa::net
+rh10-net-012	[Net] Where RHEL 10 stores connection profiles	/etc/NetworkManager/system-connections/*.nmconnection   (keyfiles; ifcfg files are gone)	rhcsa::net
+rh10-net-013	[Net] nmcli con down vs nmcli dev disconnect	con down deactivates the profile (another may auto-activate); dev disconnect downs the device and blocks auto-activation	rhcsa::net
+rh10-net-014	[Net] Show addresses / routes / links	ip a / ip r / ip link   (ip -6 r for IPv6 routes)	rhcsa::net
+rh10-net-015	[Net] Forgot the nmcli syntax	nmtui (menus for connections + hostname), tab completion, or man nmcli-examples	rhcsa::net
+rh10-net-016	[Net] Set the hostname persistently	hostnamectl set-hostname server1.example.com   (writes /etc/hostname)	rhcsa::net
+rh10-net-017	[Net] Static name-to-IP mappings	/etc/hosts   (checked before DNS per hosts: files dns in /etc/nsswitch.conf)	rhcsa::net
+rh10-net-018	[Net] Why not edit /etc/resolv.conf directly?	NetworkManager rewrites it — set ipv4.dns on the connection	rhcsa::net
+rh10-net-019	[Net] Test name resolution the way applications do	getent hosts NAME   (uses /etc/hosts + DNS; dig/host only ask DNS)	rhcsa::net
+rh10-users-001	[Users] Create a user with a shell, UID and supplementary group	useradd -u 2001 -s /bin/bash -G wheel bob   (-c comment, -d home, -M no home)	rhcsa::users
+rh10-users-002	[Users] Add a user to a group — the -a trap	usermod -aG GROUP USER — without -a, -G REPLACES all supplementary groups	rhcsa::users
+rh10-users-003	[Users] Change a user's primary group	usermod -g GROUP USER	rhcsa::users
+rh10-users-004	[Users] User that can't log in interactively	useradd -s /sbin/nologin USER (or usermod -s /sbin/nologin)	rhcsa::users
+rh10-users-005	[Users] Set a password non-interactively (two ways)	echo 'P@ss' | passwd --stdin USER   —or—   echo 'USER:P@ss' | chpasswd	rhcsa::users
+rh10-users-006	[Users] Lock / unlock an account	usermod -L USER / usermod -U USER   (or passwd -l / -u)	rhcsa::users
+rh10-users-007	[Users] nologin shell vs locked password	nologin blocks interactive shells; a locked password blocks password auth but NOT SSH keys	rhcsa::users
+rh10-users-008	[Users] Delete a user and their home + mail	userdel -r USER	rhcsa::users
+rh10-users-009	[Users] Force a password change at next login	chage -d 0 USER   (or passwd -e USER)	rhcsa::users
+rh10-users-010	[Users] Show password aging for a user	chage -l USER	rhcsa::users
+rh10-users-011	[Users] Max 90 days / min 7 days / warn 14 days	chage -M 90 USER / chage -m 7 USER / chage -W 14 USER	rhcsa::users
+rh10-users-012	[Users] Expire an account on a date / never	chage -E 2026-12-31 USER / chage -E -1 USER	rhcsa::users
+rh10-users-013	[Users] Password aging defaults for NEW users	PASS_MAX_DAYS, PASS_MIN_DAYS, PASS_WARN_AGE in /etc/login.defs (existing users: use chage)	rhcsa::users
+rh10-users-014	[Users] Files copied into every new home directory	/etc/skel/	rhcsa::users
+rh10-users-015	[Users] /etc/passwd fields	name:x:UID:GID:comment:home:shell	rhcsa::users
+rh10-users-016	[Users] /etc/shadow fields	name:hash:lastchange:min:max:warn:inactive:expire	rhcsa::users
+rh10-users-017	[Users] What does ! or !! at the start of the shadow hash mean?	Locked / no usable password	rhcsa::users
+rh10-users-018	[Users] UID ranges	0 = root, 1–999 = system, 1000+ = regular users	rhcsa::users
+rh10-users-019	[Users] Create a group / with GID 2000	groupadd devs / groupadd -g 2000 devs	rhcsa::users
+rh10-users-020	[Users] Rename / delete a group	groupmod -n new old / groupdel name (fails if it's someone's primary group)	rhcsa::users
+rh10-users-021	[Users] Add / remove a user from a group with gpasswd	gpasswd -a USER GROUP / gpasswd -d USER GROUP	rhcsa::users
+rh10-users-022	[Users] Show a user's UID, GID and groups	id USER	rhcsa::users
+rh10-users-023	[Users] Edit sudo config safely	visudo, or a file in /etc/sudoers.d/ (no dots in name; check with visudo -c)	rhcsa::users
+rh10-users-024	[Users] sudoers: full access for user bob / group admins	bob ALL=(ALL) ALL / %admins ALL=(ALL) ALL	rhcsa::users
+rh10-users-025	[Users] sudoers: no password prompt	%admins ALL=(ALL) NOPASSWD: ALL	rhcsa::users
+rh10-users-026	[Users] Fastest way to give a user full sudo on RHEL	usermod -aG wheel USER   (%wheel ALL=(ALL) ALL is already in /etc/sudoers)	rhcsa::users
+rh10-users-027	[Users] What does umask do?	Removes permission bits from new files (base 666) and dirs (base 777) — never adds	rhcsa::users
+rh10-users-028	[Users] umask 022 / 027 / 077 results for files and dirs	022 → 644/755 ; 027 → 640/750 ; 077 → 600/700	rhcsa::users
+rh10-users-029	[Users] Show the current umask	umask   (umask -S for symbolic)	rhcsa::users
+rh10-users-030	[Users] Persistent umask for one user / for everyone	umask 027 in that user's ~/.bashrc / a file in /etc/profile.d/*.sh	rhcsa::users
+rh10-security-001	[Security] Generate an SSH key pair	ssh-keygen -t ed25519   (-N '' for no passphrase)	rhcsa::security
+rh10-security-002	[Security] Install your public key on a server	ssh-copy-id user@host   (appends to remote ~/.ssh/authorized_keys)	rhcsa::security
+rh10-security-003	[Security] SSH permissions that silently break key login if wrong	~/.ssh 700 ; authorized_keys and private key 600 ; home not group/other-writable	rhcsa::security
+rh10-security-004	[Security] Disable root login / password auth in sshd	PermitRootLogin no / PasswordAuthentication no — then systemctl restart sshd	rhcsa::security
+rh10-security-005	[Security] sshd setting ignored on RHEL 10 — why?	sshd_config includes /etc/ssh/sshd_config.d/*.conf FIRST and the first value wins. Put your setting in a drop-in like 00-local.conf, or check those files	rhcsa::security
+rh10-security-006	[Security] Check sshd config syntax / see the effective value	sshd -t / sshd -T | grep -i permitrootlogin	rhcsa::security
+rh10-security-007	[Security] Move sshd to port 2222 — extra steps	semanage port -a -t ssh_port_t -p tcp 2222 ; firewall-cmd --permanent --add-port=2222/tcp ; firewall-cmd --reload	rhcsa::security
+rh10-security-008	[Security] firewalld must be running and enabled	systemctl enable --now firewalld	rhcsa::security
+rh10-security-009	[Security] Zones: list / default / which are active	firewall-cmd --get-zones / --get-default-zone / --get-active-zones	rhcsa::security
+rh10-security-010	[Security] Set the default zone	firewall-cmd --set-default-zone=ZONE	rhcsa::security
+rh10-security-011	[Security] Allow http persistently	firewall-cmd --permanent --add-service=http ; firewall-cmd --reload	rhcsa::security
+rh10-security-012	[Security] Allow TCP 8080 persistently	firewall-cmd --permanent --add-port=8080/tcp ; firewall-cmd --reload	rhcsa::security
+rh10-security-013	[Security] The firewalld exam trap	Without --permanent, the rule dies at reboot; with --permanent, it doesn't apply until --reload. Do both	rhcsa::security
+rh10-security-014	[Security] Save rules you added at runtime into the permanent config	firewall-cmd --runtime-to-permanent	rhcsa::security
+rh10-security-015	[Security] Remove a service / port rule	firewall-cmd --permanent --remove-service=http (or --remove-port=8080/tcp) ; firewall-cmd --reload	rhcsa::security
+rh10-security-016	[Security] Show the full config of the active zone	firewall-cmd --list-all   (--zone=NAME for another)	rhcsa::security
+rh10-security-017	[Security] List predefined service names / ports a service covers	firewall-cmd --get-services / firewall-cmd --info-service=nfs	rhcsa::security
+rh10-security-018	[Security] Allow everything from 10.0.0.0/24 / drop everything from 10.0.0.5	firewall-cmd --permanent --zone=trusted --add-source=10.0.0.0/24 / --zone=drop --add-source=10.0.0.5 ; then --reload	rhcsa::security
+rh10-selinux-001	[SELinux] Three SELinux modes	enforcing (blocks + logs), permissive (logs only), disabled	rhcsa::selinux
+rh10-selinux-002	[SELinux] Show / temporarily change the mode	getenforce / setenforce 0 (permissive) or 1 (enforcing)	rhcsa::selinux
+rh10-selinux-003	[SELinux] Make the mode persistent	SELINUX=enforcing in /etc/selinux/config (switching to/from disabled needs a reboot)	rhcsa::selinux
+rh10-selinux-004	[SELinux] Full SELinux status	sestatus	rhcsa::selinux
+rh10-selinux-005	[SELinux] Context format and the field that matters	user:role:type:level (system_u:object_r:httpd_sys_content_t:s0) — the TYPE	rhcsa::selinux
+rh10-selinux-006	[SELinux] Show contexts of files / processes	ls -Z / ps -eZ   (ps -eZ | grep httpd)	rhcsa::selinux
+rh10-selinux-007	[SELinux] Reset files to their default labels	restorecon -Rv /path	rhcsa::selinux
+rh10-selinux-008	[SELinux] mv vs cp and SELinux	mv keeps the OLD label; cp takes the destination's label. Moved content 403s? restorecon -Rv it	rhcsa::selinux
+rh10-selinux-009	[SELinux] Permanently label /srv/web for Apache	semanage fcontext -a -t httpd_sys_content_t '/srv/web(/.*)?' ; restorecon -Rv /srv/web   (both steps)	rhcsa::selinux
+rh10-selinux-010	[SELinux] What label should a path get by policy?	matchpathcon /path   (or semanage fcontext -l | grep web)	rhcsa::selinux
+rh10-selinux-011	[SELinux] chcon -t … vs semanage fcontext	chcon changes the label now but a relabel/restorecon undoes it; semanage fcontext + restorecon is persistent	rhcsa::selinux
+rh10-selinux-012	[SELinux] Package that provides semanage	policycoreutils-python-utils	rhcsa::selinux
+rh10-selinux-013	[SELinux] Allow httpd to listen on TCP 82	semanage port -a -t http_port_t -p tcp 82	rhcsa::selinux
+rh10-selinux-014	[SELinux] semanage port -a fails with 'already defined' (e.g. 8080)	The port already has another type (8080 = http_cache_port_t) — use -m: semanage port -m -t http_port_t -p tcp 8080	rhcsa::selinux
+rh10-selinux-015	[SELinux] List port labels for http	semanage port -l | grep http	rhcsa::selinux
+rh10-selinux-016	[SELinux] List booleans / set one persistently	getsebool -a / setsebool -P NAME on   (no -P = resets at reboot)	rhcsa::selinux
+rh10-selinux-017	[SELinux] Find booleans for a service, with descriptions	semanage boolean -l | grep httpd	rhcsa::selinux
+rh10-selinux-018	[SELinux] Booleans worth knowing	httpd_can_network_connect, httpd_enable_homedirs, use_nfs_home_dirs	rhcsa::selinux
+rh10-selinux-019	[SELinux] Find recent SELinux denials	ausearch -m avc -ts recent   (or grep AVC /var/log/audit/audit.log ; sealert -a if setroubleshoot is installed)	rhcsa::selinux
+rh10-selinux-020	[SELinux] SELinux troubleshooting order	1) setenforce 0 — does it work now? (then setenforce 1!) 2) read the AVC 3) fix: restorecon → port label → boolean → fcontext rule	rhcsa::selinux beyond-objectives
+rh10-docs-001	[Docs] fstab syntax and options	man 5 fstab   (NFS options: man 5 nfs)	rhcsa::docs
+rh10-docs-002	[Docs] autofs map syntax	man 5 autofs, and copy from /etc/auto.misc and /etc/auto.master	rhcsa::docs
+rh10-docs-003	[Docs] crontab field order	cat /etc/crontab — the comment header draws the fields. Also man 5 crontab	rhcsa::docs
+rh10-docs-004	[Docs] systemd timer syntax	man systemd.timer and man systemd.time (OnCalendar). Copy a real one: systemctl cat dnf-makecache.timer	rhcsa::docs
+rh10-docs-005	[Docs] nmcli examples	man nmcli-examples	rhcsa::docs
+rh10-docs-006	[Docs] nmcli property names	man nm-settings   (or nmcli con show CONN lists them all)	rhcsa::docs
+rh10-docs-007	[Docs] semanage fcontext regex example	man semanage-fcontext → EXAMPLES at the bottom	rhcsa::docs
+rh10-docs-008	[Docs] .repo file options	man 5 dnf.conf (also man yum.conf)	rhcsa::docs
+rh10-docs-009	[Docs] sudoers syntax	man 5 sudoers — and the commented examples inside /etc/sudoers	rhcsa::docs
+rh10-docs-010	[Docs] sshd options	man 5 sshd_config	rhcsa::docs
+rh10-docs-011	[Docs] chrony settings	man chrony.conf   (and the comments in /etc/chrony.conf)	rhcsa::docs
+rh10-docs-012	[Docs] journald settings	man journald.conf	rhcsa::docs
+rh10-docs-013	[Docs] bash test operators	help test (or man test)	rhcsa::docs
+rh10-exam-001	[Exam] End-of-exam persistence checklist	services enabled; firewall --permanent + --reload; fstab + mount -a; setsebool -P; nmcli con up; tuned profile set. Then REBOOT every node and verify each task	rhcsa::exam
+rh10-exam-002	[Exam] SELinux on the exam	Leave it enforcing. Never 'fix' a task by disabling SELinux or firewalld — the grader checks the final state	rhcsa::exam
+rh10-exam-003	[Exam] Do networking/hostname/repos first — why?	Later tasks (packages, NFS, autofs, chrony) depend on them; a broken network or repo stalls everything else	rhcsa::exam
+rh10-exam-004	[Exam] Root password task on a node	Do it FIRST — you can't do anything else on that node without root	rhcsa::exam
+rh10-exam-005	[Exam] Before you reboot mid-exam	findmnt --verify and mount -a — a bad fstab line can stop the VM booting	rhcsa::exam
+rh10-exam-006	[Exam] Read the task literally	Exact names, UIDs, paths, case and permissions. 'Group sysadmin' ≠ 'sysadmins'	rhcsa::exam
