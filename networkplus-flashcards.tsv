@@ -1,0 +1,596 @@
+#separator:tab
+#html:false
+#notetype:Basic
+#deck:CompTIA Network+ N10-009
+#guid column:1
+#tags column:4
+np9-1.1-001	[OSI] The 7 OSI layers, bottom (1) to top (7)	Physical, Data Link, Network, Transport, Session, Presentation, Application   (Please Do Not Throw Sausage Pizza Away)	netplus::1.1
+np9-1.1-002	[OSI] OSI layer 1 — name and job	Physical: bits as electrical/light/radio signals — cables, connectors, signaling, hubs, repeaters	netplus::1.1
+np9-1.1-003	[OSI] OSI layer 2 — name and job	Data Link: frames between devices on the SAME local network, using MAC addresses — switches, bridges, NICs, Ethernet, 802.11	netplus::1.1
+np9-1.1-004	[OSI] OSI layer 3 — name and job	Network: packets between DIFFERENT networks using logical (IP) addresses and routing — routers, L3 switches, IP, ICMP, IPsec	netplus::1.1
+np9-1.1-005	[OSI] OSI layer 4 — name and job	Transport: end-to-end delivery between applications using port numbers — TCP (reliable) and UDP (best effort)	netplus::1.1
+np9-1.1-006	[OSI] OSI layer 5 — name and job	Session: sets up, maintains and tears down sessions between applications (dialog control)	netplus::1.1
+np9-1.1-007	[OSI] OSI layer 6 — name and job	Presentation: formats/translates data — encoding, compression, encryption (e.g. TLS/SSL is often placed here, JPEG, ASCII)	netplus::1.1
+np9-1.1-008	[OSI] OSI layer 7 — name and job	Application: network services applications use — HTTP, DNS, SMTP, FTP, SSH (the protocol, not the app itself)	netplus::1.1
+np9-1.1-009	[OSI] OSI layer 2's two sublayers	LLC (Logical Link Control, talks to layer 3) and MAC (Media Access Control, addressing + media access)	netplus::1.1
+np9-1.1-010	[OSI] PDU name at layers 1, 2, 3, 4	L1 bits, L2 frames, L3 packets, L4 segments (TCP) / datagrams (UDP)	netplus::1.1
+np9-1.1-011	[OSI] Address type used at layer 2 / layer 3 / layer 4	MAC address / IP address / port number	netplus::1.1
+np9-1.1-012	[OSI] MAC address: size and structure	48 bits written as 12 hex digits; first 24 bits = OUI (manufacturer ID), last 24 = device-specific	netplus::1.1
+np9-1.1-013	[OSI] What is encapsulation?	Each layer wraps the data from the layer above with its own header (and L2 trailer) on the way down; decapsulation strips them on the way up	netplus::1.1
+np9-1.1-014	[OSI] Which layer: hub, repeater, media converter, transceiver	Layer 1	netplus::1.1
+np9-1.1-015	[OSI] Which layer: switch, bridge, wireless AP, NIC	Layer 2	netplus::1.1
+np9-1.1-016	[OSI] Which layer: router, layer-3 switch	Layer 3	netplus::1.1
+np9-1.1-017	[OSI] Which layer: a basic packet-filter firewall vs a next-generation firewall	Packet filter: layers 3–4 (IPs, ports). NGFW: up to layer 7 (identifies applications)	netplus::1.1
+np9-1.1-018	[OSI] TCP vs UDP	TCP: connection-oriented, reliable (sequencing, ACKs, retransmits, flow control). UDP: connectionless, no guarantees, lower overhead (DNS queries, VoIP, streaming, DHCP)	netplus::1.1
+np9-1.1-019	[OSI] TCP three-way handshake	SYN → SYN-ACK → ACK	netplus::1.1
+np9-1.1-020	[OSI] How TCP closes / aborts a connection	FIN (graceful close, acknowledged by both sides) / RST (immediate reset)	netplus::1.1
+np9-1.1-021	[OSI] TCP windowing	Flow control — the receiver advertises how much data it can accept before an ACK; the window grows/shrinks with conditions	netplus::1.1
+np9-1.1-022	[OSI] Default Ethernet MTU	1500 bytes (payload); a standard frame is up to 1518 bytes	netplus::1.1
+np9-1.1-023	[OSI] Troubleshooting 'bottom-up' — what do you check first?	Layer 1: cable, link lights, power, port — then work up the stack	netplus::1.1
+np9-1.2-001	[Devices] Router	Layer 3 device that forwards packets between networks by IP address; each interface is its own broadcast domain	netplus::1.2
+np9-1.2-002	[Devices] Switch	Layer 2 device that forwards frames by MAC address using its MAC address table; each port is its own collision domain	netplus::1.2
+np9-1.2-003	[Devices] Layer 3 switch	A switch that can also route — typically routes between VLANs using SVIs	netplus::1.2
+np9-1.2-004	[Devices] Hub	Layer 1 — repeats every signal out every port; one big collision domain, half duplex. Obsolete	netplus::1.2
+np9-1.2-005	[Devices] How a switch handles a frame for a MAC it hasn't learned (or a broadcast)	Floods it out all ports in that VLAN except the one it came in on	netplus::1.2
+np9-1.2-006	[Devices] Collision domain vs broadcast domain	Collision domain: segment where frames can collide (switches split them per port). Broadcast domain: everyone who hears a broadcast (routers/VLANs split them)	netplus::1.2
+np9-1.2-007	[Devices] Firewall	Filters traffic between zones based on rules (IP, port, protocol, state, application)	netplus::1.2
+np9-1.2-008	[Devices] Stateful vs stateless firewall	Stateful tracks connections and automatically allows return traffic; stateless checks each packet against rules in isolation	netplus::1.2
+np9-1.2-009	[Devices] Next-generation firewall (NGFW)	Stateful firewall + application awareness (layer 7), integrated IPS, URL filtering, often TLS inspection	netplus::1.2
+np9-1.2-010	[Devices] IDS vs IPS	IDS detects and alerts (passive, often fed by a SPAN/TAP copy). IPS sits inline and can BLOCK traffic	netplus::1.2
+np9-1.2-011	[Devices] Signature-based vs anomaly-based detection	Signature: matches known attack patterns (misses new attacks). Anomaly/behavior: flags deviations from a baseline (catches new attacks, more false positives)	netplus::1.2
+np9-1.2-012	[Devices] HIDS/HIPS vs NIDS/NIPS	Host-based runs on one endpoint; network-based watches traffic on a network segment	netplus::1.2
+np9-1.2-013	[Devices] Load balancer	Spreads client requests across multiple servers behind one virtual IP, using health checks — for scalability and availability	netplus::1.2
+np9-1.2-014	[Devices] Load balancing methods to know	Round robin, weighted round robin, least connections, source IP hash/affinity (sticky sessions)	netplus::1.2
+np9-1.2-015	[Devices] Forward proxy vs reverse proxy	Forward proxy: sits in front of CLIENTS going out (caching, filtering, anonymity). Reverse proxy: sits in front of SERVERS taking requests in (load balancing, TLS offload, protection)	netplus::1.2
+np9-1.2-016	[Devices] NAS vs SAN	NAS: file-level storage over the normal network (SMB/NFS). SAN: block-level storage on a dedicated network (Fibre Channel, iSCSI) — appears as a local disk	netplus::1.2
+np9-1.2-017	[Devices] Wireless access point (AP)	Bridges wireless clients onto the wired network (layer 2)	netplus::1.2
+np9-1.2-018	[Devices] Wireless LAN controller (WLC)	Centrally configures and manages many lightweight APs (channels, power, security, roaming)	netplus::1.2
+np9-1.2-019	[Devices] VPN (as a network function)	Creates an encrypted tunnel across an untrusted network (internet) between sites or a client and a site	netplus::1.2
+np9-1.2-020	[Devices] Quality of Service (QoS)	Classifies and prioritizes traffic (voice/video first) so latency-sensitive traffic survives congestion	netplus::1.2
+np9-1.2-021	[Devices] QoS markings at layer 2 vs layer 3	L2: CoS (802.1p, 3 bits in the 802.1Q tag). L3: DSCP (6 bits in the IP header; EF = voice)	netplus::1.2
+np9-1.2-022	[Devices] Traffic shaping vs policing	Shaping buffers/delays excess traffic to smooth it; policing drops (or re-marks) traffic over the limit	netplus::1.2
+np9-1.2-023	[Devices] TTL in an IP packet	Hop limit — each router decrements it; at 0 the packet is dropped (and ICMP Time Exceeded sent). Prevents endless routing loops. IPv6 calls it Hop Limit	netplus::1.2
+np9-1.2-024	[Devices] TTL in DNS	How long a resolver may cache a record before asking again	netplus::1.2
+np9-1.2-025	[Devices] Content Delivery Network (CDN)	Geographically distributed servers that cache content close to users — faster loads, less origin load, absorbs DDoS	netplus::1.2
+np9-1.2-026	[Devices] Physical vs virtual network devices	Same functions (switch, router, firewall, LB) either as dedicated hardware or as software/VMs (virtual switch in a hypervisor, virtual firewall appliance)	netplus::1.2
+np9-1.2-027	[Devices] Media converter	Layer 1 device that converts between media types, e.g. copper Ethernet ↔ fiber	netplus::1.2
+np9-1.2-028	[Devices] Modem	Converts between digital data and the carrier's signal (cable/DSL/fiber ONT) at the ISP demarcation	netplus::1.2
+np9-1.3-001	[Cloud] Network Functions Virtualization (NFV)	Running network functions (router, firewall, load balancer) as software on standard servers instead of dedicated appliances	netplus::1.3
+np9-1.3-002	[Cloud] Virtual Private Cloud (VPC)	A logically isolated private network you define inside a public cloud (your own subnets, routes, gateways)	netplus::1.3
+np9-1.3-003	[Cloud] Network security group (cloud)	Firewall rules attached to instances/network interfaces; typically stateful	netplus::1.3
+np9-1.3-004	[Cloud] Network security list / network ACL (cloud)	Firewall rules applied at the SUBNET level; e.g. AWS network ACLs are stateless (return traffic needs its own rule)	netplus::1.3
+np9-1.3-005	[Cloud] Internet gateway (cloud)	Lets resources in a VPC with public IPs reach the internet and be reached from it	netplus::1.3
+np9-1.3-006	[Cloud] NAT gateway (cloud)	Lets instances in a PRIVATE subnet start outbound connections to the internet while blocking unsolicited inbound connections	netplus::1.3
+np9-1.3-007	[Cloud] Cloud connectivity: VPN vs direct connection	VPN: encrypted tunnel over the internet — cheap, quick. Direct connection (AWS Direct Connect, Azure ExpressRoute): private dedicated link — consistent latency/bandwidth, not over the internet, costs more	netplus::1.3
+np9-1.3-008	[Cloud] Public vs private vs hybrid cloud	Public: shared provider infrastructure. Private: dedicated to one organization. Hybrid: mix of the two, connected	netplus::1.3
+np9-1.3-009	[Cloud] IaaS	Provider supplies virtual compute/storage/network; YOU manage OS, apps, data (e.g. AWS EC2, Azure VMs)	netplus::1.3
+np9-1.3-010	[Cloud] PaaS	Provider manages OS and runtime; you deploy your code/apps and data (e.g. Azure App Service, Google App Engine, Heroku)	netplus::1.3
+np9-1.3-011	[Cloud] SaaS	Provider runs the whole application; you just use it (e.g. Microsoft 365, Gmail, Salesforce)	netplus::1.3
+np9-1.3-012	[Cloud] Scalability vs elasticity	Scalability: ability to add capacity as demand grows. Elasticity: automatically scaling up AND down with demand	netplus::1.3
+np9-1.3-013	[Cloud] Multitenancy	Many customers share the same physical infrastructure/software instance, logically isolated from each other	netplus::1.3
+np9-1.3-014	[Cloud] Shared responsibility model	Provider secures the cloud itself; customer secures what they put in it — the split shifts toward the provider from IaaS → PaaS → SaaS	netplus::1.3 beyond-objectives
+np9-1.4-001	[Ports] Port(s): FTP	TCP 20 (data) and 21 (control)	netplus::1.4
+np9-1.4-002	[Ports] Port: SSH	TCP 22	netplus::1.4
+np9-1.4-003	[Ports] Port: SFTP	TCP 22 (it runs over SSH)	netplus::1.4
+np9-1.4-004	[Ports] Port: Telnet	TCP 23 (cleartext — replace with SSH)	netplus::1.4
+np9-1.4-005	[Ports] Port: SMTP	TCP 25	netplus::1.4
+np9-1.4-006	[Ports] Port: DNS	53 — UDP for normal queries, TCP for zone transfers and large responses	netplus::1.4
+np9-1.4-007	[Ports] Port(s): DHCP	UDP 67 (server) and 68 (client)	netplus::1.4
+np9-1.4-008	[Ports] Port: TFTP	UDP 69 (no authentication; used for config/firmware/PXE boot files)	netplus::1.4
+np9-1.4-009	[Ports] Port: HTTP	TCP 80	netplus::1.4
+np9-1.4-010	[Ports] Port: NTP	UDP 123	netplus::1.4
+np9-1.4-011	[Ports] Port(s): SNMP	UDP 161 (agent queries) and 162 (traps)	netplus::1.4
+np9-1.4-012	[Ports] Port: LDAP	389	netplus::1.4
+np9-1.4-013	[Ports] Port: HTTPS	TCP 443	netplus::1.4
+np9-1.4-014	[Ports] Port: SMB	TCP 445	netplus::1.4
+np9-1.4-015	[Ports] Port: Syslog	UDP 514	netplus::1.4
+np9-1.4-016	[Ports] Port: SMTPS / secure mail submission (CompTIA's answer)	587 (SMTP submission with STARTTLS). Also know 465 = SMTP over implicit TLS	netplus::1.4
+np9-1.4-017	[Ports] Port: LDAPS	636	netplus::1.4
+np9-1.4-018	[Ports] Port: Microsoft SQL Server	TCP 1433	netplus::1.4
+np9-1.4-019	[Ports] Port: RDP	TCP 3389	netplus::1.4
+np9-1.4-020	[Ports] Port(s): SIP	5060 (unencrypted) and 5061 (SIP over TLS)	netplus::1.4
+np9-1.4-021	[Ports] What uses port 20/21?	FTP (20 data, 21 control)	netplus::1.4
+np9-1.4-022	[Ports] What uses port 22?	SSH (and SFTP over it)	netplus::1.4
+np9-1.4-023	[Ports] What uses port 23?	Telnet	netplus::1.4
+np9-1.4-024	[Ports] What uses port 25?	SMTP	netplus::1.4
+np9-1.4-025	[Ports] What uses port 53?	DNS	netplus::1.4
+np9-1.4-026	[Ports] What uses ports 67/68?	DHCP	netplus::1.4
+np9-1.4-027	[Ports] What uses port 69?	TFTP	netplus::1.4
+np9-1.4-028	[Ports] What uses port 123?	NTP	netplus::1.4
+np9-1.4-029	[Ports] What uses ports 161/162?	SNMP (162 = traps)	netplus::1.4
+np9-1.4-030	[Ports] What uses port 389?	LDAP	netplus::1.4
+np9-1.4-031	[Ports] What uses port 445?	SMB	netplus::1.4
+np9-1.4-032	[Ports] What uses port 514?	Syslog	netplus::1.4
+np9-1.4-033	[Ports] What uses port 587?	SMTP mail submission with TLS (CompTIA: SMTPS)	netplus::1.4
+np9-1.4-034	[Ports] What uses port 636?	LDAPS	netplus::1.4
+np9-1.4-035	[Ports] What uses port 1433?	Microsoft SQL Server	netplus::1.4
+np9-1.4-036	[Ports] What uses port 3389?	RDP	netplus::1.4
+np9-1.4-037	[Ports] What uses ports 5060/5061?	SIP (VoIP call signaling; 5061 = TLS)	netplus::1.4
+np9-1.4-038	[Ports] Insecure protocol → secure replacement	Telnet → SSH; HTTP → HTTPS; FTP → SFTP/FTPS; LDAP → LDAPS; SNMPv1/v2c → SNMPv3; SIP 5060 → 5061	netplus::1.4
+np9-1.4-039	[Ports] Port(s): POP3 / POP3S	110 / 995	netplus::1.4 beyond-objectives
+np9-1.4-040	[Ports] Port(s): IMAP / IMAPS	143 / 993	netplus::1.4 beyond-objectives
+np9-1.4-041	[Ports] ICMP	Layer 3 control/error messaging (ping, traceroute, unreachable, time exceeded). No ports. IP protocol 1	netplus::1.4
+np9-1.4-042	[Ports] ICMP message types: echo request / echo reply / destination unreachable / time exceeded	8 / 0 / 3 / 11	netplus::1.4
+np9-1.4-043	[Ports] IP protocol numbers for TCP, UDP, GRE, ESP, AH	TCP 6, UDP 17, GRE 47, ESP 50, AH 51	netplus::1.4
+np9-1.4-044	[Ports] GRE	Generic Routing Encapsulation — tunnels almost any traffic (incl. multicast/routing protocols) inside IP. NO encryption on its own (often run inside IPsec)	netplus::1.4
+np9-1.4-045	[Ports] IPsec AH	Authentication Header — integrity and authentication, NO encryption; breaks through NAT	netplus::1.4
+np9-1.4-046	[Ports] IPsec ESP	Encapsulating Security Payload — encryption + integrity + authentication (the one you normally use)	netplus::1.4
+np9-1.4-047	[Ports] IPsec IKE	Internet Key Exchange — negotiates the security associations and keys; UDP 500 (UDP 4500 for NAT traversal)	netplus::1.4
+np9-1.4-048	[Ports] IPsec transport vs tunnel mode	Transport: protects the payload, keeps the original IP header (host-to-host). Tunnel: encrypts the whole original packet inside a new IP header (site-to-site VPN)	netplus::1.4
+np9-1.4-049	[Ports] Unicast	One sender → one specific receiver	netplus::1.4
+np9-1.4-050	[Ports] Multicast	One sender → a group of subscribed receivers (IPv4 224.0.0.0/4, IPv6 ff00::/8), e.g. streaming, routing protocol updates	netplus::1.4
+np9-1.4-051	[Ports] Anycast	One address advertised from many locations; traffic goes to the NEAREST one (e.g. DNS root servers, CDNs)	netplus::1.4
+np9-1.4-052	[Ports] Broadcast	One sender → every host on the local segment (IPv4 only; IPv6 has no broadcast and uses multicast instead)	netplus::1.4
+np9-1.5-001	[Media] 802.11a	5 GHz, up to 54 Mbps (1999)	netplus::1.5
+np9-1.5-002	[Media] 802.11b	2.4 GHz, up to 11 Mbps (1999)	netplus::1.5
+np9-1.5-003	[Media] 802.11g	2.4 GHz, up to 54 Mbps, backward compatible with b (2003)	netplus::1.5
+np9-1.5-004	[Media] 802.11n (Wi-Fi 4)	2.4 AND 5 GHz, MIMO, up to 600 Mbps, 40 MHz channels (2009)	netplus::1.5
+np9-1.5-005	[Media] 802.11ac (Wi-Fi 5)	5 GHz only, MU-MIMO (downlink), up to 160 MHz channels, multi-gigabit (~6.9 Gbps theoretical) (2013)	netplus::1.5
+np9-1.5-006	[Media] 802.11ax (Wi-Fi 6 / 6E)	2.4 and 5 GHz (6E adds 6 GHz), OFDMA, up to ~9.6 Gbps — built for efficiency in crowded areas	netplus::1.5
+np9-1.5-007	[Media] 802.11be (Wi-Fi 7)	2.4/5/6 GHz, 320 MHz channels, Multi-Link Operation — newest standard	netplus::1.5 beyond-objectives
+np9-1.5-008	[Media] Which 802.11 standards use 2.4 GHz?	b, g, n, ax	netplus::1.5
+np9-1.5-009	[Media] Which 802.11 standards use 5 GHz?	a, n, ac, ax	netplus::1.5
+np9-1.5-010	[Media] Which Wi-Fi generation added the 6 GHz band?	Wi-Fi 6E (802.11ax extended)	netplus::1.5
+np9-1.5-011	[Media] MIMO vs MU-MIMO	MIMO: multiple antennas/streams to ONE client at a time. MU-MIMO: streams to several clients simultaneously	netplus::1.5
+np9-1.5-012	[Media] OFDMA (Wi-Fi 6)	Splits a channel into sub-carriers (resource units) so many clients can transmit in the same time slot — efficiency in dense areas	netplus::1.5
+np9-1.5-013	[Media] Cellular options to recognize	4G LTE and 5G — used for WAN backup, branch connectivity, out-of-band management, IoT	netplus::1.5
+np9-1.5-014	[Media] Satellite internet: the main drawback	Latency — geostationary (GEO) ~600 ms+ round trip; low Earth orbit (LEO, e.g. Starlink) is far lower. Also weather sensitivity	netplus::1.5
+np9-1.5-015	[Media] Decode 1000BASE-T	1000 Mbps, BASEband signaling, Twisted pair copper	netplus::1.5
+np9-1.5-016	[Media] Copper Ethernet standards: 100BASE-TX, 1000BASE-T, 10GBASE-T	100 Mbps / 1 Gbps / 10 Gbps over twisted pair, all up to 100 m (10GBASE-T needs Cat6a for 100 m)	netplus::1.5
+np9-1.5-017	[Media] Fiber Ethernet: what do S and L mean in 1000BASE-SX / 10GBASE-LR?	S = short wavelength (multimode, shorter distances); L = long wavelength (single-mode, km distances)	netplus::1.5
+np9-1.5-018	[Media] Typical reach: 10GBASE-SR vs 10GBASE-LR	SR: multimode, ~300–400 m. LR: single-mode, ~10 km	netplus::1.5
+np9-1.5-019	[Media] Max length of a twisted-pair Ethernet run	100 meters (328 ft) — 90 m permanent link + patch cords	netplus::1.5
+np9-1.5-020	[Media] Cat5 / Cat5e	Cat5: 100 Mbps. Cat5e: 1 Gbps — 100 m	netplus::1.5
+np9-1.5-021	[Media] Cat6	1 Gbps at 100 m; 10 Gbps only up to ~55 m	netplus::1.5
+np9-1.5-022	[Media] Cat6a	10 Gbps at 100 m	netplus::1.5
+np9-1.5-023	[Media] Cat7	10 Gbps at 100 m, shielded (S/FTP) — not an official TIA standard	netplus::1.5
+np9-1.5-024	[Media] Cat8	25/40 Gbps, but only ~30 m — data center (switch-to-server) use	netplus::1.5
+np9-1.5-025	[Media] UTP vs STP	UTP: unshielded, cheapest, most common. STP/shielded: foil/braid shielding for high-EMI areas; must be grounded	netplus::1.5
+np9-1.5-026	[Media] Single-mode fiber	Small core (~9 µm), laser light, one light path → long distances (km+). Often yellow jacket	netplus::1.5
+np9-1.5-027	[Media] Multimode fiber	Larger core (50/62.5 µm), LED/VCSEL light, many paths (modal dispersion) → shorter distances (hundreds of m). Often orange or aqua	netplus::1.5
+np9-1.5-028	[Media] Advantages of fiber over copper	Immune to EMI, much longer distances, higher bandwidth, harder to tap	netplus::1.5
+np9-1.5-029	[Media] Direct Attach Copper (DAC)	Twinaxial copper cable with SFP/QSFP ends built on — cheap, low-latency, short (a few meters) links inside/between racks	netplus::1.5
+np9-1.5-030	[Media] Twinaxial cable	Two inner conductors in one shielded cable — used in DAC cables	netplus::1.5
+np9-1.5-031	[Media] Coaxial cable: common types and use	RG-6 (cable TV/cable internet, F-type connector); RG-59 older/shorter runs	netplus::1.5
+np9-1.5-032	[Media] Plenum vs non-plenum cable	Plenum-rated jacket is fire-retardant and low-smoke — required in air-handling spaces (above drop ceilings/under raised floors). PVC non-plenum is cheaper but toxic when burned	netplus::1.5
+np9-1.5-033	[Media] Transceiver protocols to know	Ethernet and Fibre Channel (FC — storage networking for SANs)	netplus::1.5
+np9-1.5-034	[Media] SFP vs SFP+	SFP: 1 Gbps. SFP+: 10 Gbps. Same small form factor, hot-pluggable	netplus::1.5
+np9-1.5-035	[Media] QSFP / QSFP+ / QSFP28	Quad SFP — four lanes: QSFP+ 40 Gbps, QSFP28 100 Gbps	netplus::1.5
+np9-1.5-036	[Media] RJ11	Small 6-position connector for telephone lines/DSL	netplus::1.5
+np9-1.5-037	[Media] RJ45	8-position 8-contact (8P8C) connector for twisted-pair Ethernet	netplus::1.5
+np9-1.5-038	[Media] F-type connector	Screw-on coax connector — cable modems, cable TV	netplus::1.5
+np9-1.5-039	[Media] BNC connector	Bayonet (twist-lock) coax connector — older Ethernet, video/CCTV, test equipment	netplus::1.5
+np9-1.5-040	[Media] SC fiber connector	Square, push-pull snap-in connector (subscriber/square connector)	netplus::1.5
+np9-1.5-041	[Media] LC fiber connector	Small latched 'local/little connector' — the common one on SFP modules	netplus::1.5
+np9-1.5-042	[Media] ST fiber connector	Round bayonet 'straight tip' — push and twist ('stick and twist')	netplus::1.5
+np9-1.5-043	[Media] MPO fiber connector	Multi-fiber push-on — one connector carrying 12/24 fibers for 40/100G links	netplus::1.5
+np9-1.5-044	[Media] T568B pinout order (pins 1–8)	White-orange, orange, white-green, blue, white-blue, green, white-brown, brown	netplus::1.5
+np9-1.5-045	[Media] T568A vs T568B	The orange and green pairs are swapped. Use the same standard on both ends for a straight-through cable	netplus::1.5
+np9-1.5-046	[Media] Straight-through vs crossover cable	Straight-through: same standard both ends (PC → switch). Crossover: T568A on one end, B on the other (like device → like device). Auto-MDIX makes this mostly irrelevant today	netplus::1.5
+np9-1.5-047	[Media] Rollover/console cable	Connects a PC to a switch/router console port for out-of-band CLI access	netplus::1.5
+np9-1.5-048	[Media] UPC vs APC fiber polish	APC is angled (green connector) and has lower back-reflection; never mate APC with UPC (blue)	netplus::1.5 beyond-objectives
+np9-1.6-001	[Topologies] Star / hub-and-spoke topology	All nodes connect to a central device or site. Easy to manage; the center is a single point of failure	netplus::1.6
+np9-1.6-002	[Topologies] Full mesh topology	Every node connects to every other node — maximum redundancy, most expensive. Links = n(n−1)/2	netplus::1.6
+np9-1.6-003	[Topologies] Partial mesh	Some nodes have multiple connections — balances redundancy and cost (typical WAN core)	netplus::1.6
+np9-1.6-004	[Topologies] Hybrid topology	A combination of two or more topologies (e.g. star sites connected by a mesh)	netplus::1.6
+np9-1.6-005	[Topologies] Point-to-point	A direct link between exactly two endpoints (e.g. a leased line or wireless bridge between two buildings)	netplus::1.6
+np9-1.6-006	[Topologies] Three-tier hierarchical model: the layers	Core, Distribution, Access	netplus::1.6
+np9-1.6-007	[Topologies] Access layer	Where end devices connect (PCs, phones, APs, printers); port security, PoE, VLAN assignment	netplus::1.6
+np9-1.6-008	[Topologies] Distribution layer	Aggregates access switches; routing between VLANs, policy/ACLs, redundancy	netplus::1.6
+np9-1.6-009	[Topologies] Core layer	High-speed, highly redundant backbone that moves traffic between distribution blocks — keep it fast and simple	netplus::1.6
+np9-1.6-010	[Topologies] Collapsed core	Core and distribution combined into one layer (two-tier) — smaller campuses that don't need three tiers	netplus::1.6
+np9-1.6-011	[Topologies] Spine-and-leaf: who connects to whom?	Every leaf connects to every spine. Leaves never connect to each other; spines never connect to each other. Servers connect to leaves	netplus::1.6
+np9-1.6-012	[Topologies] Spine-and-leaf: why data centers use it	Any server is at most leaf→spine→leaf away — predictable low latency, all links active (ECMP, no STP blocking), scale by adding leaves (ports) or spines (bandwidth)	netplus::1.6
+np9-1.6-013	[Topologies] North-south traffic	Traffic entering/leaving the data center (clients ↔ servers, internet ↔ DC)	netplus::1.6
+np9-1.6-014	[Topologies] East-west traffic	Traffic between servers INSIDE the data center — dominant in modern apps; spine-leaf is optimized for it	netplus::1.6
+np9-1.6-015	[Topologies] Three-tier with STP: the downside	STP blocks redundant links, wasting bandwidth, and paths/latency vary	netplus::1.6
+np9-1.6-016	[Topologies] LAN vs MAN vs WAN	LAN: one building/campus, owned. MAN: across a city. WAN: connects distant sites, usually leased from carriers	netplus::1.6 beyond-objectives
+np9-1.7-001	[IPv4] RFC 1918 private range in the 10.x space	10.0.0.0/8 (10.0.0.0 – 10.255.255.255)	netplus::1.7
+np9-1.7-002	[IPv4] RFC 1918 private range in the 172.x space	172.16.0.0/12 (172.16.0.0 – 172.31.255.255)	netplus::1.7
+np9-1.7-003	[IPv4] RFC 1918 private range in the 192.168.x space	192.168.0.0/16	netplus::1.7
+np9-1.7-004	[IPv4] Is 172.32.1.1 private?	No — the private 172 block stops at 172.31.255.255	netplus::1.7
+np9-1.7-005	[IPv4] Can private addresses be routed on the internet?	No — ISPs drop them. NAT translates them to a public address	netplus::1.7
+np9-1.7-006	[IPv4] APIPA range — and what it tells you	169.254.0.0/16. The host couldn't reach a DHCP server, so it self-assigned a link-local address	netplus::1.7
+np9-1.7-007	[IPv4] Loopback range	127.0.0.0/8 (127.0.0.1 = localhost); never leaves the host	netplus::1.7
+np9-1.7-008	[IPv4] 0.0.0.0	'This host/unspecified' (e.g. DHCP Discover source); as a route 0.0.0.0/0 = default route	netplus::1.7
+np9-1.7-009	[IPv4] 255.255.255.255	Limited broadcast — every host on the local segment; not forwarded by routers	netplus::1.7
+np9-1.7-010	[IPv4] Class A: first-octet range and default mask	1–126, /8 (255.0.0.0)   (127 is loopback)	netplus::1.7
+np9-1.7-011	[IPv4] Class B: first-octet range and default mask	128–191, /16 (255.255.0.0)	netplus::1.7
+np9-1.7-012	[IPv4] Class C: first-octet range and default mask	192–223, /24 (255.255.255.0)	netplus::1.7
+np9-1.7-013	[IPv4] Class D	224–239 — multicast	netplus::1.7
+np9-1.7-014	[IPv4] Class E	240–255 — experimental/reserved	netplus::1.7
+np9-1.7-015	[IPv4] What class is 150.10.25.1?	Class B (first octet 128–191)	netplus::1.7
+np9-1.7-016	[IPv4] What class is 198.162.1.1?	Class C (192–223) — and NOT private (private is 192.168)	netplus::1.7
+np9-1.7-017	[IPv4] CIDR	Classless Inter-Domain Routing — any prefix length (/x) instead of fixed classes; enables route summarization	netplus::1.7
+np9-1.7-018	[IPv4] VLSM	Variable Length Subnet Masking — different-sized subnets within one network to match each segment's host count (assign largest first)	netplus::1.7
+np9-1.7-019	[IPv4] Usable hosts formula	2^h − 2  (h = host bits; minus network and broadcast addresses)	netplus::1.7
+np9-1.7-020	[IPv4] Number of subnets formula	2^n  (n = bits borrowed)	netplus::1.7
+np9-1.7-021	[IPv4] Binary place values in an octet	128 64 32 16 8 4 2 1	netplus::1.7
+np9-1.7-022	[IPv4] Block size ('magic number') trick	256 − the mask value in the interesting octet = subnet increment (e.g. 255.255.255.224 → 32)	netplus::1.7
+np9-1.7-023	[IPv4] /25 mask and usable hosts	255.255.255.128 — 126 hosts (block 128)	netplus::1.7
+np9-1.7-024	[IPv4] /26 mask and usable hosts	255.255.255.192 — 62 hosts (block 64)	netplus::1.7
+np9-1.7-025	[IPv4] /27 mask and usable hosts	255.255.255.224 — 30 hosts (block 32)	netplus::1.7
+np9-1.7-026	[IPv4] /28 mask and usable hosts	255.255.255.240 — 14 hosts (block 16)	netplus::1.7
+np9-1.7-027	[IPv4] /29 mask and usable hosts	255.255.255.248 — 6 hosts (block 8)	netplus::1.7
+np9-1.7-028	[IPv4] /30 mask and usable hosts	255.255.255.252 — 2 hosts (classic point-to-point link)	netplus::1.7
+np9-1.7-029	[IPv4] /23 mask and usable hosts	255.255.254.0 — 510 hosts	netplus::1.7
+np9-1.7-030	[IPv4] /22 mask and usable hosts	255.255.252.0 — 1,022 hosts	netplus::1.7
+np9-1.7-031	[IPv4] /20 mask and usable hosts	255.255.240.0 — 4,094 hosts	netplus::1.7
+np9-1.7-032	[IPv4] Smallest subnet for 50 hosts	/26 (62 usable)	netplus::1.7
+np9-1.7-033	[IPv4] Smallest subnet for 100 hosts	/25 (126 usable)	netplus::1.7
+np9-1.7-034	[IPv4] Smallest subnet for 500 hosts	/23 (510 usable)	netplus::1.7
+np9-1.7-035	[IPv4] Smallest subnet for 14 hosts / for 15 hosts	/28 (exactly 14) / /27 (30) — 15 doesn't fit a /28	netplus::1.7
+np9-1.7-036	[IPv4] 192.168.10.130/25 — network and broadcast	Network 192.168.10.128, broadcast 192.168.10.255	netplus::1.7
+np9-1.7-037	[IPv4] 10.10.10.77/27 — network, broadcast, usable range	Network .64, broadcast .95, usable .65–.94	netplus::1.7
+np9-1.7-038	[IPv4] 192.168.5.200/28 — network and broadcast	Network 192.168.5.192, broadcast 192.168.5.207	netplus::1.7
+np9-1.7-039	[IPv4] 172.16.45.14/30 — network, broadcast, the two hosts	Network .12, broadcast .15, hosts .13 and .14	netplus::1.7
+np9-1.7-040	[IPv4] 172.20.250.5/22 — network and broadcast	Network 172.20.248.0, broadcast 172.20.251.255 (block 4 in the 3rd octet)	netplus::1.7
+np9-1.7-041	[IPv4] 192.168.1.128/26 — first and last usable host	.129 and .190 (broadcast .191)	netplus::1.7
+np9-1.7-042	[IPv4] Are 10.0.0.50/25 and 10.0.0.200/25 on the same subnet?	No — 10.0.0.0/25 vs 10.0.0.128/25	netplus::1.7
+np9-1.7-043	[IPv4] Is 192.168.1.255/23 a usable host address?	No — /23 spans 192.168.0.0–192.168.1.255, so .1.255 is the broadcast. (192.168.1.0/23 IS usable)	netplus::1.7
+np9-1.7-044	[IPv4] Split 192.168.1.0/24 into 4 equal subnets	/26s: .0, .64, .128, .192 (62 hosts each)	netplus::1.7
+np9-1.7-045	[IPv4] Need 6 subnets from a /24 — new prefix and hosts per subnet	Borrow 3 bits → /27: 8 subnets, 30 hosts each	netplus::1.7
+np9-1.7-046	[IPv4] 10.0.0.0/8 subnetted with /12 — how many subnets, hosts each?	16 subnets (4 bits borrowed), 1,048,574 hosts each (2^20 − 2)	netplus::1.7
+np9-1.7-047	[IPv4] Summarize 10.1.0.0/24 through 10.1.3.0/24 into one route	10.1.0.0/22	netplus::1.7
+np9-1.7-048	[IPv4] Carrier-grade NAT shared range	100.64.0.0/10	netplus::1.7 beyond-objectives
+np9-1.8-001	[Modern] Software-Defined Networking (SDN)	Separates the control plane from the data plane and centralizes control in a software controller that programs the devices	netplus::1.8
+np9-1.8-002	[Modern] Data plane vs control plane vs management plane	Data: forwards traffic. Control: decides how (routing protocols, STP, tables). Management: config/monitoring (SSH, SNMP, API)	netplus::1.8
+np9-1.8-003	[Modern] SDN northbound vs southbound API	Northbound: apps/orchestration ↔ controller. Southbound: controller ↔ network devices (e.g. OpenFlow)	netplus::1.8
+np9-1.8-004	[Modern] SD-WAN	Software-defined WAN — centrally managed overlay that steers traffic across multiple WAN links (MPLS, broadband, LTE)	netplus::1.8
+np9-1.8-005	[Modern] SD-WAN: application aware	Identifies apps and routes each over the best path by policy (e.g. voice over the lowest-latency link)	netplus::1.8
+np9-1.8-006	[Modern] SD-WAN: zero-touch provisioning	A new branch device is plugged in and pulls its config from the controller automatically — no on-site engineer	netplus::1.8
+np9-1.8-007	[Modern] SD-WAN: transport agnostic	Works over any underlay — MPLS, cable, fiber, LTE/5G, satellite	netplus::1.8
+np9-1.8-008	[Modern] SD-WAN: central policy management	Policies defined once at the controller and pushed to every site	netplus::1.8
+np9-1.8-009	[Modern] VXLAN	Encapsulates layer 2 frames in UDP (port 4789) to stretch L2 segments across a layer 3 network	netplus::1.8
+np9-1.8-010	[Modern] VXLAN vs VLAN scale	VXLAN's 24-bit VNI allows ~16 million segments vs 4,094 VLANs	netplus::1.8
+np9-1.8-011	[Modern] Data center interconnect (DCI)	Linking data centers so workloads/L2 segments span sites — a main VXLAN use case	netplus::1.8
+np9-1.8-012	[Modern] Zero Trust Architecture (ZTA)	Never trust, always verify — no implicit trust from network location; every request is authenticated, authorized and least-privilege	netplus::1.8
+np9-1.8-013	[Modern] ZTA: policy-based authentication	Access decisions use identity + device posture + context (location, time, risk), not just a password	netplus::1.8
+np9-1.8-014	[Modern] SASE	Secure Access Service Edge — SD-WAN combined with cloud-delivered security (SWG, CASB, ZTNA, FWaaS) at the edge	netplus::1.8
+np9-1.8-015	[Modern] SSE	Security Service Edge — the security half of SASE (SWG, CASB, ZTNA) without SD-WAN	netplus::1.8
+np9-1.8-016	[Modern] Infrastructure as Code (IaC)	Defining network/server config in code files (templates/playbooks) that tools apply automatically — repeatable, versioned	netplus::1.8
+np9-1.8-017	[Modern] IaC: playbooks / templates / reusable tasks	Prewritten automation (e.g. Ansible playbooks) applied consistently to many devices	netplus::1.8
+np9-1.8-018	[Modern] Configuration drift	Devices slowly diverge from the intended/standard config through manual changes; IaC detects and corrects it (compliance)	netplus::1.8
+np9-1.8-019	[Modern] IaC: dynamic inventory	The list of target devices is pulled live from a source (cloud API, CMDB) instead of a hand-maintained file	netplus::1.8
+np9-1.8-020	[Modern] Source control: why version control for network config?	History of every change, who made it, easy rollback, peer review	netplus::1.8
+np9-1.8-021	[Modern] Source control: central repository	The single shared copy (e.g. a Git server) everyone pulls from and pushes to	netplus::1.8
+np9-1.8-022	[Modern] Source control: branching	Work on a change in an isolated copy, then merge it back when tested	netplus::1.8
+np9-1.8-023	[Modern] Source control: conflict identification	Version control flags when two people changed the same lines so they're resolved before merge	netplus::1.8
+np9-1.8-024	[Modern] IPv6 address size and notation	128 bits, 8 groups (hextets) of 4 hex digits separated by colons	netplus::1.8
+np9-1.8-025	[Modern] IPv6 shortening rules	Drop leading zeros in each group; replace ONE run of all-zero groups with ::	netplus::1.8
+np9-1.8-026	[Modern] Compress 2001:0db8:0000:0000:0000:ff00:0042:8329	2001:db8::ff00:42:8329	netplus::1.8
+np9-1.8-027	[Modern] Why is 2001:db8::1::5 invalid?	:: may appear only once	netplus::1.8
+np9-1.8-028	[Modern] IPv6 global unicast prefix	2000::/3 (addresses starting 2 or 3) — publicly routable	netplus::1.8
+np9-1.8-029	[Modern] IPv6 link-local prefix	fe80::/10 — every IPv6 interface has one; not routed	netplus::1.8
+np9-1.8-030	[Modern] IPv6 unique local prefix	fc00::/7 (in practice fd00::/8) — the private-address equivalent	netplus::1.8
+np9-1.8-031	[Modern] IPv6 multicast prefix	ff00::/8	netplus::1.8
+np9-1.8-032	[Modern] IPv6 loopback / unspecified	::1 / ::	netplus::1.8
+np9-1.8-033	[Modern] Standard IPv6 subnet size for a LAN	/64	netplus::1.8
+np9-1.8-034	[Modern] EUI-64 interface ID	Split the 48-bit MAC, insert FFFE in the middle, flip the 7th bit. 00:1A:2B:3C:4D:5E → 021A:2BFF:FE3C:4D5E	netplus::1.8
+np9-1.8-035	[Modern] What replaces ARP in IPv6?	NDP (Neighbor Discovery Protocol, over ICMPv6): neighbor solicitation/advertisement	netplus::1.8
+np9-1.8-036	[Modern] NDP router solicitation / router advertisement	RS: host asks for routers. RA: router announces prefix, gateway, and whether to use SLAAC/DHCPv6	netplus::1.8
+np9-1.8-037	[Modern] IPv6 duplicate address detection (DAD)	Before using an address, a host sends a neighbor solicitation for it; any reply means it's taken	netplus::1.8
+np9-1.8-038	[Modern] Why IPv6? (address exhaustion)	IPv4 has ~4.3 billion addresses; IPv6's 128 bits removes the need for NAT to stretch addresses	netplus::1.8
+np9-1.8-039	[Modern] IPv6 transition: dual stack	Devices run IPv4 and IPv6 at the same time — the most common approach	netplus::1.8
+np9-1.8-040	[Modern] IPv6 transition: tunneling	Carry IPv6 packets inside IPv4 across IPv4-only networks (6to4, 6in4, Teredo)	netplus::1.8
+np9-1.8-041	[Modern] IPv6 transition: NAT64	Translates between IPv6-only clients and IPv4 servers (with DNS64 synthesizing AAAA records)	netplus::1.8
+np9-2.1-001	[Routing] Static vs dynamic routing	Static: manually configured, no overhead, doesn't adapt. Dynamic: routers learn and adapt via routing protocols	netplus::2.1
+np9-2.1-002	[Routing] Default route	Route used when nothing more specific matches: 0.0.0.0/0 (IPv6 ::/0) — the 'gateway of last resort'	netplus::2.1
+np9-2.1-003	[Routing] Route selection order	1) Longest prefix match  2) lowest administrative distance (between sources)  3) lowest metric (within one protocol)	netplus::2.1
+np9-2.1-004	[Routing] Routes for 10.0.0.0/8 (OSPF) and 10.1.0.0/16 (static) — where does 10.1.2.3 go?	The /16 — longest prefix match wins before AD is even considered	netplus::2.1
+np9-2.1-005	[Routing] Administrative distance (AD)	Trustworthiness of a route source — lower wins when two sources offer the SAME prefix	netplus::2.1
+np9-2.1-006	[Routing] AD values: connected, static, eBGP, EIGRP, OSPF, RIP, iBGP	0, 1, 20, 90, 110, 120, 200	netplus::2.1
+np9-2.1-007	[Routing] Metric	A protocol's own cost measure for choosing between its paths (OSPF cost, EIGRP bandwidth+delay, RIP hop count)	netplus::2.1
+np9-2.1-008	[Routing] OSPF	Open Shortest Path First — open-standard link-state IGP; Dijkstra SPF; areas (area 0 = backbone); cost based on bandwidth; AD 110	netplus::2.1
+np9-2.1-009	[Routing] EIGRP	Enhanced Interior Gateway Routing Protocol — Cisco's advanced distance-vector (hybrid) IGP; DUAL algorithm, fast convergence; metric bandwidth + delay; AD 90	netplus::2.1
+np9-2.1-010	[Routing] BGP	Border Gateway Protocol — path-vector EGP that routes between autonomous systems (the internet); TCP 179; AD 20 eBGP / 200 iBGP	netplus::2.1
+np9-2.1-011	[Routing] RIP	Distance-vector, hop-count metric, max 15 hops; AD 120 — legacy	netplus::2.1 beyond-objectives
+np9-2.1-012	[Routing] IGP vs EGP	Interior gateway protocols run inside one organization/AS (OSPF, EIGRP). Exterior gateway protocol between ASes (BGP)	netplus::2.1
+np9-2.1-013	[Routing] Distance vector vs link state	Distance vector: routers share their routing tables with neighbors ('routing by rumor'). Link state: every router learns the full topology and computes paths itself	netplus::2.1
+np9-2.1-014	[Routing] Autonomous system (AS)	A network under one administrative control with one routing policy, identified by an AS number (used by BGP)	netplus::2.1
+np9-2.1-015	[Routing] Convergence	When all routers agree on the topology after a change — faster convergence = less outage	netplus::2.1
+np9-2.1-016	[Routing] NAT	Translates private IPs to public IPs (and back) at the network edge	netplus::2.1
+np9-2.1-017	[Routing] Static NAT vs dynamic NAT	Static: fixed 1:1 mapping (e.g. publish an internal server). Dynamic: maps inside hosts to a pool of public addresses	netplus::2.1
+np9-2.1-018	[Routing] PAT (NAT overload)	Many inside hosts share ONE public IP; unique source port numbers track each session — what home routers do	netplus::2.1
+np9-2.1-019	[Routing] First Hop Redundancy Protocol (FHRP)	Two+ routers share a virtual IP/MAC as the hosts' default gateway; if the active router fails, another takes over	netplus::2.1
+np9-2.1-020	[Routing] FHRP protocols to recognize	VRRP (open standard), HSRP (Cisco), GLBP (Cisco, also load-balances)	netplus::2.1
+np9-2.1-021	[Routing] Virtual IP (VIP)	An IP not tied to one physical device — shared by an FHRP group or a load balancer cluster	netplus::2.1
+np9-2.1-022	[Routing] Subinterfaces / router-on-a-stick	One physical router interface split into logical subinterfaces, one per VLAN (802.1Q tagged), to route between VLANs over a single trunk	netplus::2.1
+np9-2.2-001	[Switching] VLAN	Logically splits one physical switch into separate broadcast domains (layer 2 segmentation) — security, less broadcast traffic, organization	netplus::2.2
+np9-2.2-002	[Switching] Usable VLAN ID range	1–4094 (VLAN 1 = default)	netplus::2.2
+np9-2.2-003	[Switching] VLAN database	Where a switch stores its VLAN definitions (IDs and names) — on Cisco, vlan.dat	netplus::2.2
+np9-2.2-004	[Switching] SVI (Switch Virtual Interface)	A virtual layer 3 interface for a VLAN on a switch — default gateway for that VLAN (inter-VLAN routing) or management IP	netplus::2.2
+np9-2.2-005	[Switching] Access port vs trunk port	Access: carries ONE VLAN, untagged (end devices). Trunk: carries MANY VLANs with 802.1Q tags (switch-to-switch, switch-to-router, AP)	netplus::2.2
+np9-2.2-006	[Switching] 802.1Q tagging	Inserts a 4-byte tag in the Ethernet frame with a 12-bit VLAN ID so trunks can carry multiple VLANs	netplus::2.2
+np9-2.2-007	[Switching] Native VLAN	The VLAN whose traffic crosses a trunk UNTAGGED (default VLAN 1). Must match on both ends; change it from 1 for security	netplus::2.2
+np9-2.2-008	[Switching] Native VLAN mismatch symptom	Traffic leaks between the two VLANs / connectivity problems; switches log a mismatch (e.g. CDP warning)	netplus::2.2
+np9-2.2-009	[Switching] Voice VLAN	Separate VLAN for IP phones on the same access port as a PC; the phone tags voice traffic so it gets QoS, the PC stays on the data VLAN	netplus::2.2
+np9-2.2-010	[Switching] Link aggregation	Bundles multiple physical links into one logical link — more bandwidth + redundancy (port channel/EtherChannel)	netplus::2.2
+np9-2.2-011	[Switching] LACP	Link Aggregation Control Protocol (IEEE 802.3ad/802.1AX) — negotiates link aggregation between devices	netplus::2.2
+np9-2.2-012	[Switching] Speed and duplex: best practice	Both sides auto-negotiate, or both hard-set the same. Mismatch → errors and slowness	netplus::2.2
+np9-2.2-013	[Switching] Duplex mismatch symptoms	Slow throughput, late collisions, CRC/FCS errors, runts on one side	netplus::2.2
+np9-2.2-014	[Switching] What is Spanning Tree Protocol (STP, 802.1D) for?	Prevents layer 2 loops by putting redundant switch links into a blocking state	netplus::2.2
+np9-2.2-015	[Switching] What happens with a layer 2 loop and no STP?	Broadcast storm — frames loop forever (no TTL in Ethernet), MAC tables flap, network grinds to a halt	netplus::2.2
+np9-2.2-016	[Switching] STP root bridge election	Lowest Bridge ID wins = lowest priority (default 32768), then lowest MAC as the tie-breaker	netplus::2.2
+np9-2.2-017	[Switching] How to make a specific switch the root bridge	Lower its bridge priority (in multiples of 4096, e.g. 4096 or 0)	netplus::2.2
+np9-2.2-018	[Switching] STP port roles	Root port (each non-root switch's best path to root), designated port (forwarding port per segment), alternate/blocked (backup)	netplus::2.2
+np9-2.2-019	[Switching] 802.1D STP port states	Blocking → Listening → Learning → Forwarding (plus Disabled)	netplus::2.2
+np9-2.2-020	[Switching] RSTP (802.1w)	Rapid STP — converges in seconds instead of 30–50 s; states: discarding, learning, forwarding	netplus::2.2
+np9-2.2-021	[Switching] BPDU	Bridge Protocol Data Unit — messages switches exchange to elect the root and build the spanning tree	netplus::2.2
+np9-2.2-022	[Switching] PortFast	Puts an edge (end-device) port straight into forwarding, skipping listening/learning	netplus::2.2
+np9-2.2-023	[Switching] BPDU guard	Err-disables a PortFast/edge port if it receives a BPDU (someone plugged in a switch)	netplus::2.2
+np9-2.2-024	[Switching] MTU	Maximum Transmission Unit — largest payload a link carries in one frame (1500 bytes standard Ethernet)	netplus::2.2
+np9-2.2-025	[Switching] Jumbo frames	Frames with MTU up to ~9000 bytes — fewer frames, less overhead (storage/iSCSI, data center). Must be enabled end-to-end	netplus::2.2
+np9-2.2-026	[Switching] PoE standards and power per port	802.3af PoE 15.4 W; 802.3at PoE+ 30 W; 802.3bt PoE++ Type 3 60 W / Type 4 90 W	netplus::2.2
+np9-2.2-027	[Switching] MAC address table	Switch table mapping MAC → port, learned from SOURCE addresses of incoming frames; entries age out	netplus::2.2
+np9-2.3-001	[Wireless] Non-overlapping 2.4 GHz channels (US)	1, 6, 11	netplus::2.3
+np9-2.3-002	[Wireless] 2.4 vs 5 vs 6 GHz	2.4: best range/penetration, few channels, crowded. 5: more channels, faster, less range. 6: most clean spectrum, shortest range, Wi-Fi 6E/7 + WPA3 only	netplus::2.3
+np9-2.3-003	[Wireless] Channel width tradeoff	Wider (40/80/160 MHz) = more throughput but fewer non-overlapping channels and more interference risk; 20 MHz is best in dense 2.4 GHz	netplus::2.3
+np9-2.3-004	[Wireless] 802.11h	Adds DFS (dynamic frequency selection — avoid radar) and TPC (transmit power control) for 5 GHz — a regulatory requirement	netplus::2.3
+np9-2.3-005	[Wireless] Regulatory impacts on wireless	Allowed channels and maximum transmit power differ by country; DFS channels can be vacated when radar is detected	netplus::2.3
+np9-2.3-006	[Wireless] Band steering	AP nudges dual-band clients onto 5/6 GHz to free up 2.4 GHz	netplus::2.3
+np9-2.3-007	[Wireless] SSID	The network name clients see	netplus::2.3
+np9-2.3-008	[Wireless] BSSID	The MAC address of an AP's radio — identifies one specific AP/BSS	netplus::2.3
+np9-2.3-009	[Wireless] ESSID	The same SSID broadcast by multiple APs so clients can roam across an Extended Service Set	netplus::2.3
+np9-2.3-010	[Wireless] BSS vs ESS	BSS: one AP and its clients. ESS: multiple APs sharing an SSID connected by a wired distribution system	netplus::2.3
+np9-2.3-011	[Wireless] Infrastructure mode	Clients connect through an AP (normal Wi-Fi)	netplus::2.3
+np9-2.3-012	[Wireless] Ad hoc mode (IBSS)	Devices connect directly peer-to-peer, no AP	netplus::2.3
+np9-2.3-013	[Wireless] Wireless mesh network	APs connect to each other wirelessly to extend coverage; only some need a wired uplink	netplus::2.3
+np9-2.3-014	[Wireless] Wireless point-to-point	Two directional antennas linking two sites (e.g. buildings) as a bridge	netplus::2.3
+np9-2.3-015	[Wireless] WPA2	AES-CCMP encryption; Personal (PSK) or Enterprise (802.1X). Vulnerable to offline dictionary attacks on weak PSKs	netplus::2.3
+np9-2.3-016	[Wireless] WPA3	SAE (Simultaneous Authentication of Equals) replaces the PSK handshake — resists offline dictionary attacks, forward secrecy; Enterprise 192-bit mode; protected management frames required	netplus::2.3
+np9-2.3-017	[Wireless] Deprecated wireless security	WEP, WPA (TKIP) — never use	netplus::2.3
+np9-2.3-018	[Wireless] PSK vs Enterprise authentication	PSK: one shared passphrase for everyone. Enterprise: 802.1X with a RADIUS server — individual credentials/certificates, revocable per user	netplus::2.3
+np9-2.3-019	[Wireless] Guest network best practice	Separate SSID/VLAN isolated from the internal network (internet only), often with client isolation	netplus::2.3
+np9-2.3-020	[Wireless] Captive portal	Web page that intercepts a new client until it logs in or accepts terms — hotels, guest Wi-Fi	netplus::2.3
+np9-2.3-021	[Wireless] Omnidirectional vs directional antenna	Omni: 360° coverage (ceiling AP). Directional (Yagi, patch, parabolic): focused beam, longer range — point-to-point, hallways	netplus::2.3
+np9-2.3-022	[Wireless] Autonomous vs lightweight AP	Autonomous: configured individually, standalone. Lightweight: managed centrally by a wireless LAN controller (CAPWAP)	netplus::2.3
+np9-2.4-001	[Physical] MDF vs IDF	MDF: main distribution frame — central wiring room where the ISP/demarc and core equipment live. IDF: intermediate distribution frames on each floor/area, linked back to the MDF	netplus::2.4
+np9-2.4-002	[Physical] Rack unit (U) and a standard full rack	1U = 1.75 in (44.45 mm); full-height rack = 42U; standard width 19 in	netplus::2.4
+np9-2.4-003	[Physical] Port-side exhaust vs port-side intake	Device airflow direction — must match the rack's hot aisle/cold aisle layout or the gear recirculates hot air	netplus::2.4
+np9-2.4-004	[Physical] Hot aisle / cold aisle	Racks face alternate directions so intakes share a cold aisle and exhausts share a hot aisle	netplus::2.4
+np9-2.4-005	[Physical] Patch panel	Termination point where permanent cable runs land, so you patch to switches with short cords	netplus::2.4
+np9-2.4-006	[Physical] Fiber patch panel / distribution panel	Same idea for fiber — terminates and organizes fiber runs	netplus::2.4
+np9-2.4-007	[Physical] Lockable racks/cabinets	Physical security for equipment in shared spaces	netplus::2.4
+np9-2.4-008	[Physical] UPS	Uninterruptible Power Supply — battery that covers short outages, smooths dips/surges, gives time to shut down or start a generator	netplus::2.4
+np9-2.4-009	[Physical] PDU	Power Distribution Unit — rack power strip that feeds the gear; metered/managed PDUs report load and allow remote outlet control	netplus::2.4
+np9-2.4-010	[Physical] Power load	Total draw (watts/amps) of the equipment — must stay under circuit, PDU and UPS capacity	netplus::2.4
+np9-2.4-011	[Physical] Voltage	Equipment and PDUs must match the supplied voltage (e.g. 120 V vs 208/230 V)	netplus::2.4
+np9-2.4-012	[Physical] Humidity	Keep moderate (~40–60% RH): too low → static discharge (ESD); too high → condensation/corrosion	netplus::2.4
+np9-2.4-013	[Physical] Recommended data center temperature	About 18–27 °C (64–81 °F) per ASHRAE	netplus::2.4
+np9-2.4-014	[Physical] Fire suppression for server rooms	Clean-agent/gas systems (e.g. FM-200, inert gas) don't damage electronics; pre-action sprinklers keep pipes dry until a fire is detected	netplus::2.4
+np9-2.4-015	[Physical] Generator	Long-term backup power — UPS bridges the gap until it starts	netplus::2.4
+np9-3.1-001	[Processes] Physical vs logical network diagram	Physical: actual devices, cables, ports, locations. Logical: how traffic flows — subnets, VLANs, routing	netplus::3.1
+np9-3.1-002	[Processes] Layer 1 / layer 2 / layer 3 diagrams	L1: physical cabling and connections. L2: switches, VLANs, trunks. L3: IP subnets, routers, routing	netplus::3.1
+np9-3.1-003	[Processes] Rack diagram	Shows what equipment sits in which U of each rack	netplus::3.1
+np9-3.1-004	[Processes] Cable map/diagram	Documents where each cable runs and its labels, patch panel ports and endpoints	netplus::3.1
+np9-3.1-005	[Processes] Asset inventory: what it tracks	Hardware, software, licensing, warranty/support status	netplus::3.1
+np9-3.1-006	[Processes] IPAM	IP Address Management — tracks/plans IP space, subnets, DHCP scopes and DNS records in one place	netplus::3.1
+np9-3.1-007	[Processes] SLA	Service Level Agreement — contract defining expected service (uptime %, response times) and penalties	netplus::3.1
+np9-3.1-008	[Processes] Wireless survey / heat map	Measures signal strength and interference across a site to plan or validate AP placement	netplus::3.1
+np9-3.1-009	[Processes] End-of-life (EOL) vs end-of-support (EOS)	EOL: vendor stops selling/making the product. EOS: vendor stops patches/support — a security risk	netplus::3.1
+np9-3.1-010	[Processes] Software management: what to keep patched	OS, firmware, applications — patches and bug fixes, tested and scheduled	netplus::3.1
+np9-3.1-011	[Processes] Decommissioning	Retiring equipment safely: sanitize/wipe configs and data, update inventory and documentation, remove from monitoring/DNS	netplus::3.1
+np9-3.1-012	[Processes] Change management	Formal process: request → impact/risk review → approval (change board) → scheduled window with rollback plan → documentation	netplus::3.1
+np9-3.1-013	[Processes] Change management: process tracking / service request	Every change has a ticket recording what, why, who approved, and outcome	netplus::3.1
+np9-3.1-014	[Processes] Production vs backup configuration	Production: the running config. Backup: saved copies for restore after failure or bad change	netplus::3.1
+np9-3.1-015	[Processes] Baseline / golden configuration	The approved standard config that new and existing devices are compared against	netplus::3.1
+np9-3.2-001	[Monitoring] SNMP	Protocol for monitoring/managing devices: a manager polls agents (UDP 161); agents send traps (UDP 162)	netplus::3.2
+np9-3.2-002	[Monitoring] SNMP trap	Unsolicited alert an agent sends to the manager when an event happens (e.g. interface down)	netplus::3.2
+np9-3.2-003	[Monitoring] SNMP MIB / OID	MIB: database/definition of what can be monitored on a device. OID: identifier for one specific value	netplus::3.2
+np9-3.2-004	[Monitoring] SNMP community string	Shared password-like string in v1/v2c, sent in cleartext. Change the defaults 'public'/'private'	netplus::3.2
+np9-3.2-005	[Monitoring] SNMPv2c vs SNMPv3	v2c: community strings, no encryption. v3: per-user authentication AND encryption (authPriv) — use v3	netplus::3.2
+np9-3.2-006	[Monitoring] Flow data (NetFlow/IPFIX/sFlow)	Metadata about conversations — who talked to whom, ports, how much, when — without payloads	netplus::3.2
+np9-3.2-007	[Monitoring] Packet capture	Records full packets (headers + payload) for deep analysis — Wireshark, tcpdump	netplus::3.2
+np9-3.2-008	[Monitoring] Flow data vs packet capture — which for 'top talkers' over a month?	Flow data (lightweight summaries). Packet capture is for deep inspection of a specific problem	netplus::3.2
+np9-3.2-009	[Monitoring] Baseline metrics	What 'normal' looks like (utilization, latency, errors) — needed to detect anomalies	netplus::3.2
+np9-3.2-010	[Monitoring] Anomaly alerting/notification	Alerts when metrics deviate from the baseline or thresholds	netplus::3.2
+np9-3.2-011	[Monitoring] Log aggregation / syslog collector	Central server that receives logs from many devices so you can search and retain them	netplus::3.2
+np9-3.2-012	[Monitoring] SIEM	Security Information and Event Management — collects and correlates logs across systems, alerts on security events	netplus::3.2
+np9-3.2-013	[Monitoring] Syslog severity levels 0–7	0 Emergency, 1 Alert, 2 Critical, 3 Error, 4 Warning, 5 Notice, 6 Informational, 7 Debug (lower = more severe)	netplus::3.2
+np9-3.2-014	[Monitoring] API integration (monitoring)	Tools pull/push data programmatically (REST APIs) to automate monitoring and connect systems	netplus::3.2
+np9-3.2-015	[Monitoring] Port mirroring (SPAN)	Switch copies traffic from ports/VLANs to a monitoring port for an IDS or analyzer	netplus::3.2
+np9-3.2-016	[Monitoring] Network TAP vs port mirror	TAP: hardware inline device that copies ALL traffic, including errors, without loading the switch. SPAN: software copy on the switch, can drop under load	netplus::3.2
+np9-3.2-017	[Monitoring] Network discovery: ad hoc vs scheduled	Ad hoc: run on demand. Scheduled: periodic scans to keep inventory and maps current	netplus::3.2
+np9-3.2-018	[Monitoring] Traffic analysis	Studying traffic patterns/volumes (flows, captures) to find top talkers, unusual traffic, capacity needs	netplus::3.2
+np9-3.2-019	[Monitoring] Performance monitoring	Tracks latency, throughput, utilization, errors against baselines	netplus::3.2
+np9-3.2-020	[Monitoring] Availability monitoring	Checks whether devices/services are up (ping, SNMP, HTTP checks) and alerts on outages	netplus::3.2
+np9-3.2-021	[Monitoring] Configuration monitoring	Detects config changes/drift from the baseline and alerts	netplus::3.2
+np9-3.3-001	[DR] RPO	Recovery Point Objective — maximum acceptable DATA loss, measured in time (backups every 4 h → RPO 4 h)	netplus::3.3
+np9-3.3-002	[DR] RTO	Recovery Time Objective — maximum acceptable DOWNTIME before service is restored	netplus::3.3
+np9-3.3-003	[DR] MTTR	Mean Time To Repair — average time to fix a failure (lower is better)	netplus::3.3
+np9-3.3-004	[DR] MTBF	Mean Time Between Failures — average uptime between failures (higher is better)	netplus::3.3
+np9-3.3-005	[DR] Cold site	Space, power, connectivity only — no ready equipment or data; cheapest, slowest (days–weeks)	netplus::3.3
+np9-3.3-006	[DR] Warm site	Some equipment and connectivity in place, data restored from backups; hours–days	netplus::3.3
+np9-3.3-007	[DR] Hot site	Fully equipped, data replicated, ready almost immediately; most expensive	netplus::3.3
+np9-3.3-008	[DR] Active-active	All nodes/sites handle traffic at the same time; failure just reduces capacity	netplus::3.3
+np9-3.3-009	[DR] Active-passive	Standby node/site idles until the active one fails, then takes over	netplus::3.3
+np9-3.3-010	[DR] Tabletop exercise	Team talks through a disaster scenario on paper — tests the plan and roles without touching systems	netplus::3.3
+np9-3.3-011	[DR] Validation test	Actually performs failover/restore to prove the DR plan works	netplus::3.3
+np9-3.4-001	[Services] DHCP process (DORA)	Discover (client broadcast) → Offer (server) → Request (client) → Acknowledge (server)	netplus::3.4
+np9-3.4-002	[Services] DHCP scope	The range of addresses a DHCP server hands out for a subnet, plus its settings	netplus::3.4
+np9-3.4-003	[Services] DHCP reservation	Always gives the same IP to a specific client, matched by MAC address	netplus::3.4
+np9-3.4-004	[Services] DHCP exclusion	Addresses inside the scope that the server will never hand out (e.g. used by static devices)	netplus::3.4
+np9-3.4-005	[Services] DHCP lease time	How long a client may use its address; renews at 50% (T1) with its server, rebinds to any server at 87.5% (T2)	netplus::3.4
+np9-3.4-006	[Services] DHCP options to recognize	3 = default gateway (router), 6 = DNS servers, 15 = domain name, 66/67 = TFTP server/boot file (PXE)	netplus::3.4
+np9-3.4-007	[Services] DHCP relay / IP helper	Router forwards DHCP broadcasts from a subnet to a DHCP server on another subnet	netplus::3.4
+np9-3.4-008	[Services] Clients on one VLAN get APIPA, other VLANs are fine — first thing to check	The DHCP relay/IP helper on that VLAN's gateway (or scope exhaustion for that subnet)	netplus::3.4
+np9-3.4-009	[Services] SLAAC	IPv6 Stateless Address Autoconfiguration — host builds its own address from the router advertisement prefix + its own interface ID; no DHCP server needed	netplus::3.4
+np9-3.4-010	[Services] Stateful vs stateless DHCPv6	Stateful: server assigns addresses (like DHCPv4). Stateless: address via SLAAC, DHCPv6 only provides options like DNS	netplus::3.4
+np9-3.4-011	[Services] DNS A record	Hostname → IPv4 address	netplus::3.4
+np9-3.4-012	[Services] DNS AAAA record	Hostname → IPv6 address	netplus::3.4
+np9-3.4-013	[Services] DNS CNAME record	Alias → another hostname (www.example.com → example.com)	netplus::3.4
+np9-3.4-014	[Services] DNS MX record	The mail server(s) for a domain, with priority (lower = preferred)	netplus::3.4
+np9-3.4-015	[Services] DNS TXT record	Arbitrary text — used for SPF, DKIM, DMARC and domain ownership verification	netplus::3.4
+np9-3.4-016	[Services] DNS NS record	The authoritative name servers for a zone	netplus::3.4
+np9-3.4-017	[Services] DNS PTR record	IP address → hostname (reverse lookup)	netplus::3.4
+np9-3.4-018	[Services] DNS SOA record	Start of Authority — zone's primary server, admin contact, serial number and timers	netplus::3.4 beyond-objectives
+np9-3.4-019	[Services] DNS SRV record	Location (host + port) of a service, e.g. SIP, LDAP, Kerberos	netplus::3.4 beyond-objectives
+np9-3.4-020	[Services] Forward vs reverse lookup zone	Forward: name → IP. Reverse: IP → name (in-addr.arpa for IPv4, ip6.arpa for IPv6)	netplus::3.4
+np9-3.4-021	[Services] Authoritative vs non-authoritative answer	Authoritative: from a server that hosts the zone. Non-authoritative: from a resolver's cache	netplus::3.4
+np9-3.4-022	[Services] Primary vs secondary DNS server	Primary holds the editable zone; secondary keeps a read-only copy via zone transfer (TCP 53) for redundancy	netplus::3.4
+np9-3.4-023	[Services] Recursive vs iterative DNS query	Recursive: 'give me the final answer' (client → resolver). Iterative: 'tell me who to ask next' (resolver → root → TLD → authoritative)	netplus::3.4
+np9-3.4-024	[Services] DNSSEC	Digitally signs DNS records so resolvers can verify they're authentic and unmodified — integrity, NOT confidentiality	netplus::3.4
+np9-3.4-025	[Services] DoH vs DoT	Both encrypt DNS queries. DoH = DNS over HTTPS (443, blends with web traffic). DoT = DNS over TLS (853)	netplus::3.4
+np9-3.4-026	[Services] Hosts file	Local name → IP table checked before DNS — /etc/hosts or C:\Windows\System32\drivers\etc\hosts	netplus::3.4
+np9-3.4-027	[Services] NTP	Network Time Protocol (UDP 123) — syncs clocks; stratum 0 = reference clock, stratum 1 = server attached to it, and so on	netplus::3.4
+np9-3.4-028	[Services] Why accurate time matters	Log correlation, Kerberos authentication, certificate validity, scheduled tasks	netplus::3.4
+np9-3.4-029	[Services] PTP	Precision Time Protocol (IEEE 1588) — sub-microsecond accuracy using hardware timestamps; finance, industrial, telecom/5G	netplus::3.4
+np9-3.4-030	[Services] NTS	Network Time Security — adds cryptographic authentication to NTP so time sources can't be spoofed	netplus::3.4
+np9-3.5-001	[Access] Site-to-site VPN	Permanent tunnel between two networks' gateways (routers/firewalls); users don't run a client	netplus::3.5
+np9-3.5-002	[Access] Client-to-site (remote access) VPN	An individual device connects to the corporate network through a VPN client	netplus::3.5
+np9-3.5-003	[Access] Clientless VPN	Remote access through a web browser over TLS (SSL VPN portal) — no installed client	netplus::3.5
+np9-3.5-004	[Access] Split tunnel vs full tunnel	Split: only corporate traffic goes through the VPN, internet goes direct. Full: ALL traffic goes through the VPN (more control/inspection, more load)	netplus::3.5
+np9-3.5-005	[Access] Management connection methods	SSH (CLI over network), GUI (web/HTTPS), API (automation), console (direct serial)	netplus::3.5
+np9-3.5-006	[Access] Console connection	Direct serial/USB connection to a device's console port — works even if the network config is broken	netplus::3.5
+np9-3.5-007	[Access] Jump box / jump host	A hardened server admins connect to first, then reach management interfaces from it — one controlled, logged entry point	netplus::3.5
+np9-3.5-008	[Access] In-band vs out-of-band management	In-band: manage over the production network. Out-of-band: separate path (console server, management network, cellular modem) that still works when production is down	netplus::3.5
+np9-4.1-001	[Security concepts] CIA triad	Confidentiality (only authorized can read), Integrity (data unaltered), Availability (accessible when needed)	netplus::4.1
+np9-4.1-002	[Security concepts] Risk vs vulnerability vs threat vs exploit	Vulnerability: a weakness. Threat: something that could use it. Exploit: the method/code that does. Risk: likelihood × impact	netplus::4.1
+np9-4.1-003	[Security concepts] Encryption in transit vs at rest	In transit: protects data moving over the network (TLS, IPsec). At rest: protects stored data (disk/database encryption)	netplus::4.1
+np9-4.1-004	[Security concepts] PKI	Public Key Infrastructure — CAs issue certificates binding a public key to an identity so others can trust it	netplus::4.1
+np9-4.1-005	[Security concepts] Self-signed certificate	Signed by its own key, not a trusted CA — encrypts fine but browsers/clients warn because identity can't be verified	netplus::4.1
+np9-4.1-006	[Security concepts] AAA	Authentication (who are you), Authorization (what can you do), Accounting (what did you do)	netplus::4.1
+np9-4.1-007	[Security concepts] MFA factors	Something you know (password), have (token/phone), are (biometric) — plus somewhere you are. MFA = two+ DIFFERENT categories	netplus::4.1
+np9-4.1-008	[Security concepts] Is a password plus a security question MFA?	No — both are 'something you know'	netplus::4.1
+np9-4.1-009	[Security concepts] SSO	Single Sign-On — authenticate once, access many systems	netplus::4.1
+np9-4.1-010	[Security concepts] RADIUS	AAA protocol for network access (Wi-Fi 802.1X, VPN); UDP 1812/1813; combines authentication and authorization; encrypts only the password	netplus::4.1
+np9-4.1-011	[Security concepts] TACACS+	Cisco AAA protocol for device administration; TCP 49; encrypts the entire payload; separates authentication, authorization and accounting (per-command authorization)	netplus::4.1
+np9-4.1-012	[Security concepts] RADIUS vs TACACS+ — which for controlling admin commands on routers?	TACACS+	netplus::4.1
+np9-4.1-013	[Security concepts] LDAP	Protocol to query/modify directory services (users, groups) — 389, LDAPS 636 (e.g. Active Directory)	netplus::4.1
+np9-4.1-014	[Security concepts] SAML	XML-based federation standard — an identity provider vouches for the user to a service provider for web SSO	netplus::4.1
+np9-4.1-015	[Security concepts] Time-based authentication	Time-based one-time passwords (TOTP — codes that change every ~30 s) and/or allowing logins only during set hours	netplus::4.1
+np9-4.1-016	[Security concepts] Least privilege	Give users and systems only the access they need for their job, nothing more	netplus::4.1
+np9-4.1-017	[Security concepts] Role-based vs rule-based access control	Role-based: permissions by job role/group. Rule-based: permissions by rules/conditions (ACLs, time of day) applied to everyone	netplus::4.1
+np9-4.1-018	[Security concepts] Geofencing	Allowing/denying access or actions based on a device's physical location	netplus::4.1
+np9-4.1-019	[Security concepts] Physical security: cameras and locks	Cameras deter and record; locks (key, badge, biometric) control entry	netplus::4.1
+np9-4.1-020	[Security concepts] Honeypot	A decoy system that lures attackers so you can detect and study them	netplus::4.1
+np9-4.1-021	[Security concepts] Honeynet	A network of honeypots	netplus::4.1
+np9-4.1-022	[Security concepts] Data locality / data residency	Laws requiring certain data to be stored/processed within a specific country or region	netplus::4.1
+np9-4.1-023	[Security concepts] PCI DSS	Payment Card Industry Data Security Standard — required security controls for anyone handling credit card data	netplus::4.1
+np9-4.1-024	[Security concepts] GDPR	EU regulation protecting personal data of people in the EU — consent, breach notification, right to erasure	netplus::4.1
+np9-4.1-025	[Security concepts] Why segment IoT/IIoT, SCADA/ICS/OT, guest and BYOD devices?	They're hard to patch or untrusted — isolate them on their own VLANs/zones so a compromise can't spread to critical systems	netplus::4.1
+np9-4.1-026	[Security concepts] SCADA / ICS / OT	Systems that control physical industrial processes (power, water, manufacturing) — availability-critical, often legacy	netplus::4.1
+np9-4.1-027	[Security concepts] BYOD	Bring Your Own Device — personal devices on the network; control with NAC, MDM and a separate segment	netplus::4.1
+np9-4.2-001	[Attacks] DoS vs DDoS	DoS: one source overwhelms a target. DDoS: many sources (botnet) at once — much harder to block	netplus::4.2
+np9-4.2-002	[Attacks] Reflection/amplification DDoS	Attacker spoofs the victim's IP and sends small requests to servers (DNS, NTP) that send large replies to the victim	netplus::4.2
+np9-4.2-003	[Attacks] VLAN hopping	Getting traffic into a VLAN you shouldn't reach — via switch spoofing or double tagging	netplus::4.2
+np9-4.2-004	[Attacks] VLAN hopping: switch spoofing	Attacker's device negotiates a trunk (DTP) with the switch and gets all VLANs. Prevent: disable auto-trunking, hard-set access ports	netplus::4.2
+np9-4.2-005	[Attacks] VLAN hopping: double tagging	Attacker on the native VLAN sends a frame with two 802.1Q tags; the first switch strips one and forwards into the target VLAN. Prevent: change native VLAN off the user VLAN/1	netplus::4.2
+np9-4.2-006	[Attacks] MAC flooding	Flooding a switch with fake source MACs to fill its MAC table, so it floods all frames like a hub → attacker can sniff. Prevent: port security	netplus::4.2
+np9-4.2-007	[Attacks] ARP poisoning / spoofing	Sending fake ARP replies so victims map the gateway's IP to the attacker's MAC → on-path attack. Prevent: Dynamic ARP Inspection	netplus::4.2
+np9-4.2-008	[Attacks] DNS poisoning vs DNS spoofing	Poisoning: corrupting a resolver's CACHE with false records. Spoofing: forging DNS responses to a victim. Both redirect users to malicious IPs. DNSSEC helps	netplus::4.2
+np9-4.2-009	[Attacks] Rogue DHCP server	Unauthorized DHCP server handing out a malicious gateway/DNS (on-path) or bad addresses. Prevent: DHCP snooping	netplus::4.2
+np9-4.2-010	[Attacks] Rogue access point	An unauthorized AP plugged into the network (often by an employee) — a backdoor around security	netplus::4.2
+np9-4.2-011	[Attacks] Evil twin	Attacker's AP copying a legitimate SSID to trick users into connecting and capture traffic/credentials	netplus::4.2
+np9-4.2-012	[Attacks] On-path attack	Attacker secretly relays/intercepts traffic between two parties (formerly 'man-in-the-middle')	netplus::4.2
+np9-4.2-013	[Attacks] Phishing (and variants)	Fraudulent messages to steal credentials or deliver malware. Spear phishing: targeted. Whaling: executives. Vishing: voice. Smishing: SMS	netplus::4.2
+np9-4.2-014	[Attacks] Dumpster diving	Searching trash for sensitive info — prevent with shredding	netplus::4.2
+np9-4.2-015	[Attacks] Shoulder surfing	Watching someone's screen/keyboard to steal info — privacy screens, awareness	netplus::4.2
+np9-4.2-016	[Attacks] Tailgating	Following an authorized person through a secured door without badging (piggybacking = with their consent). Prevent: mantraps/access control vestibules, guards	netplus::4.2
+np9-4.2-017	[Attacks] Malware types to recognize	Virus (needs a host/user action), worm (self-spreads over networks), trojan (disguised as legit), ransomware (encrypts for payment), botnet (remote-controlled hosts)	netplus::4.2
+np9-4.3-001	[Security features] Device hardening basics	Disable unused ports and services, change default passwords, update firmware, use SSH/HTTPS/SNMPv3 instead of cleartext protocols	netplus::4.3
+np9-4.3-002	[Security features] Why disable unused switch ports?	Stops someone plugging in an unauthorized device; also put them in an unused VLAN	netplus::4.3
+np9-4.3-003	[Security features] NAC	Network Access Control — checks identity and device posture (patches, AV) before granting network access; can quarantine non-compliant devices	netplus::4.3
+np9-4.3-004	[Security features] Port security	Limits which/how many MAC addresses can use a switch port; violations can shut the port (err-disable)	netplus::4.3
+np9-4.3-005	[Security features] Port security violation modes	Protect (drop silently), Restrict (drop + log/count), Shutdown (err-disable the port — default)	netplus::4.3
+np9-4.3-006	[Security features] Sticky MAC	Port security learns the connected device's MAC dynamically and saves it as allowed	netplus::4.3
+np9-4.3-007	[Security features] 802.1X roles	Supplicant (client), authenticator (switch/AP), authentication server (RADIUS)	netplus::4.3
+np9-4.3-008	[Security features] 802.1X	Port-based network access control — the port passes no normal traffic until the device authenticates via EAP to a RADIUS server	netplus::4.3
+np9-4.3-009	[Security features] MAC filtering — why it's weak	MAC addresses are easily spoofed; it's a deterrent, not real security	netplus::4.3
+np9-4.3-010	[Security features] Key management	Securely generating, distributing, storing, rotating and revoking cryptographic keys/certificates	netplus::4.3
+np9-4.3-011	[Security features] ACL	Ordered list of permit/deny rules on a router/firewall interface, matched top-down; the first match wins	netplus::4.3
+np9-4.3-012	[Security features] ACL implicit deny	Anything not explicitly permitted is denied at the end of the list	netplus::4.3
+np9-4.3-013	[Security features] ACL rule order trap	A broad permit placed above a specific deny makes the deny useless — put specific rules first	netplus::4.3
+np9-4.3-014	[Security features] URL filtering	Blocks/allows websites by URL or category	netplus::4.3
+np9-4.3-015	[Security features] Content filtering	Inspects content (keywords, file types, malware) and blocks inappropriate or dangerous material	netplus::4.3
+np9-4.3-016	[Security features] Trusted vs untrusted zones	Trusted: internal network. Untrusted: internet. Firewalls control traffic between zones	netplus::4.3
+np9-4.3-017	[Security features] Screened subnet (DMZ)	A separate zone for public-facing servers (web, mail) between the internet and the internal network, so a compromise there doesn't expose internal hosts	netplus::4.3
+np9-5.1-001	[Methodology] CompTIA troubleshooting steps 1–7	1 Identify the problem 2 Establish a theory of probable cause 3 Test the theory 4 Establish a plan of action (and identify potential effects) 5 Implement the solution or escalate 6 Verify full functionality and implement preventive measures 7 Document findings, actions, outcomes, lessons learned	netplus::5.1
+np9-5.1-002	[Methodology] Step 1 (identify the problem) includes…	Gather information, question users, identify symptoms, determine if anything changed, duplicate the problem, approach multiple problems individually	netplus::5.1
+np9-5.1-003	[Methodology] Step 2 (theory of probable cause) includes…	Question the obvious; consider multiple approaches — top-to-bottom/bottom-to-top OSI, divide and conquer	netplus::5.1
+np9-5.1-004	[Methodology] Step 3: the theory is confirmed — next?	Determine the next steps to resolve the problem (move to the plan of action)	netplus::5.1
+np9-5.1-005	[Methodology] Step 3: the theory is NOT confirmed — next?	Establish a new theory or escalate	netplus::5.1
+np9-5.1-006	[Methodology] What comes right after implementing the solution?	Verify full system functionality and, if applicable, implement preventive measures	netplus::5.1
+np9-5.1-007	[Methodology] Last step of the methodology	Document findings, actions, outcomes and lessons learned	netplus::5.1
+np9-5.1-008	[Methodology] When do you identify potential effects of a fix?	Step 4 — while establishing the plan of action (before implementing)	netplus::5.1
+np9-5.1-009	[Methodology] Divide and conquer	Start troubleshooting in the middle of the OSI model (e.g. ping, layer 3) and move up or down depending on the result	netplus::5.1
+np9-5.1-010	[Methodology] Scenario: a user reports the internet is down — the very first thing to do	Gather information: question the user, identify symptoms, ask what changed (Step 1)	netplus::5.1
+np9-5.2-001	[Cabling] Symptoms of using the wrong cable category for the speed	Link negotiates lower speed, errors, or intermittent drops (e.g. Cat5 on a 1 Gbps or Cat5e on 10GBASE-T at length)	netplus::5.2
+np9-5.2-002	[Cabling] Single-mode transceiver on multimode fiber (or vice versa)	Mismatch → no link or high errors; transceiver type, fiber type and wavelength must match on both ends	netplus::5.2
+np9-5.2-003	[Cabling] Attenuation	Signal loss over distance — too long a run (copper > 100 m) causes errors/drops	netplus::5.2
+np9-5.2-004	[Cabling] Crosstalk	Signal from one pair bleeding into another (NEXT/FEXT) — often from untwisting too much at termination	netplus::5.2
+np9-5.2-005	[Cabling] Interference (EMI)	Electrical noise from motors, fluorescent lights, power cables — use shielded cable or fiber, reroute	netplus::5.2
+np9-5.2-006	[Cabling] Improper termination	Wrong pinout, untwisted pairs, bad crimp → no link, errors, or low speed. Re-terminate and test with a cable tester	netplus::5.2
+np9-5.2-007	[Cabling] Fiber link has no light/connectivity after install — common simple cause	TX and RX reversed — swap the strands (also check dirty connectors)	netplus::5.2
+np9-5.2-008	[Cabling] CRC/FCS errors increasing	Corrupted frames — bad cable/connector, EMI, or duplex mismatch	netplus::5.2
+np9-5.2-009	[Cabling] Runts	Frames smaller than 64 bytes — usually collisions/duplex mismatch	netplus::5.2
+np9-5.2-010	[Cabling] Giants	Frames larger than the max (1518 bytes) — MTU/jumbo frame mismatch	netplus::5.2
+np9-5.2-011	[Cabling] Drops/discards on an interface	Frames thrown away — usually congestion/buffers full (or errors)	netplus::5.2
+np9-5.2-012	[Cabling] Port status: error-disabled	Switch shut the port due to a violation (port security, BPDU guard, etc.) — fix the cause, then shut / no shut	netplus::5.2
+np9-5.2-013	[Cabling] Port status: administratively down	Someone disabled it with 'shutdown' — enable with 'no shutdown'	netplus::5.2
+np9-5.2-014	[Cabling] Port status: suspended	Typically a link-aggregation member whose settings don't match the bundle (LACP misconfig)	netplus::5.2
+np9-5.2-015	[Cabling] PoE: power budget exceeded	The switch's total PoE capacity is used up — new PoE devices don't power on. Upgrade switch/PSU or rebalance	netplus::5.2
+np9-5.2-016	[Cabling] PoE: incorrect standard	Device needs more power than the port supplies (e.g. PoE+ device on an 802.3af port) — won't power or keeps rebooting	netplus::5.2
+np9-5.2-017	[Cabling] Transceiver signal strength problems	Optical power too low (dirty/damaged connectors, too long, bad splices) or too high (short SMF run without attenuator)	netplus::5.2
+np9-5.2-018	[Cabling] Cat 5/6/7/8 issue on the exam: 10 Gbps needed for a 90 m run — which category?	Cat6a (Cat6 only does 10G to ~55 m; Cat8 only ~30 m)	netplus::5.2
+np9-5.2-019	[Cabling] STP vs UTP issue: new run beside heavy machinery keeps erroring	Use shielded twisted pair (grounded) or fiber	netplus::5.2
+np9-5.3-001	[Service issues] Symptoms of a switching loop	Broadcast storm, very high utilization/CPU, MAC address flapping, network-wide outage	netplus::5.3
+np9-5.3-002	[Service issues] Suboptimal root bridge (e.g. an old access switch became root)	Traffic takes inefficient paths — set the core switch's priority lowest so it's always root	netplus::5.3
+np9-5.3-003	[Service issues] STP issue: port stuck blocking/forwarding when it shouldn't	Check port roles/states and costs; a wrongly forwarding port causes a loop, a wrongly blocked one cuts connectivity	netplus::5.3
+np9-5.3-004	[Service issues] Host is on the wrong VLAN — symptom	Gets an address from the wrong subnet (or APIPA) and can't reach its normal resources	netplus::5.3
+np9-5.3-005	[Service issues] Traffic to one service fails but everything else works	Check ACLs/firewall rules for that port/protocol	netplus::5.3
+np9-5.3-006	[Service issues] Can reach local hosts but nothing on other networks	Incorrect or missing default gateway	netplus::5.3
+np9-5.3-007	[Service issues] Router can't reach a remote network but has internet	Missing route in the routing table (or the default route is the only path)	netplus::5.3
+np9-5.3-008	[Service issues] Several new clients get 169.254.x.x addresses	DHCP scope/address pool exhausted (or DHCP server unreachable)	netplus::5.3
+np9-5.3-009	[Service issues] Intermittent connectivity and 'address conflict' warnings	Duplicate IP address — two hosts with the same IP (often a static IP inside a DHCP scope)	netplus::5.3
+np9-5.3-010	[Service issues] Host can reach some hosts on its own subnet but not others	Incorrect subnet mask	netplus::5.3
+np9-5.3-011	[Service issues] Host has the right IP and gateway but can't resolve names (ping by IP works)	DNS problem — wrong/unreachable DNS server	netplus::5.3
+np9-5.4-001	[Performance] Bandwidth vs throughput	Bandwidth: theoretical capacity of the link. Throughput: what you actually get	netplus::5.4
+np9-5.4-002	[Performance] Latency	Delay for data to travel from source to destination (ms)	netplus::5.4
+np9-5.4-003	[Performance] Jitter	Variation in latency between packets — ruins voice/video	netplus::5.4
+np9-5.4-004	[Performance] Packet loss	Packets that never arrive — causes retransmits (TCP) or gaps (voice/video)	netplus::5.4
+np9-5.4-005	[Performance] Congestion / contention	More traffic than a link or device can handle → queuing, latency, drops	netplus::5.4
+np9-5.4-006	[Performance] Bottleneck	The slowest link/device in the path limits overall throughput	netplus::5.4
+np9-5.4-007	[Performance] VoIP quality targets	One-way latency < 150 ms, jitter < 30 ms, packet loss < 1%	netplus::5.4
+np9-5.4-008	[Performance] Wireless interference sources (2.4 GHz)	Microwave ovens, Bluetooth, cordless phones, baby monitors, neighboring networks	netplus::5.4
+np9-5.4-009	[Performance] Channel overlap	Nearby APs on the same or overlapping channels compete (co-channel/adjacent-channel interference) — use 1/6/11, narrower widths, more 5 GHz	netplus::5.4
+np9-5.4-010	[Performance] Signal degradation or loss	Distance and obstacles (walls, metal, water, glass) weaken signal → low data rates, drops	netplus::5.4
+np9-5.4-011	[Performance] Insufficient wireless coverage	Dead spots — site survey, add/move APs, adjust power/antennas	netplus::5.4
+np9-5.4-012	[Performance] Client disassociation issues	Clients repeatedly dropping off — interference, weak signal, misconfig, or a deauthentication attack	netplus::5.4
+np9-5.4-013	[Performance] Roaming misconfiguration	APs with different SSIDs/security settings, or bad power levels causing 'sticky' clients that cling to a distant AP	netplus::5.4
+np9-5.4-014	[Performance] RSSI: what's good?	Measured in negative dBm — closer to 0 is stronger. About −67 dBm or better for voice/video; −80 is poor; −90 unusable	netplus::5.4
+np9-5.5-001	[Tools] Protocol analyzer	Captures and decodes packets for analysis — Wireshark (GUI), tcpdump (CLI)	netplus::5.5
+np9-5.5-002	[Tools] ping	Tests reachability and round-trip time with ICMP echo request/reply	netplus::5.5
+np9-5.5-003	[Tools] ping: continuous on Windows / count on Linux	ping -t / ping -c 4	netplus::5.5
+np9-5.5-004	[Tools] traceroute / tracert	Shows each router hop to a destination by sending probes with increasing TTL and reading ICMP Time Exceeded replies	netplus::5.5
+np9-5.5-005	[Tools] traceroute vs tracert probe types	Linux traceroute: UDP by default. Windows tracert: ICMP echo	netplus::5.5
+np9-5.5-006	[Tools] nslookup	Queries DNS — test name resolution, specify a server, look up record types (set type=mx)	netplus::5.5
+np9-5.5-007	[Tools] dig	Linux/Unix DNS query tool with detailed output (dig example.com MX, dig @8.8.8.8 example.com)	netplus::5.5
+np9-5.5-008	[Tools] tcpdump	CLI packet capture (tcpdump -i eth0 port 53 -w cap.pcap)	netplus::5.5
+np9-5.5-009	[Tools] netstat	Shows active connections, listening ports, routing table and stats (netstat -an; -r routes; -b process on Windows)	netplus::5.5
+np9-5.5-010	[Tools] ipconfig (Windows)	/all full config; /release and /renew DHCP; /flushdns clear DNS cache; /displaydns show it	netplus::5.5
+np9-5.5-011	[Tools] ip / ifconfig (Linux)	ip addr, ip route, ip link, ip neigh (ARP); ifconfig is the legacy equivalent	netplus::5.5
+np9-5.5-012	[Tools] arp	Shows/edits the IP → MAC cache: arp -a	netplus::5.5
+np9-5.5-013	[Tools] Nmap	Network scanner — host discovery, open ports, service versions, OS detection (nmap -sV -O host)	netplus::5.5
+np9-5.5-014	[Tools] LLDP / CDP	Neighbor discovery protocols — a device advertises its name, model, port, IP, VLAN to directly connected neighbors. LLDP = open standard, CDP = Cisco	netplus::5.5
+np9-5.5-015	[Tools] Speed tester	Measures actual throughput/latency to a server (speedtest, iperf)	netplus::5.5
+np9-5.5-016	[Tools] Toner and probe	Puts a tone on a cable so you can find the other end in a bundle/patch panel	netplus::5.5
+np9-5.5-017	[Tools] Cable tester	Checks continuity, pinout (miswires, opens, shorts) of copper cables; certifiers also test performance	netplus::5.5
+np9-5.5-018	[Tools] TDR / OTDR	Time-domain reflectometer — finds the distance to a break/fault in copper (TDR) or fiber (OTDR)	netplus::5.5 beyond-objectives
+np9-5.5-019	[Tools] Network TAP	Hardware device inline on a link that copies all traffic to a monitoring tool	netplus::5.5
+np9-5.5-020	[Tools] Wi-Fi analyzer	Shows SSIDs, channels, signal strength, interference — used for channel planning and troubleshooting	netplus::5.5
+np9-5.5-021	[Tools] Visual fault locator (VFL)	Shines visible red laser into fiber to find breaks/sharp bends and check continuity	netplus::5.5
+np9-5.5-022	[Tools] Cisco-style command: show the MAC address table	show mac address-table	netplus::5.5
+np9-5.5-023	[Tools] Cisco-style command: show the routing table	show ip route	netplus::5.5
+np9-5.5-024	[Tools] Cisco-style command: interface status and error counters	show interfaces (show ip interface brief for a summary)	netplus::5.5
+np9-5.5-025	[Tools] Cisco-style command: show the running configuration	show running-config	netplus::5.5
+np9-5.5-026	[Tools] Cisco-style command: show the ARP table	show arp (show ip arp)	netplus::5.5
+np9-5.5-027	[Tools] Cisco-style command: show VLANs and their ports	show vlan (brief)	netplus::5.5
+np9-5.5-028	[Tools] Cisco-style command: show PoE power usage per port	show power inline	netplus::5.5
+np9-5.5-029	[Tools] Which tool: find which wall jack goes to which patch panel port	Toner and probe	netplus::5.5
+np9-5.5-030	[Tools] Which tool: verify a newly crimped cable's pinout	Cable tester	netplus::5.5
+np9-5.5-031	[Tools] Which tool: find which ports are open on a server	Nmap	netplus::5.5
+np9-5.5-032	[Tools] Which tool: see which switch and port a PC is plugged into	LLDP/CDP neighbor info (or the switch's MAC address table)	netplus::5.5
+np9-5.5-033	[Tools] Which tool: find which hop is adding latency	traceroute/tracert (or pathping/mtr)	netplus::5.5
+np9-5.5-034	[Tools] Which tool: pick the least-congested Wi-Fi channel	Wi-Fi analyzer	netplus::5.5
