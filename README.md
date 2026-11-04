@@ -6,12 +6,12 @@ Questions taken from <https://github.com/chlebik/rhcsa-practice-questions> and g
 
 ## RHCSA deck (EX200, RHEL 10)
 
-- `rhcsa-flashcards.tsv` — 415 cards written against the RHEL 10 exam objectives. Import it in Anki with File → Import; the header in the file sets the deck, the tags and the stable note IDs, so re-importing an updated file updates cards in place.
+- `rhcsa-flashcards.tsv` — 505 cards written against the RHEL 10 exam objectives. Import it in Anki with File → Import; the header in the file sets the deck, the tags and the stable note IDs, so re-importing an updated file updates cards in place.
 - `RHCSA-STUDY-PLAN.md` — what the cards won't teach you, resources, lab setup, and a training plan.
 
 ## Network+ deck (N10-009)
 
-- `networkplus-flashcards.tsv` — 590 cards covering every N10-009 objective (1.1–5.5), tagged `netplus::<objective>`. Imports into its own Anki deck, "CompTIA Network+ N10-009".
+- `networkplus-flashcards.tsv` — 629 cards covering every N10-009 objective (1.1–5.5), tagged `netplus::<objective>`. Imports into its own Anki deck, "CompTIA Network+ N10-009".
 - `NETWORKPLUS-STUDY-PLAN.md` — exam format, which resources are worth it, and a training plan.
 
 (The CLI program still reads the older `flashcards.csv`.)

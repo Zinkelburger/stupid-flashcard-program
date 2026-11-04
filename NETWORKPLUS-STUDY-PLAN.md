@@ -1,6 +1,6 @@
 # CompTIA Network+ (N10-009) study plan
 
-The deck (`networkplus-flashcards.tsv`, 590 cards) covers every N10-009 objective, 1.1 through 5.5. Network+ is multiple choice plus performance-based questions (PBQs), so recall helps a lot more here than on the RHCSA. Cards still won't teach you to reason through scenario questions, do subnetting quickly, or handle PBQs. That's what practice exams are for.
+The deck (`networkplus-flashcards.tsv`, 629 cards) covers every N10-009 objective, 1.1 through 5.5. Network+ is multiple choice plus performance-based questions (PBQs), so recall helps a lot more here than on the RHCSA. Cards still won't teach you to reason through scenario questions, do subnetting quickly, or handle PBQs. That's what practice exams are for.
 
 ## The exam
 
@@ -58,7 +58,7 @@ The deck (`networkplus-flashcards.tsv`, 590 cards) covers every N10-009 objectiv
 
 ## Training plan (about 6–8 weeks at ~1 h/day)
 
-**Every day:** Anki for 15 min at **25 new cards/day**, which gets through all 590 in about 3.5 weeks. Add 10 minutes of subnetting practice.
+**Every day:** Anki for 15 min at **25 new cards/day**, which gets through all 629 in about 3.5 weeks. Add 10 minutes of subnetting practice.
 
 **Weeks 1–4: learn each objective once**
 - Watch Messer's videos in objective order (1.1 → 5.5).
@@ -90,5 +90,5 @@ The deck (`networkplus-flashcards.tsv`, 590 cards) covers every N10-009 objectiv
 
 - **Anki:** File → Import → `networkplus-flashcards.tsv`. This creates its own deck, "CompTIA Network+ N10-009", separate from the RHCSA deck.
 - **Updates:** re-importing an updated file updates cards in place and keeps your review history.
-- **Tags:** `netplus::<objective>` (e.g. `netplus::2.2`). 11 cards are tagged `beyond-objectives` (POP3/IMAP, Wi-Fi 7, RIP, OTDR…). They're commonly asked about but not explicitly in the objectives.
+- **Tags:** `netplus::<objective>` (e.g. `netplus::2.2`). 17 cards are tagged `beyond-objectives` (POP3/IMAP, Wi-Fi 7, RIP, phishing variants…). They're commonly asked about but not explicitly in the objectives.
 - **Your earlier notes:** the useful bits of `networking-gemini-notes/` (subnetting, spine-leaf, 802.11) are folded into the deck. The 802.11ac speed is corrected to ~6.9 Gbps theoretical. UDP hole punching isn't on the exam, so it was left out.

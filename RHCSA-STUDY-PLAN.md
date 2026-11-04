@@ -53,7 +53,7 @@ None of that comes from flashcards. It comes from repeating the tasks in a lab.
 
 ## Training plan (about 8 weeks at ~1 h/day; compress if you have more time)
 
-**Every day, the whole way through:** Anki for 10–15 min. Use **20 new cards/day**, which gets through all 415 in about 3 weeks, then keep up with reviews.
+**Every day, the whole way through:** Anki for 10–15 min. Use **20 new cards/day**, which gets through all 505 in about 3.5 weeks, then keep up with reviews.
 
 **Weeks 1–4: learn and do every objective once**
 - Work through RH124 → RH134 (or van Vugt chapter by chapter).
@@ -89,7 +89,7 @@ None of that comes from flashcards. It comes from repeating the tasks in a lab.
 
 ## Using the deck
 
-- **Anki:** File → Import → `rhcsa-flashcards.tsv`. The file's header sets the deck ("RHCSA EX200 (RHEL 10)"), the tags and the stable IDs.
+- **Anki:** File → Import → `rhcsa-flashcards.tsv`. The file's header sets the deck ("RHCSA"), the tags and the stable IDs.
   - If the cards are improved later, re-import the file. Changed cards update in place and keep their review history.
   - Tags: `rhcsa::<domain>` for each objective area. Cards marked `beyond-objectives` (ACLs, SGID, SELinux troubleshooting order) aren't in the v10 objective list but help with real tasks.
 - The `[Docs]` cards cover where to look things up during the exam. The `[Exam]` cards cover strategy.
